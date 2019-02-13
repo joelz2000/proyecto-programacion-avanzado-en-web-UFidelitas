@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="763c9f81fcfe4b0087d37dd25ccbe8a4" Name="Diagram1">
+        <EntityTypeShape EntityType="BDprogramacionVModel.canton" Width="1.5" PointX="6" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.categorias" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.colecciones" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.distribuidor" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.distrito" Width="1.5" PointX="6" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.facturacion_producto" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.facturaciones" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.formas_pago_facturacion" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.genero_producto" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.imagen_producto" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.marcas" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.medida_producto" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.pais" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.productos" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.promociones" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.promociones_productos" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.provincia" Width="1.5" PointX="6" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.rol" Width="1.5" PointX="6" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.user" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.usuarios_promocion" Width="1.5" PointX="10.5" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_canton_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_categorias_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_colecciones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_distribuidor_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_distrito_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_facturacion_facturacion_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_producto_facturacion_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_facturacion_formas_pago_facturacion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_producto_genero_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_producto_imagen_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_marca_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_producto_medida_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_pais_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_productos_promociones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_promociones_promociones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_user_usuarios_promocion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_provincia_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_promocion_usuarios_promocion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.rol_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel.usuario_facturaciones" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
