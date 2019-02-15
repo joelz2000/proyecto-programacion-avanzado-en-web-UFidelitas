@@ -110,7 +110,7 @@ GO
 
 CREATE TABLE [dbo].[facturacion_producto](
 	[productoId] [int] NOT NULL,
-	[facturacionId] [varchar](250) NOT NULL,
+	[facturacionId] int NOT NULL,
 	[cantidad] [int] NULL,
  CONSTRAINT [PK_facturacion_producto] PRIMARY KEY CLUSTERED 
 (
@@ -128,7 +128,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[facturaciones](
-	[facturacionId] [varchar](250) IDENTITY(1,1) NOT NULL,
+	[facturacionId] int IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](250) NULL,
 	[fecha] [date] NULL,
 	[descripcion] [text] NULL,
@@ -151,7 +151,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[formas_pago_facturacion](
-	[facturacionId] [varchar](250) NOT NULL,
+	[facturacionId]  int NOT NULL,
 	[forma_pago] [varchar](250) NULL,
  CONSTRAINT [PK_formas_pago_facturacion] PRIMARY KEY CLUSTERED 
 (
@@ -421,7 +421,7 @@ GO
 
 CREATE TABLE [dbo].[usuario_facturaciones](
 	[usuarioId] [int] NOT NULL,
-	[facturacionId] [varchar](250) NOT NULL,
+	[facturacionId] int NOT NULL,
  CONSTRAINT [PK_usuario_facturaciones] PRIMARY KEY CLUSTERED 
 (
 	[usuarioId] ASC,
