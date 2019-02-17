@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="63d87add19244ba0bea189d449a24554" Name="Diagram1">
+        <EntityTypeShape EntityType="BDprogramacionVModel1.Canton" Width="1.5" PointX="6" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.categorias" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.colecciones" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.distribuidor" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.Distrito" Width="1.5" PointX="6" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.facturacion_producto" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.facturaciones" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.formas_pago_facturacion" Width="1.5" PointX="5.25" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.genero_producto" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.imagen_producto" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.marcas" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.medida_producto" Width="1.5" PointX="5.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.Pais" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.productos" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.promociones" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.promociones_productos" Width="1.5" PointX="8.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.Provincia" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.rol" Width="1.5" PointX="6" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.sysdiagrams" Width="1.5" PointX="7.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.user" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDprogramacionVModel1.usuarios_promocion" Width="1.5" PointX="10.5" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_Canton_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_Distrito_Canton" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_user_Canton" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_categorias_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_colecciones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_distribuidor_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_Distrito_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_user_Distrito" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_facturacion_facturacion_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_producto_facturacion_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_facturacion_formas_pago_facturacion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_producto_genero_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_producto_imagen_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_marca_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_producto_medida_producto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_Pais_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_user_pais" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_productos_promociones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_promociones_promociones_productos" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_user_usuarios_promocion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_user_Provincia" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.FK_promocion_usuarios_promocion" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.rol_user" ManuallyRouted="false" />
+        <AssociationConnector Association="BDprogramacionVModel1.usuario_facturaciones" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -12,17 +12,21 @@ namespace Backend.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class distrito
+    public partial class Distrito
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public distrito()
+        public Distrito()
         {
             this.user = new HashSet<user>();
         }
     
+        public int provinciaId { get; set; }
+        public int cantonId { get; set; }
         public int distritoId { get; set; }
         public string nombre { get; set; }
     
+        public virtual Canton Canton { get; set; }
+        public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> user { get; set; }
     }

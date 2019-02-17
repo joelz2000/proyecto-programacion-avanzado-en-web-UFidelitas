@@ -37,10 +37,10 @@ namespace Backend.Entities
         public Nullable<int> provinciaId { get; set; }
         public Nullable<int> cantonId { get; set; }
     
-        public virtual canton canton { get; set; }
-        public virtual distrito distrito { get; set; }
-        public virtual pais pais { get; set; }
-        public virtual provincia provincia { get; set; }
+        public virtual Canton Canton { get; set; }
+        public virtual Distrito Distrito { get; set; }
+        public virtual Pais Pais { get; set; }
+        public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuarios_promocion> usuarios_promocion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

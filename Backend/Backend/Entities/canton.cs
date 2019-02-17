@@ -12,17 +12,22 @@ namespace Backend.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class canton
+    public partial class Canton
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public canton()
+        public Canton()
         {
+            this.Distrito = new HashSet<Distrito>();
             this.user = new HashSet<user>();
         }
     
+        public int provinciaId { get; set; }
         public int cantonId { get; set; }
         public string nombre { get; set; }
     
+        public virtual Provincia Provincia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Distrito> Distrito { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> user { get; set; }
     }
