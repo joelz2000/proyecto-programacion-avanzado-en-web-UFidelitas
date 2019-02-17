@@ -24,7 +24,7 @@ namespace Backend.Entities
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<canton> canton { get; set; }
         public virtual DbSet<categorias> categorias { get; set; }
         public virtual DbSet<colecciones> colecciones { get; set; }
