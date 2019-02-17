@@ -12,20 +12,17 @@ namespace Backend.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Pais
+    public partial class pais
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pais()
+        public pais()
         {
-            this.Provincia = new HashSet<Provincia>();
             this.user = new HashSet<user>();
         }
     
         public int paisId { get; set; }
         public string nombre { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Provincia> Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> user { get; set; }
     }
