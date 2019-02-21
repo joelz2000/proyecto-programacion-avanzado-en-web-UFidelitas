@@ -388,7 +388,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE TABLE [dbo].[user](
+CREATE TABLE [dbo].[usuarios](
 	[userId] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](25) NULL,
 	[apellidos] [varchar](125) NULL,
