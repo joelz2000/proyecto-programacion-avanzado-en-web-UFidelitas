@@ -147,8 +147,8 @@ CREATE PROCEDURE sp_agregarUsuario
 	@pFechaNacimiento date,
 	@pGenero varchar(20),
 	@pFotoPerfil varchar(150),
-	@telefono int,
-	@direccion text,
+	@pTelefono int,
+	@pDireccion text,
 	@pPaisId int,
 	@pDistritoId int,
 	@pProvinciaId int,
@@ -158,6 +158,110 @@ CREATE PROCEDURE sp_agregarUsuario
 AS
 BEGIN
 	INSERT INTO dbo.usuarios 
-	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @telefono,@direccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId);
+	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @pTelefono,@pDireccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId);
+END
+GO
+
+/**
+*
+*  Obtener Usuarios 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerUsuarios
+AS
+BEGIN
+	SELECT * FROM dbo.usuarios;
+END
+GO
+
+/**
+*
+*  Obtener Usuarios con Id
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerUsuariosId
+	@pUsuarioId int
+AS
+BEGIN
+	SELECT * FROM dbo.usuarios where userId = @pUsuarioId;
+END
+GO
+
+/**
+*
+*  Actualizar Usuario
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE or alter PROCEDURE sp_actualizarUsuario
+	@pUsuarioId int,
+	@pNombre varchar(25),
+	@pApellidos varchar(125),
+	@pContrasena varchar(125),
+	@pCorreoElectronico varchar(125),
+	@pFechaNacimiento date,
+	@pGenero varchar(20),
+	@pFotoPerfil varchar(150),
+	@pTelefono int,
+	@pDireccion text,
+	@pPaisId int,
+	@pDistritoId int,
+	@pProvinciaId int,
+	@pCantonId int
+AS
+BEGIN
+
+
+	UPDATE dbo.usuarios 
+	set nombre = @pNombre, apellidos = @pApellidos, contrasena = @pContrasena, correoElectronico = @pCorreoElectronico, fechaNacimiento = @pFechaNacimiento, genero = @pGenero, fotoPerfil = @pFotoPerfil, telefono = @pTelefono, direccion = @pDireccion, paisId = @pPaisId, distritoId = @pDistritoId, provinciaId = @pProvinciaId, cantonId = @pCantonId
+	WHERE userId = @pUsuarioId;
+
+END
+GO
+
+
+/**
+*
+*  Eliminar Usuario
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_eliminarUsuario 
+	@pUserId int
+AS
+BEGIN
+	
+	DELETE FROM usuarios WHERE userId = @pUserId; 
+
+	DELETE FROM rol_user WHERE userId = @pUserId;
+
+	DELETE FROM usuario_facturaciones WHERE usuarioId = @pUserId;
+
+	DELETE FROM usuarios_promocion WHERE usuarioId = @pUserId;
+
+
+
 END
 GO
