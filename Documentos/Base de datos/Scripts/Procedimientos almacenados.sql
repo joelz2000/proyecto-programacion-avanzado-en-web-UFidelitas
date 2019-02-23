@@ -265,3 +265,105 @@ BEGIN
 
 END
 GO
+
+
+
+/**
+*
+*  Agregar ROL USER
+*
+**/
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_agregarRolUser
+	@pRolId int,
+	@pUserId int
+	
+AS
+BEGIN
+	
+	INSERT INTO dbo.rol_user(rolId, userId) VALUES (@pRolId, @pUserId);
+
+END
+GO
+
+
+/**
+*
+*  Obtener ROL USER
+*
+**/
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_ObtenerRolesUser
+	
+AS
+BEGIN
+	
+	SELECT r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
+	inner join dbo.rol r on r.ROLID = ru.rolId
+	inner join dbo.usuarios u on ru.userId = u.userId ;
+
+END
+GO
+
+/**
+*
+*  Actualizar ROL USER
+*
+**/
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerRolUserId
+
+	@idUser int
+AS
+BEGIN
+	SELECT r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
+	inner join dbo.rol r on r.ROLID = ru.rolId
+	inner join dbo.usuarios u on ru.userId = u.userId 
+	where ru.userId = @idUser;
+
+END
+GO
+
+
+/**
+*
+*  Actualizar ROL USER
+*
+**/
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_actualizarRolesUser
+	@idRolOriginal int,
+	@idUser int,
+	@idRolNueva int
+AS
+BEGIN
+	
+	UPDATE dbo.rol_user SET rolId = @idRolNueva 
+	WHERE rolId = @idRolOriginal and userId = @idUser;
+
+END
+GO
