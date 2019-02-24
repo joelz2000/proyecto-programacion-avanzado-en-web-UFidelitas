@@ -372,7 +372,68 @@ GO
 
 /**
 *
-*  Actualizar ROL USER
+*  Agregar FACTURACION
 *
 **/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_agregarFacturacion
+	@pNombre varchar(250),
+	@pfecha date,
+	@pDescripcion text,
+	@pImpuesto int,
+	@pSubtotal float,
+	@pTotal float,
+	@pTipo varchar(25)
+AS
+BEGIN
+	
+	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
+	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
+
+END
+GO
+
+
+/**
+*
+*  Obtener FACTURACIONES
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerFacturaciones
+AS
+BEGIN
+	SELECT * FROM dbo.facturaciones;
+END
+GO
+
+/**
+*
+*  Obtener FACTURACION por id
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerFacturacionId
+	@pId int
+AS
+BEGIN
+	SELECT * FROM dbo.facturaciones where facturacionId = @pId;
+END
+GO
+
 
