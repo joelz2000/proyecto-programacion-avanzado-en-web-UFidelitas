@@ -135,7 +135,7 @@ CREATE TABLE [dbo].[facturaciones](
 	[impuesto] [int] NULL,
 	[subtotal] [float] NULL,
 	[total] [float] NULL,
-	[tipo] [varbinary](250) NULL,
+	[tipo] [varchar](250) NULL,
  CONSTRAINT [PK_facturaciones] PRIMARY KEY CLUSTERED 
 (
 	[facturacionId] ASC

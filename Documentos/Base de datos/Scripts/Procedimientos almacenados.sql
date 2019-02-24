@@ -319,7 +319,7 @@ GO
 
 /**
 *
-*  Actualizar ROL USER
+*  Obtener ROL USER by id
 *
 **/
 
@@ -367,3 +367,12 @@ BEGIN
 
 END
 GO
+
+
+
+/**
+*
+*  Actualizar ROL USER
+*
+**/
+
