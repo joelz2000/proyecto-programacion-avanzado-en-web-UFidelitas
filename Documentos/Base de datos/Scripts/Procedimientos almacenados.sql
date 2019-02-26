@@ -381,23 +381,33 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_agregarFacturacion
+ALTER PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
 	@pImpuesto int,
 	@pSubtotal float,
 	@pTotal float,
-	@pTipo varchar(25)
+	@pTipo varchar(25),
+	@pCantidad int,
+	@pProductId int
 AS
+
+ DECLARE @ultimaFacturacion int;
 BEGIN
-	
+	 
+	 
 	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
 	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
 
-END
-GO
 
+	SET @ultimaFacturacion = (select TOP 1 facturacionId from dbo.facturaciones);
+
+	INSERT INTO dbo.facturacion_producto(facturacionId,productoId,cantidad)
+	VALUES(@ultimaFacturacion, @pProductId, @pCantidad);
+
+	update dbo.productos set cantidad = (cantidad - @pCantidad ) where productoId = @pProductId;
+END
 
 /**
 *

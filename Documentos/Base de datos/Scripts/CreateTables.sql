@@ -272,6 +272,7 @@ CREATE TABLE [dbo].[productos](
 	[id_coleccion] [int] NULL,
 	[id_bodega] [int] NULL,
 	[id_distribuidor] [int] NULL,
+	[cantidad] [int] NULL,
  CONSTRAINT [PK_producto] PRIMARY KEY CLUSTERED 
 (
 	[productoId] ASC
