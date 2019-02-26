@@ -380,7 +380,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-alter PROCEDURE [dbo].[sp_agregarFacturacion]
+CREATE PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
@@ -393,12 +393,12 @@ AS
  DECLARE @ultimaFacturacion int;
  DECLARE @pSubtotal float;
  DECLARE @pTotal float;
- DECLARE @i float;
+ DECLARE @impuestoConvertido float;
 BEGIN
 	 
 	 SET @pTotal = (SELECT (precio * @pCantidad) FROM productos WHERE productoId = @pProductId);
-	 set @i = @pImpuesto / 100
-	 SET @pSubtotal = ((@pTotal * @i) + @pTotal );
+	 set @impuestoConvertido = CAST(@pImpuesto AS FLOAT) /   CAST(100 AS FLOAT)
+	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );
 	 
 	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
 	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
