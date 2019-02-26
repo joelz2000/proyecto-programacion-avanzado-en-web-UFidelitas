@@ -375,13 +375,12 @@ GO
 *  Agregar FACTURACION
 *
 **/
-
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[sp_agregarFacturacion]
+create PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
@@ -399,7 +398,7 @@ BEGIN
 	 
 	 SET @pTotal = (SELECT (precio * cantidad) FROM productos WHERE productoId = @pProductId);
 
-	 SET @pSubtotal = (@pTotal * (@pImpuesto / 100));
+	 SET @pSubtotal = ((@pTotal * (@pImpuesto / 100)) + @pTotal );
 	 
 	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
 	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
@@ -412,7 +411,6 @@ BEGIN
 
 	update dbo.productos set cantidad = (cantidad - @pCantidad ) where productoId = @pProductId;
 END
-
 /**
 *
 *  Obtener FACTURACIONES
