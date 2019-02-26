@@ -386,16 +386,20 @@ ALTER PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pfecha date,
 	@pDescripcion text,
 	@pImpuesto int,
-	@pSubtotal float,
-	@pTotal float,
 	@pTipo varchar(25),
 	@pCantidad int,
 	@pProductId int
 AS
 
  DECLARE @ultimaFacturacion int;
+ DECLARE @pSubtotal float;
+ DECLARE @pTotal float;
+
 BEGIN
 	 
+	 SET @pTotal = (SELECT (precio * cantidad) FROM productos WHERE productoId = @pProductId);
+
+	 SET @pSubtotal = (@pTotal * (@pImpuesto / 100));
 	 
 	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
 	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
