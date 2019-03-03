@@ -387,7 +387,8 @@ CREATE PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pImpuesto int,
 	@pTipo varchar(25),
 	@pCantidad int,
-	@pProductId int
+	@pProductId int,
+	@pUsuario int
 AS
 
  DECLARE @ultimaFacturacion int;
@@ -408,6 +409,9 @@ BEGIN
 
 	INSERT INTO dbo.facturacion_producto(facturacionId,productoId,cantidad)
 	VALUES(@ultimaFacturacion, @pProductId, @pCantidad);
+
+	INSERT INTO dbo.usuario_facturaciones(usuarioId, facturacionId)
+	VALUES(@pUsuario, @ultimaFacturacion);
 
 	update dbo.productos set cantidad = (cantidad - @pCantidad ) where productoId = @pProductId;
 END
