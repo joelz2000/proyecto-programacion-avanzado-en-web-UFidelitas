@@ -452,4 +452,48 @@ BEGIN
 END
 GO
 
+/**
+*
+*  Obtener FACTURACION por PRODUCTO 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerFacturacionesProducto
+	@pId int
+AS
+BEGIN
+	SELECT f.facturacionId, f.nombre, p.productoId, p.nombre FROM dbo.facturacion_producto fp 
+	inner join dbo.productos p on fp.productoId = p.productoId
+	inner join dbo.facturaciones f on f.facturacionId = fp.facturacionId
+	where p.productoId = @pId;
+END
+GO
+
+
+/**
+*
+*  Obtener FACTURACION por Usuario 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerFacturacionesUsuario
+	@pId int
+AS
+BEGIN
+	select f.facturacionId, f.nombre, u.userId, u.nombre from dbo.usuario_facturaciones uf
+	inner join dbo.usuarios u on u.userId = uf.usuarioId
+	inner join dbo.facturaciones f on f.facturacionId = uf.facturacionId
+	where u.userId = @pId;
+END
+GO
 
