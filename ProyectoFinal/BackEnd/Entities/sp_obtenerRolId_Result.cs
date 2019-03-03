@@ -10,13 +10,11 @@
 namespace BackEnd.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class medida_producto
+    public partial class sp_obtenerRolId_Result
     {
-        public int productoId { get; set; }
-        public Nullable<double> medida { get; set; }
-    
-        public virtual productos productos { get; set; }
+        public int ROLID { get; set; }
+        public string NOMBRE { get; set; }
+        public string DESCRIPCION { get; set; }
     }
 }
