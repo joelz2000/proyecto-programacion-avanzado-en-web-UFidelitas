@@ -14,7 +14,7 @@ namespace BackEnd.Entities
     
     public partial class formas_pago_facturacion
     {
-        public string facturacionId { get; set; }
+        public int facturacionId { get; set; }
         public string forma_pago { get; set; }
     
         public virtual facturaciones facturaciones { get; set; }

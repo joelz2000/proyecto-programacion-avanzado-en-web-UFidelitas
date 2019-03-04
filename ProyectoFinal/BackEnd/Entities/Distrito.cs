@@ -17,7 +17,7 @@ namespace BackEnd.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Distrito()
         {
-            this.user = new HashSet<user>();
+            this.usuarios = new HashSet<usuarios>();
         }
     
         public int provinciaId { get; set; }
@@ -28,6 +28,6 @@ namespace BackEnd.Entities
         public virtual Canton Canton { get; set; }
         public virtual Provincia Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<usuarios> usuarios { get; set; }
     }
 }

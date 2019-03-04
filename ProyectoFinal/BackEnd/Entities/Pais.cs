@@ -18,7 +18,7 @@ namespace BackEnd.Entities
         public Pais()
         {
             this.Provincia = new HashSet<Provincia>();
-            this.user = new HashSet<user>();
+            this.usuarios = new HashSet<usuarios>();
         }
     
         public int paisId { get; set; }
@@ -27,6 +27,6 @@ namespace BackEnd.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Provincia> Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<usuarios> usuarios { get; set; }
     }
 }

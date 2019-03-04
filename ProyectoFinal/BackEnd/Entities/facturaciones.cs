@@ -18,22 +18,22 @@ namespace BackEnd.Entities
         public facturaciones()
         {
             this.facturacion_producto = new HashSet<facturacion_producto>();
-            this.user = new HashSet<user>();
+            this.usuarios = new HashSet<usuarios>();
         }
     
-        public string facturacionId { get; set; }
+        public int facturacionId { get; set; }
         public string nombre { get; set; }
         public Nullable<System.DateTime> fecha { get; set; }
         public string descripcion { get; set; }
         public Nullable<int> impuesto { get; set; }
         public Nullable<double> subtotal { get; set; }
         public Nullable<double> total { get; set; }
-        public byte[] tipo { get; set; }
+        public string tipo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<facturacion_producto> facturacion_producto { get; set; }
         public virtual formas_pago_facturacion formas_pago_facturacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<usuarios> usuarios { get; set; }
     }
 }

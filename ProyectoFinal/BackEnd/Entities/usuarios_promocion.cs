@@ -20,6 +20,6 @@ namespace BackEnd.Entities
         public Nullable<System.DateTime> fecha_final_promocion { get; set; }
     
         public virtual promociones promociones { get; set; }
-        public virtual user user { get; set; }
+        public virtual usuarios usuarios { get; set; }
     }
 }

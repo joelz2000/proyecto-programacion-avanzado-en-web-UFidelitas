@@ -14,6 +14,14 @@ namespace BackEnd.Entities
     
     public partial class usuarios
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public usuarios()
+        {
+            this.usuarios_promocion = new HashSet<usuarios_promocion>();
+            this.rol = new HashSet<rol>();
+            this.facturaciones = new HashSet<facturaciones>();
+        }
+    
         public int userId { get; set; }
         public string nombre { get; set; }
         public string apellidos { get; set; }
@@ -28,5 +36,16 @@ namespace BackEnd.Entities
         public Nullable<int> distritoId { get; set; }
         public Nullable<int> provinciaId { get; set; }
         public Nullable<int> cantonId { get; set; }
+    
+        public virtual Canton Canton { get; set; }
+        public virtual Distrito Distrito { get; set; }
+        public virtual Pais Pais { get; set; }
+        public virtual Provincia Provincia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuarios_promocion> usuarios_promocion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rol> rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<facturaciones> facturaciones { get; set; }
     }
 }

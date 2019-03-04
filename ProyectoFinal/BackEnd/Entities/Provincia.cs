@@ -19,7 +19,7 @@ namespace BackEnd.Entities
         {
             this.Canton = new HashSet<Canton>();
             this.Distrito = new HashSet<Distrito>();
-            this.user = new HashSet<user>();
+            this.usuarios = new HashSet<usuarios>();
         }
     
         public int provinciaId { get; set; }
@@ -32,6 +32,6 @@ namespace BackEnd.Entities
         public virtual ICollection<Distrito> Distrito { get; set; }
         public virtual Pais Pais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> user { get; set; }
+        public virtual ICollection<usuarios> usuarios { get; set; }
     }
 }

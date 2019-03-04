@@ -15,7 +15,7 @@ namespace BackEnd.Entities
     public partial class facturacion_producto
     {
         public int productoId { get; set; }
-        public string facturacionId { get; set; }
+        public int facturacionId { get; set; }
         public Nullable<int> cantidad { get; set; }
     
         public virtual facturaciones facturaciones { get; set; }
