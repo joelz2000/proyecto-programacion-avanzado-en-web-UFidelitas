@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="cantonId" />
@@ -531,6 +531,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_actualizarRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pId" Type="int" Mode="In" />
+          <Parameter Name="pNombre" Type="varchar" Mode="In" />
+          <Parameter Name="pDescripcion" Type="text" Mode="In" />
+        </Function>
+        <Function Name="sp_actualizarRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idRolOriginal" Type="int" Mode="In" />
+          <Parameter Name="idUser" Type="int" Mode="In" />
+          <Parameter Name="idRolNueva" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_actualizarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsuarioId" Type="int" Mode="In" />
+          <Parameter Name="pNombre" Type="varchar" Mode="In" />
+          <Parameter Name="pApellidos" Type="varchar" Mode="In" />
+          <Parameter Name="pContrasena" Type="varchar" Mode="In" />
+          <Parameter Name="pCorreoElectronico" Type="varchar" Mode="In" />
+          <Parameter Name="pFechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="pGenero" Type="varchar" Mode="In" />
+          <Parameter Name="pFotoPerfil" Type="varchar" Mode="In" />
+          <Parameter Name="pTelefono" Type="int" Mode="In" />
+          <Parameter Name="pDireccion" Type="text" Mode="In" />
+          <Parameter Name="pPaisId" Type="int" Mode="In" />
+          <Parameter Name="pDistritoId" Type="int" Mode="In" />
+          <Parameter Name="pProvinciaId" Type="int" Mode="In" />
+          <Parameter Name="pCantonId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_agregarFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pNombre" Type="varchar" Mode="In" />
+          <Parameter Name="pfecha" Type="date" Mode="In" />
+          <Parameter Name="pDescripcion" Type="text" Mode="In" />
+          <Parameter Name="pImpuesto" Type="int" Mode="In" />
+          <Parameter Name="pTipo" Type="varchar" Mode="In" />
+          <Parameter Name="pCantidad" Type="int" Mode="In" />
+          <Parameter Name="pProductId" Type="int" Mode="In" />
+          <Parameter Name="pUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_agregarRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pNombre" Type="varchar" Mode="In" />
+          <Parameter Name="pDescripcion" Type="text" Mode="In" />
+        </Function>
+        <Function Name="sp_agregarRolUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pRolId" Type="int" Mode="In" />
+          <Parameter Name="pUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_agregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pNombre" Type="varchar" Mode="In" />
+          <Parameter Name="pApellidos" Type="varchar" Mode="In" />
+          <Parameter Name="pContrasena" Type="varchar" Mode="In" />
+          <Parameter Name="pCorreoElectronico" Type="varchar" Mode="In" />
+          <Parameter Name="pFechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="pGenero" Type="varchar" Mode="In" />
+          <Parameter Name="pFotoPerfil" Type="varchar" Mode="In" />
+          <Parameter Name="pTelefono" Type="int" Mode="In" />
+          <Parameter Name="pDireccion" Type="text" Mode="In" />
+          <Parameter Name="pPaisId" Type="int" Mode="In" />
+          <Parameter Name="pDistritoId" Type="int" Mode="In" />
+          <Parameter Name="pProvinciaId" Type="int" Mode="In" />
+          <Parameter Name="pCantonId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_deleteRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pRolId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_eliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerFacturacionesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerFacturacionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_ObtenerRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_obtenerRolId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerRolUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idUser" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_obtenerUsuariosId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsuarioId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="BDprogramacionVModelStoreContainer">
           <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categorias" EntityType="Self.categorias" Schema="dbo" store:Type="Tables" />
@@ -660,8 +747,7 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDprogramacionVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1301,7 +1387,176 @@
             <End Role="facturaciones" EntitySet="facturaciones" />
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
+          <FunctionImport Name="sp_actualizarRol">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pDescripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarRolesUser">
+            <Parameter Name="idRolOriginal" Mode="In" Type="Int32" />
+            <Parameter Name="idUser" Mode="In" Type="Int32" />
+            <Parameter Name="idRolNueva" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarUsuario">
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pApellidos" Mode="In" Type="String" />
+            <Parameter Name="pContrasena" Mode="In" Type="String" />
+            <Parameter Name="pCorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="pFechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="pGenero" Mode="In" Type="String" />
+            <Parameter Name="pFotoPerfil" Mode="In" Type="String" />
+            <Parameter Name="pTelefono" Mode="In" Type="Int32" />
+            <Parameter Name="pDireccion" Mode="In" Type="String" />
+            <Parameter Name="pPaisId" Mode="In" Type="Int32" />
+            <Parameter Name="pDistritoId" Mode="In" Type="Int32" />
+            <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
+            <Parameter Name="pCantonId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_agregarFacturacion">
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pfecha" Mode="In" Type="DateTime" />
+            <Parameter Name="pDescripcion" Mode="In" Type="String" />
+            <Parameter Name="pImpuesto" Mode="In" Type="Int32" />
+            <Parameter Name="pTipo" Mode="In" Type="String" />
+            <Parameter Name="pCantidad" Mode="In" Type="Int32" />
+            <Parameter Name="pProductId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_agregarRol">
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pDescripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_agregarRolUser">
+            <Parameter Name="pRolId" Mode="In" Type="Int32" />
+            <Parameter Name="pUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_agregarUsuario">
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pApellidos" Mode="In" Type="String" />
+            <Parameter Name="pContrasena" Mode="In" Type="String" />
+            <Parameter Name="pCorreoElectronico" Mode="In" Type="String" />
+            <Parameter Name="pFechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="pGenero" Mode="In" Type="String" />
+            <Parameter Name="pFotoPerfil" Mode="In" Type="String" />
+            <Parameter Name="pTelefono" Mode="In" Type="Int32" />
+            <Parameter Name="pDireccion" Mode="In" Type="String" />
+            <Parameter Name="pPaisId" Mode="In" Type="Int32" />
+            <Parameter Name="pDistritoId" Mode="In" Type="Int32" />
+            <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
+            <Parameter Name="pCantonId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_deleteRol">
+            <Parameter Name="pRolId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_eliminarUsuario">
+            <Parameter Name="pUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
+          <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
+          <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
+          <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
+            <Parameter Name="idUser" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
+          <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_obtenerFacturaciones_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="impuesto" Nullable="true" />
+          <Property Type="Double" Name="subtotal" Nullable="true" />
+          <Property Type="Double" Name="total" Nullable="true" />
+          <Property Type="String" Name="tipo" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerFacturacionesProducto_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="nombre1" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerFacturacionesUsuario_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="String" Name="nombre1" Nullable="true" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerFacturacionId_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="impuesto" Nullable="true" />
+          <Property Type="Double" Name="subtotal" Nullable="true" />
+          <Property Type="Double" Name="total" Nullable="true" />
+          <Property Type="String" Name="tipo" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerRoles_Result">
+          <Property Type="Int32" Name="ROLID" Nullable="false" />
+          <Property Type="String" Name="NOMBRE" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_ObtenerRolesUser_Result">
+          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerRolId_Result">
+          <Property Type="Int32" Name="ROLID" Nullable="false" />
+          <Property Type="String" Name="NOMBRE" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerRolUserId_Result">
+          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerUsuarios_Result">
+          <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="125" />
+          <Property Type="String" Name="contrasena" Nullable="true" MaxLength="125" />
+          <Property Type="String" Name="correoElectronico" Nullable="true" MaxLength="125" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="String" Name="genero" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fotoPerfil" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="telefono" Nullable="true" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="paisId" Nullable="true" />
+          <Property Type="Int32" Name="distritoId" Nullable="true" />
+          <Property Type="Int32" Name="provinciaId" Nullable="true" />
+          <Property Type="Int32" Name="cantonId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerUsuariosId_Result">
+          <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="125" />
+          <Property Type="String" Name="contrasena" Nullable="true" MaxLength="125" />
+          <Property Type="String" Name="correoElectronico" Nullable="true" MaxLength="125" />
+          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
+          <Property Type="String" Name="genero" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="fotoPerfil" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="telefono" Nullable="true" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="paisId" Nullable="true" />
+          <Property Type="Int32" Name="distritoId" Nullable="true" />
+          <Property Type="Int32" Name="provinciaId" Nullable="true" />
+          <Property Type="Int32" Name="cantonId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1539,6 +1794,137 @@
               <ScalarProperty Name="userId" ColumnName="usuarioId" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_actualizarRol" FunctionName="BDprogramacionVModel.Store.sp_actualizarRol" />
+          <FunctionImportMapping FunctionImportName="sp_actualizarRolesUser" FunctionName="BDprogramacionVModel.Store.sp_actualizarRolesUser" />
+          <FunctionImportMapping FunctionImportName="sp_actualizarUsuario" FunctionName="BDprogramacionVModel.Store.sp_actualizarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_agregarFacturacion" FunctionName="BDprogramacionVModel.Store.sp_agregarFacturacion" />
+          <FunctionImportMapping FunctionImportName="sp_agregarRol" FunctionName="BDprogramacionVModel.Store.sp_agregarRol" />
+          <FunctionImportMapping FunctionImportName="sp_agregarRolUser" FunctionName="BDprogramacionVModel.Store.sp_agregarRolUser" />
+          <FunctionImportMapping FunctionImportName="sp_agregarUsuario" FunctionName="BDprogramacionVModel.Store.sp_agregarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_deleteRol" FunctionName="BDprogramacionVModel.Store.sp_deleteRol" />
+          <FunctionImportMapping FunctionImportName="sp_eliminarUsuario" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturaciones" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturaciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturaciones_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionesProducto" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionesProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionesUsuario" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionesUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionId" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionId_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerRoles" FunctionName="BDprogramacionVModel.Store.sp_obtenerRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRoles_Result">
+                <ScalarProperty Name="ROLID" ColumnName="ROLID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ObtenerRolesUser" FunctionName="BDprogramacionVModel.Store.sp_ObtenerRolesUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_ObtenerRolesUser_Result">
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerRolId" FunctionName="BDprogramacionVModel.Store.sp_obtenerRolId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRolId_Result">
+                <ScalarProperty Name="ROLID" ColumnName="ROLID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerRolUserId" FunctionName="BDprogramacionVModel.Store.sp_obtenerRolUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRolUserId_Result">
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerUsuarios" FunctionName="BDprogramacionVModel.Store.sp_obtenerUsuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerUsuarios_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correoElectronico" ColumnName="correoElectronico" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="fotoPerfil" ColumnName="fotoPerfil" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="paisId" ColumnName="paisId" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerUsuariosId" FunctionName="BDprogramacionVModel.Store.sp_obtenerUsuariosId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerUsuariosId_Result">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correoElectronico" ColumnName="correoElectronico" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="fotoPerfil" ColumnName="fotoPerfil" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="paisId" ColumnName="paisId" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
