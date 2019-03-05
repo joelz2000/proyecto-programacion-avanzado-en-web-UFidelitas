@@ -43,5 +43,23 @@ namespace UnitTestProject
 
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+        public void actualizarRol()
+        {
+            IRolDAL rolDAL = new RolDALImpl();
+
+            sp_obtenerRoles_Result sp_ObtenerRoles_Result;
+
+            bool result;
+
+            result = rolDAL.sp_actualizarRol(sp_ObtenerRoles_Result = new sp_obtenerRoles_Result() {
+                ROLID = 1,
+                NOMBRE = "ADMIN",
+                DESCRIPCION = "administradores"
+            });
+
+            Assert.AreEqual(true, result);
+        }
     }
 }
