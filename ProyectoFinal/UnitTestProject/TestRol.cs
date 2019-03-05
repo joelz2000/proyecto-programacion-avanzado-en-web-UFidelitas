@@ -32,5 +32,16 @@ namespace UnitTestProject
             Assert.AreEqual(1, result);
 
         }
+
+        [TestMethod]
+        public void obtenerRolById()
+        {
+            int result;
+            IRolDAL rolDAL = new RolDALImpl();
+
+            result = rolDAL.sp_obtenerRolById(1).ROLID;
+
+            Assert.AreEqual(1, result);
+        }
     }
 }
