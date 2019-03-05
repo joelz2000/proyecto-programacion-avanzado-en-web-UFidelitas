@@ -63,7 +63,7 @@ namespace BackEnd.DAL
             catch (Exception)
             {
 
-                throw;
+                return null;
             }
            
         }
