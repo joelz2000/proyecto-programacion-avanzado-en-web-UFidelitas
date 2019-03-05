@@ -1,6 +1,7 @@
 ﻿using BackEnd.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,20 @@ namespace BackEnd.DAL
     {
         private BDContext context;
 
-        public bool sp_actualizarRol(int id, string nombre, string descripcion)
+        public bool sp_actualizarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result)
         {
-            throw new NotImplementedException();
+            try
+            {
+                context.Entry(sp_ObtenerRoles_Result).State = EntityState.Modified;
+                context.SaveChanges();
+                return true;
+            }
+
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public bool sp_agregarRol(string nombre, string descripcion)
