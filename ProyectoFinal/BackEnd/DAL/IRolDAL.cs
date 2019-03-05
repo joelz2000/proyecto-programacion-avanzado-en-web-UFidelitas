@@ -13,7 +13,7 @@ namespace BackEnd.DAL
 
         List<sp_obtenerRoles_Result> sp_obtenerRoles();
 
-        rol sp_obtenerRolById(int id);
+        sp_obtenerRolId_Result sp_obtenerRolById(int id);
 
         bool sp_actualizarRol(int id, string nombre, string descripcion);
 
