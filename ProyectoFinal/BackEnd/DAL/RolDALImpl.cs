@@ -41,9 +41,27 @@ namespace BackEnd.DAL
             throw new NotImplementedException();
         }
 
-        public rol sp_obtenerRolById(int id)
+        public sp_obtenerRolId_Result sp_obtenerRolById(int id)
         {
-            throw new NotImplementedException();
+
+            try
+            {
+                sp_obtenerRolId_Result sp_ObtenerRolId_Result;
+
+                using (context = new BDContext())
+                {
+                    sp_ObtenerRolId_Result = context.sp_obtenerRolId(id).FirstOrDefault();
+                }
+
+                return sp_ObtenerRolId_Result;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+           
         }
 
         public List<sp_obtenerRoles_Result> sp_obtenerRoles()
