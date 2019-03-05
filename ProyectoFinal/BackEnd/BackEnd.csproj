@@ -52,8 +52,8 @@
   <ItemGroup>
     <Compile Include="DAL\DALGenericoImpl.cs" />
     <Compile Include="DAL\IDALGenerico.cs" />
-    <Compile Include="DAL\IRolDAL.cs" />
-    <Compile Include="DAL\RolDALImpl.cs" />
+    <Compile Include="DAL\IDALRol.cs" />
+    <Compile Include="DAL\DALRolImpl.cs" />
     <Compile Include="DAL\UnidadDeTrabajo.cs" />
     <Compile Include="Entities\BDprogramacionVModel.Context.cs">
       <AutoGen>True</AutoGen>
