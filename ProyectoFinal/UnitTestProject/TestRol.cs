@@ -11,12 +11,17 @@ namespace UnitTestProject
         [TestMethod]
         public void agregarRol()
         {
-            string nombre = "administrador";
-            string descripcion = "administradores de la tienda";
+
 
             IRolDAL rolDAL = new RolDALImpl();
+            sp_obtenerRoles_Result sp_ObtenerRoles_Result;
 
-            bool result = rolDAL.agregarRol(nombre, descripcion);
+
+
+            bool result = rolDAL.agregarRol(sp_ObtenerRoles_Result = new sp_obtenerRoles_Result() {
+                NOMBRE = "Admin",
+                DESCRIPCION = "administradores de la tienda"
+            });
             Assert.AreEqual(true, result);
 
         }

@@ -35,13 +35,17 @@ namespace BackEnd.DAL
             }
         }
 
-        public bool agregarRol(string nombre, string descripcion)
+        public bool agregarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result)
         {
             try
             {
                 using (context = new BDContext())
                 {
-                    context.sp_agregarRol(nombre, descripcion);
+                    context.sp_agregarRol
+                    (
+                        sp_ObtenerRoles_Result.NOMBRE,
+                        sp_ObtenerRoles_Result.DESCRIPCION
+                    );
                     context.SaveChanges();
                    
                 }
