@@ -61,5 +61,18 @@ namespace UnitTestProject
 
             Assert.AreEqual(true, result);
         }
+
+        [TestMethod]
+        public void eliminarRol()
+        {
+            IRolDAL rolDAL = new RolDALImpl();
+
+            bool result;
+
+            result = rolDAL.eliminarRol(1);
+
+            Assert.AreEqual(true, result);
+        }
+
     }
 }

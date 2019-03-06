@@ -57,7 +57,20 @@ namespace BackEnd.DAL
 
         public bool eliminarRol(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_deleteRol(id);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public sp_obtenerRolId_Result obtenerRolById(int id)
