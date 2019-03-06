@@ -9,14 +9,14 @@ namespace BackEnd.DAL
 {
     public interface IRolDAL
     {
-        bool sp_agregarRol(string nombre, string descripcion);
+        bool agregarRol(string nombre, string descripcion);
 
-        List<sp_obtenerRoles_Result> sp_obtenerRoles();
+        List<sp_obtenerRoles_Result> obtenerRoles();
 
-        sp_obtenerRolId_Result sp_obtenerRolById(int id);
+        sp_obtenerRolId_Result obtenerRolById(int id);
 
-        bool sp_actualizarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result);
+        bool actualizarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result);
 
-        bool sp_eliminarRol(int id);
+        bool eliminarRol(int id);
     }
 }

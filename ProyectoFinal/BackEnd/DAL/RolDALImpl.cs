@@ -12,12 +12,19 @@ namespace BackEnd.DAL
     {
         private BDContext context;
 
-        public bool sp_actualizarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result)
+        public bool actualizarRol(sp_obtenerRoles_Result sp_ObtenerRoles_Result)
         {
             try
             {
-                context.Entry(sp_ObtenerRoles_Result).State = EntityState.Modified;
-                context.SaveChanges();
+                // context.Entry(sp_ObtenerRoles_Result).State = EntityState.Modified;
+                using (context = new BDContext())
+                {
+
+                    context.sp_actualizarRol(sp_ObtenerRoles_Result.ROLID, sp_ObtenerRoles_Result.NOMBRE, sp_ObtenerRoles_Result.DESCRIPCION);
+                    context.SaveChanges();
+                }
+
+              
                 return true;
             }
 
@@ -28,7 +35,7 @@ namespace BackEnd.DAL
             }
         }
 
-        public bool sp_agregarRol(string nombre, string descripcion)
+        public bool agregarRol(string nombre, string descripcion)
         {
             try
             {
@@ -48,12 +55,12 @@ namespace BackEnd.DAL
             
         }
 
-        public bool sp_eliminarRol(int id)
+        public bool eliminarRol(int id)
         {
             throw new NotImplementedException();
         }
 
-        public sp_obtenerRolId_Result sp_obtenerRolById(int id)
+        public sp_obtenerRolId_Result obtenerRolById(int id)
         {
 
             try
@@ -76,7 +83,7 @@ namespace BackEnd.DAL
            
         }
 
-        public List<sp_obtenerRoles_Result> sp_obtenerRoles()
+        public List<sp_obtenerRoles_Result> obtenerRoles()
         {
 
             try

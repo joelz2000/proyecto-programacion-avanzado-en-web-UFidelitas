@@ -16,7 +16,7 @@ namespace UnitTestProject
 
             IRolDAL rolDAL = new RolDALImpl();
 
-            bool result = rolDAL.sp_agregarRol(nombre, descripcion);
+            bool result = rolDAL.agregarRol(nombre, descripcion);
             Assert.AreEqual(true, result);
 
         }
@@ -27,7 +27,7 @@ namespace UnitTestProject
             int result = 0;
             IRolDAL rolDAL = new RolDALImpl();
 
-            result = rolDAL.sp_obtenerRoles().Count;
+            result = rolDAL.obtenerRoles().Count;
 
             Assert.AreEqual(1, result);
 
@@ -39,7 +39,7 @@ namespace UnitTestProject
             int result;
             IRolDAL rolDAL = new RolDALImpl();
 
-            result = rolDAL.sp_obtenerRolById(1).ROLID;
+            result = rolDAL.obtenerRolById(1).ROLID;
 
             Assert.AreEqual(1, result);
         }
@@ -53,7 +53,7 @@ namespace UnitTestProject
 
             bool result;
 
-            result = rolDAL.sp_actualizarRol(sp_ObtenerRoles_Result = new sp_obtenerRoles_Result() {
+            result = rolDAL.actualizarRol(sp_ObtenerRoles_Result = new sp_obtenerRoles_Result() {
                 ROLID = 1,
                 NOMBRE = "ADMIN",
                 DESCRIPCION = "administradores"
