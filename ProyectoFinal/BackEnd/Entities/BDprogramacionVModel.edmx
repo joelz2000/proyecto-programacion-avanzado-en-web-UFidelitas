@@ -1431,7 +1431,7 @@
             <Parameter Name="pRolId" Mode="In" Type="Int32" />
             <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_agregarUsuario">
+          <FunctionImport Name="sp_agregarUsuario" ReturnType="Collection(Boolean)">
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />

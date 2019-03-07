@@ -207,7 +207,7 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarRolUser", pRolIdParameter, pUserIdParameter);
         }
     
-        public virtual int sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId)
+        public virtual ObjectResult<Nullable<bool>> sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId)
         {
             var pNombreParameter = pNombre != null ?
                 new ObjectParameter("pNombre", pNombre) :
@@ -261,7 +261,7 @@ namespace BackEnd.Entities
                 new ObjectParameter("pCantonId", pCantonId) :
                 new ObjectParameter("pCantonId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter);
         }
     
         public virtual int sp_deleteRol(Nullable<int> pRolId)
