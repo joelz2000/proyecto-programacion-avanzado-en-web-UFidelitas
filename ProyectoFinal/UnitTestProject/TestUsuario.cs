@@ -57,5 +57,47 @@ namespace UnitTestProject
 
             Assert.AreEqual(1, result);
         }
+
+        [TestMethod]
+
+        public void actualizarUsuario()
+        {
+            bool result;
+            
+            
+
+            result = usuarioDAL.actualizarUsuario(sp_ObtenerUsuarios_Result = new sp_obtenerUsuarios_Result
+            {
+                userId = 1,
+                nombre = "Joel2",
+                apellidos = "Zuniga Jimenezs",
+                contrasena = "1212asas",
+                correoElectronico = "joel@live.com",
+                fechaNacimiento = DateTime.Parse("1998-03-11"),
+                genero = "Masculino",
+                fotoPerfil = null,
+                telefono = 85689875,
+                direccion = "Guanacaste av22",
+                paisId = 1,
+                distritoId = 1,
+                provinciaId = 1,
+                cantonId = 1
+
+            });
+
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+
+        public void eliminarUsuario()
+        {
+            bool result = false;
+
+            result = usuarioDAL.eliminarUsuario(1);
+
+            Assert.AreEqual(true, result);
+
+        }
     }
 }

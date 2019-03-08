@@ -10,8 +10,40 @@ namespace BackEnd.DAL
     public class usuarioDALImpl : IUsuarioDAL
     {
         private BDContext context;
-        public bool actualizarUsuario(sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result)
+        public bool actualizarUsuario(sp_obtenerUsuarios_Result usuario)
         {
+            
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_actualizarUsuario(
+                        usuario.userId, 
+                        usuario.nombre,
+                        usuario.apellidos,
+                        usuario.contrasena,
+                        usuario.correoElectronico,
+                        usuario.fechaNacimiento,
+                        usuario.genero,
+                        usuario.fotoPerfil,
+                        usuario.telefono,
+                        usuario.direccion,
+                        usuario.paisId,
+                        usuario.distritoId,
+                        usuario.provinciaId,
+                        usuario.cantonId
+
+                    );
+
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
             throw new NotImplementedException();
         }
 
@@ -51,7 +83,20 @@ namespace BackEnd.DAL
 
         public bool eliminarUsuario(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_eliminarUsuario(id);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public sp_obtenerUsuariosId_Result obtenerUsuarioById(int id)
