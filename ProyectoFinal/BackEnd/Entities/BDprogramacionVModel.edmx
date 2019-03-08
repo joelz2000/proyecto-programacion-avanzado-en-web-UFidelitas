@@ -1515,6 +1515,8 @@
         <ComplexType Name="sp_ObtenerRolesUser_Result">
           <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="rolId" Nullable="false" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_obtenerRolId_Result">
           <Property Type="Int32" Name="ROLID" Nullable="false" />
@@ -1865,6 +1867,8 @@
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_ObtenerRolesUser_Result">
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
