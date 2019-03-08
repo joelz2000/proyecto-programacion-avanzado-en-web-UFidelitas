@@ -310,7 +310,7 @@ CREATE PROCEDURE sp_ObtenerRolesUser
 AS
 BEGIN
 	
-	SELECT r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
+	SELECT ru.rolId, ru.userId, r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
 	inner join dbo.rol r on r.ROLID = ru.rolId
 	inner join dbo.usuarios u on ru.userId = u.userId ;
 
