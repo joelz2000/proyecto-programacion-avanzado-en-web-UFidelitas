@@ -18,5 +18,7 @@ namespace BackEnd.DAL
         bool actualizarUsuario(sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result);
 
         bool eliminarUsuario(int id);
+
+        bool agregarRolUsuario(sp_ObtenerRolesUser_Result sp_obtenerRolesUser);
     }
 }

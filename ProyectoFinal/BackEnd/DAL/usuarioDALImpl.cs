@@ -47,6 +47,28 @@ namespace BackEnd.DAL
             throw new NotImplementedException();
         }
 
+        public bool agregarRolUsuario(sp_ObtenerRolesUser_Result rolUser)
+        {
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_agregarRolUser(
+                        rolUser.rolId,
+                        rolUser.userId
+                    );
+
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
         public bool agregarUsuario(sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result)
         {
             try
