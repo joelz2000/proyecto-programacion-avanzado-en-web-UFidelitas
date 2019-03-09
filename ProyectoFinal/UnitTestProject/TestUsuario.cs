@@ -10,6 +10,7 @@ namespace UnitTestProject
     {
         IUsuarioDAL usuarioDAL = new usuarioDALImpl();
         sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result;
+        sp_ObtenerRolesUser_Result sp_obtenerRolesUser;
 
         [TestMethod]
         public void agregarUsuario()
@@ -100,6 +101,19 @@ namespace UnitTestProject
 
         }
 
-        
+        [TestMethod]
+
+        public void agregarRolUsuario()
+        {
+            bool result;
+
+            result = usuarioDAL.agregarRolUsuario(sp_obtenerRolesUser = new sp_ObtenerRolesUser_Result {
+                    rolId = 1,
+                    userId = 1
+                    
+            });
+
+            Assert.AreEqual(true, result);
+        }
     }
 }
