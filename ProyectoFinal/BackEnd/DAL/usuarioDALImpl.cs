@@ -10,6 +10,25 @@ namespace BackEnd.DAL
     public class usuarioDALImpl : IUsuarioDAL
     {
         private BDContext context;
+
+        public bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva)
+        {
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_actualizarRolesUser(rolIdActual, userId, rolIdNueva);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false ;
+            }
+        }
+
         public bool actualizarUsuario(sp_obtenerUsuarios_Result usuario)
         {
             
@@ -118,6 +137,44 @@ namespace BackEnd.DAL
             {
 
                 return false;
+            }
+        }
+
+        public List<sp_ObtenerRolesUser_Result> obtenerRolesUsuario()
+        {
+            List<sp_ObtenerRolesUser_Result> rolesUsuario;
+            try
+            {
+                using (context = new BDContext())
+                {
+                    rolesUsuario = context.sp_ObtenerRolesUser().ToList();
+                }
+
+                return rolesUsuario;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public sp_obtenerRolUserId_Result obtenerRolUsuarioById(int id)
+        {
+            sp_obtenerRolUserId_Result rolUsuario;
+            try
+            {
+                using (context = new BDContext())
+                {
+                    rolUsuario = context.sp_obtenerRolUserId(id).FirstOrDefault();
+                }
+
+                return rolUsuario;
+            }
+            catch (Exception)
+            {
+
+                return null;
             }
         }
 

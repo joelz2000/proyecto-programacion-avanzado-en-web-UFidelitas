@@ -115,5 +115,43 @@ namespace UnitTestProject
 
             Assert.AreEqual(true, result);
         }
+
+        [TestMethod]
+
+        public void actualizarRolUsuario()
+        {
+            bool result = false;
+            int rolIdActual = 1;
+            int userId = 1;
+            int rolIdNueva = 2;
+
+            result = usuarioDAL.actualizarRolUsuario(rolIdActual, userId, rolIdNueva);
+
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+
+        public void obtenerRolUsuarios()
+        {
+            int result = 0;
+
+            result = usuarioDAL.obtenerRolesUsuario().Count;
+
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+
+        public void obtenerRolUsuariosById()
+        {
+            int result = 0;
+
+            result = usuarioDAL.obtenerRolUsuarioById(1).userId;
+
+            Assert.AreEqual(1, result);
+        }
+
+
     }
 }
