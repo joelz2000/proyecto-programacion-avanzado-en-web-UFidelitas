@@ -172,16 +172,6 @@
           <Property Name="rolId" Type="int" Nullable="false" />
           <Property Name="userId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="usuario_facturaciones">
           <Key>
             <PropertyRef Name="usuarioId" />
@@ -638,7 +628,6 @@
           <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rol" EntityType="Self.rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rol_user" EntityType="Self.rol_user" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario_facturaciones" EntityType="Self.usuario_facturaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuarios_promocion" EntityType="Self.usuarios_promocion" Schema="dbo" store:Type="Tables" />
@@ -1526,6 +1515,8 @@
         <ComplexType Name="sp_obtenerRolUserId_Result">
           <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="rolId" Nullable="false" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_obtenerUsuarios_Result">
           <Property Type="Int32" Name="userId" Nullable="false" />
@@ -1739,17 +1730,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="usuarios">
             <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios">
               <MappingFragment StoreEntitySet="usuarios">
@@ -1886,6 +1866,8 @@
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRolUserId_Result">
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
