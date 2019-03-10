@@ -334,7 +334,7 @@ CREATE PROCEDURE sp_obtenerRolUserId
 	@idUser int
 AS
 BEGIN
-	SELECT r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
+	SELECT ru.rolId, r.NOMBRE as Rol,ru.userId, u.nombre AS Usuario from dbo.rol_user ru 
 	inner join dbo.rol r on r.ROLID = ru.rolId
 	inner join dbo.usuarios u on ru.userId = u.userId 
 	where ru.userId = @idUser;
