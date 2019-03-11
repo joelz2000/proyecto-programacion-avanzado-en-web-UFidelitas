@@ -45,9 +45,9 @@ namespace BackEnd.Entities
         public virtual DbSet<promociones_productos> promociones_productos { get; set; }
         public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<rol> rol { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_promocion> usuarios_promocion { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual int sp_actualizarRol(Nullable<int> pId, string pNombre, string pDescripcion)
         {
