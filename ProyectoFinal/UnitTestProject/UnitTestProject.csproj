@@ -59,6 +59,7 @@
     <Compile Include="TestRol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUsuario.cs" />
+    <Compile Include="TestPais.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
