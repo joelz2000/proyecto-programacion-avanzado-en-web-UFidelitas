@@ -951,16 +951,6 @@
           <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="usuarios" Relationship="Self.rol_user" FromRole="rol" ToRole="usuarios" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="usuarios">
           <Key>
             <PropertyRef Name="userId" />
@@ -1291,7 +1281,6 @@
           <EntitySet Name="promociones_productos" EntityType="Self.promociones_productos" />
           <EntitySet Name="Provincia" EntityType="Self.Provincia" />
           <EntitySet Name="rol" EntityType="Self.rol" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="usuarios" EntityType="Self.usuarios" />
           <EntitySet Name="usuarios_promocion" EntityType="Self.usuarios_promocion" />
           <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
@@ -1391,17 +1380,17 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
           <FunctionImport Name="sp_actualizarRol">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_actualizarRolesUser">
-            <Parameter Name="idRolOriginal" Mode="In" Type="Int32" />
+          <Parameter Name="idRolOriginal" Mode="In" Type="Int32" />
             <Parameter Name="idUser" Mode="In" Type="Int32" />
             <Parameter Name="idRolNueva" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_actualizarUsuario">
-            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
@@ -1417,7 +1406,7 @@
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarFacturacion">
-            <Parameter Name="pNombre" Mode="In" Type="String" />
+          <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pfecha" Mode="In" Type="DateTime" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
             <Parameter Name="pImpuesto" Mode="In" Type="Int32" />
@@ -1427,15 +1416,15 @@
             <Parameter Name="pUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarRol">
-            <Parameter Name="pNombre" Mode="In" Type="String" />
+          <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarRolUser">
-            <Parameter Name="pRolId" Mode="In" Type="Int32" />
+          <Parameter Name="pRolId" Mode="In" Type="Int32" />
             <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_agregarUsuario">
-            <Parameter Name="pNombre" Mode="In" Type="String" />
+          <FunctionImport Name="sp_agregarUsuario" ReturnType="Collection(Boolean)">
+          <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
             <Parameter Name="pCorreoElectronico" Mode="In" Type="String" />
@@ -1477,6 +1466,7 @@
           <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
             <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="sysdiagrams" EntityType="BDprogramacionVModel.sysdiagrams" />
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -1518,6 +1508,8 @@
         <ComplexType Name="sp_ObtenerRolesUser_Result">
           <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="rolId" Nullable="false" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_obtenerRolId_Result">
           <Property Type="Int32" Name="ROLID" Nullable="false" />
@@ -1527,6 +1519,8 @@
         <ComplexType Name="sp_obtenerRolUserId_Result">
           <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="rolId" Nullable="false" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
         </ComplexType>
         <ComplexType Name="sp_obtenerUsuarios_Result">
           <Property Type="Int32" Name="userId" Nullable="false" />
@@ -1562,6 +1556,16 @@
           <Property Type="Int32" Name="cantonId" Nullable="true" />
           <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
         </ComplexType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1742,17 +1746,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="usuarios">
             <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios">
               <MappingFragment StoreEntitySet="usuarios">
@@ -1871,6 +1864,8 @@
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_ObtenerRolesUser_Result">
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1888,6 +1883,8 @@
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRolUserId_Result">
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1933,6 +1930,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -10,9 +10,82 @@ namespace BackEnd.DAL
     public class usuarioDALImpl : IUsuarioDAL
     {
         private BDContext context;
-        public bool actualizarUsuario(sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result)
+
+        public bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva)
         {
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_actualizarRolesUser(rolIdActual, userId, rolIdNueva);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false ;
+            }
+        }
+
+        public bool actualizarUsuario(sp_obtenerUsuarios_Result usuario)
+        {
+            
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_actualizarUsuario(
+                        usuario.userId, 
+                        usuario.nombre,
+                        usuario.apellidos,
+                        usuario.contrasena,
+                        usuario.correoElectronico,
+                        usuario.fechaNacimiento,
+                        usuario.genero,
+                        usuario.fotoPerfil,
+                        usuario.telefono,
+                        usuario.direccion,
+                        usuario.paisId,
+                        usuario.distritoId,
+                        usuario.provinciaId,
+                        usuario.cantonId
+
+                    );
+
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
             throw new NotImplementedException();
+        }
+
+        public bool agregarRolUsuario(sp_ObtenerRolesUser_Result rolUser)
+        {
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_agregarRolUser(
+                        rolUser.rolId,
+                        rolUser.userId
+                    );
+
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public bool agregarUsuario(sp_obtenerUsuarios_Result sp_ObtenerUsuarios_Result)
@@ -51,7 +124,58 @@ namespace BackEnd.DAL
 
         public bool eliminarUsuario(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_eliminarUsuario(id);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public List<sp_ObtenerRolesUser_Result> obtenerRolesUsuario()
+        {
+            List<sp_ObtenerRolesUser_Result> rolesUsuario;
+            try
+            {
+                using (context = new BDContext())
+                {
+                    rolesUsuario = context.sp_ObtenerRolesUser().ToList();
+                }
+
+                return rolesUsuario;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public sp_obtenerRolUserId_Result obtenerRolUsuarioById(int id)
+        {
+            sp_obtenerRolUserId_Result rolUsuario;
+            try
+            {
+                using (context = new BDContext())
+                {
+                    rolUsuario = context.sp_obtenerRolUserId(id).FirstOrDefault();
+                }
+
+                return rolUsuario;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
 
         public sp_obtenerUsuariosId_Result obtenerUsuarioById(int id)

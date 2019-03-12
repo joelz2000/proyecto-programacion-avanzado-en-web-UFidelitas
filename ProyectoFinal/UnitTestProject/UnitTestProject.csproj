@@ -56,9 +56,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestCategoria.cs" />
+    <Compile Include="TestMarca.cs" />
     <Compile Include="TestRol.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUsuario.cs" />
+    <Compile Include="TestPais.cs" />
+    <Compile Include="TestProductos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
