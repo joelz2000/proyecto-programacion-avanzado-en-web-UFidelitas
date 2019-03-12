@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FrontEnd.Models;
+using BackEnd.Entities;
+using BackEnd.DAL;
 
 namespace FrontEnd.Controllers
 {
@@ -17,6 +19,7 @@ namespace FrontEnd.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        //private UnidadDeTrabajo<usuarioDALImpl> unidad = new UnidadDeTrabajo<UsuarioDALImpl>(new BDContext());
 
         public AccountController()
         {
@@ -149,19 +152,41 @@ namespace FrontEnd.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
+                BDContext context = new BDContext();
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    usuarios usuario = new usuarios()
+                    {
+                        Usuario_ID = user.Id,
+                        nombre = model.Name,
+                        apellidos = model.FirstLastName + ' ' + model.SecondLastName,
+                        correoElectronico = model.Email
+                    };
+
+                    UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(context);
+                    unidad.genericDAL.Add(usuario);
+                    unidad.Complete();
+
+                    var obtener_usuario_BD = context.usuarios.Where(u => u.Usuario_ID.Equals(usuario.Usuario_ID)).Single();
+
+
+                    // para agregar usuario admin, descomentar la linea de abajo y comentar la linea abajo de la de abajo
+                    //context.sp_agregarRolUser(1, obtener_usuario_BD.userId);
+                    context.sp_agregarRolUser(2, obtener_usuario_BD.userId);
+                    context.SaveChanges();
 
                     return RedirectToAction("Index", "Home");
                 }

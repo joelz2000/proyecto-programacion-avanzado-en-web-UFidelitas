@@ -36,6 +36,7 @@ namespace BackEnd.Entities
         public Nullable<int> distritoId { get; set; }
         public Nullable<int> provinciaId { get; set; }
         public Nullable<int> cantonId { get; set; }
+        public string Usuario_ID { get; set; }
     
         public virtual Canton Canton { get; set; }
         public virtual Distrito Distrito { get; set; }

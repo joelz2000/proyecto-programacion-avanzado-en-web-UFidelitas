@@ -12,9 +12,27 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Su nombre" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstLastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstLastName, new { @class = "form-control", @placeholder = "Primer apellido" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SecondLastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SecondLastName, new { @class = "form-control", @placeholder = "Segundo apellido" })
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Your email"})
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Your email" })
         </div>
     </div>
     <div class="form-group">
@@ -35,7 +53,6 @@
         </div>
     </div>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

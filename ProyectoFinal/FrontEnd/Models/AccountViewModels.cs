@@ -65,19 +65,56 @@ namespace FrontEnd.Models
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Nombre: ")]
+        [DataType(DataType.Text)]
+        public string Name { get; set; }
+
+        [Display(Name = "Primer apellido: ")]
+        [DataType(DataType.Text)]
+        public string FirstLastName { get; set; }
+
+        [Display(Name = "Segundo apellido: ")]
+        [DataType(DataType.Text)]
+        public string SecondLastName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [EmailAddress]
+        [Display(Name = "Correo: ")]
+        public string Email { get; set; }
+
+        [DataType(DataType.Date)]
+        [Display(Name = "Fecha de nacimiento: ")]
+        public string BirthDay { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Numero de telefono: ")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Pais: ")]
+        public int PaisID { get; set; }
+
+        [Required]
+        [Display(Name = "Provincia: ")]
+        public int ProvinciaID { get; set; }
+
+        [Required]
+        [Display(Name = "Canton: ")]
+        public int CantonID { get; set; }
+
+        [Required]
+        [Display(Name = "Distrito: ")]
+        public int DistritoID { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Contraseña: ")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmar contraseña: ")]
+        [Compare("Password", ErrorMessage = "La contraseña y su confirmación no concuerdan.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -89,7 +126,7 @@ namespace FrontEnd.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

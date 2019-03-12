@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="cantonId" />
@@ -208,6 +208,7 @@
           <Property Name="distritoId" Type="int" />
           <Property Name="provinciaId" Type="int" />
           <Property Name="cantonId" Type="int" />
+          <Property Name="Usuario_ID" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="usuarios_promocion">
           <Key>
@@ -747,7 +748,8 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDprogramacionVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -977,6 +979,7 @@
           <Property Name="distritoId" Type="Int32" />
           <Property Name="provinciaId" Type="Int32" />
           <Property Name="cantonId" Type="Int32" />
+          <Property Name="Usuario_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Canton" Relationship="Self.FK_usuarios_Canton" FromRole="usuarios" ToRole="Canton" />
           <NavigationProperty Name="Distrito" Relationship="Self.FK_usuarios_Distrito" FromRole="usuarios" ToRole="Distrito" />
           <NavigationProperty Name="Pais" Relationship="Self.FK_usuarios_Pais" FromRole="usuarios" ToRole="Pais" />
@@ -1431,7 +1434,7 @@
             <Parameter Name="pRolId" Mode="In" Type="Int32" />
             <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_agregarUsuario" ReturnType="Collection(Boolean)">
+          <FunctionImport Name="sp_agregarUsuario">
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
@@ -1447,32 +1450,32 @@
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_deleteRol">
-          <Parameter Name="pRolId" Mode="In" Type="Int32" />
+            <Parameter Name="pRolId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarUsuario">
-          <Parameter Name="pUserId" Mode="In" Type="Int32" />
+            <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
           <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
           <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
           <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
-          <Parameter Name="idUser" Mode="In" Type="Int32" />
+            <Parameter Name="idUser" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
           <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
-          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
@@ -1540,6 +1543,7 @@
           <Property Type="Int32" Name="distritoId" Nullable="true" />
           <Property Type="Int32" Name="provinciaId" Nullable="true" />
           <Property Type="Int32" Name="cantonId" Nullable="true" />
+          <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
         </ComplexType>
         <ComplexType Name="sp_obtenerUsuariosId_Result">
           <Property Type="Int32" Name="userId" Nullable="false" />
@@ -1556,6 +1560,7 @@
           <Property Type="Int32" Name="distritoId" Nullable="true" />
           <Property Type="Int32" Name="provinciaId" Nullable="true" />
           <Property Type="Int32" Name="cantonId" Nullable="true" />
+          <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1765,6 +1770,7 @@
                 <ScalarProperty Name="distritoId" ColumnName="distritoId" />
                 <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
                 <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1902,6 +1908,7 @@
                 <ScalarProperty Name="distritoId" ColumnName="distritoId" />
                 <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
                 <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1922,6 +1929,7 @@
                 <ScalarProperty Name="distritoId" ColumnName="distritoId" />
                 <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
                 <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1942,7 +1950,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
