@@ -12,10 +12,12 @@ namespace FrontEnd.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private UnidadDeTrabajo<usuarios> unidad_Usuario = new UnidadDeTrabajo<usuarios>(new BDContext());
+        private static BDContext context = new BDContext();
+        private UnidadDeTrabajo<usuarios> unidad_Usuario = new UnidadDeTrabajo<usuarios>(context);
         public ActionResult Index()
         {
-            var usuario = User.Identity.GetUserId();
+
+            usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(User.Identity.GetUserId())).Single();
 
             return View();
         }
