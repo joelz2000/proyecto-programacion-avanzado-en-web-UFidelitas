@@ -6,9 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class TestCategoria
     {
-        public UnitTest1()
+        public TestCategoria()
         {
         }
 
