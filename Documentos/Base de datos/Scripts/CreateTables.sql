@@ -335,6 +335,7 @@ CREATE TABLE [dbo].[usuarios](
 	[distritoId] [int] NULL,
 	[provinciaId] [int] NULL,
 	[cantonId] [int] NULL,
+	Usuario_ID NVARCHAR (128)
  CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[userId] ASC

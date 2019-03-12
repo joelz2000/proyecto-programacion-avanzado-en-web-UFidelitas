@@ -152,13 +152,14 @@ CREATE PROCEDURE sp_agregarUsuario
 	@pPaisId int,
 	@pDistritoId int,
 	@pProvinciaId int,
-	@pCantonId int
+	@pCantonId int,
+	@pUsuario_ID nvarchar(128)
 
 
 AS
 BEGIN
 	INSERT INTO dbo.usuarios 
-	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @pTelefono,@pDireccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId);
+	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @pTelefono,@pDireccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId, @pUsuario_ID);
 END
 GO
 
@@ -224,13 +225,14 @@ CREATE or alter PROCEDURE sp_actualizarUsuario
 	@pPaisId int,
 	@pDistritoId int,
 	@pProvinciaId int,
-	@pCantonId int
+	@pCantonId int,
+	@pUsuario_ID nvarchar(128)
 AS
 BEGIN
 
 
 	UPDATE dbo.usuarios 
-	set nombre = @pNombre, apellidos = @pApellidos, contrasena = @pContrasena, correoElectronico = @pCorreoElectronico, fechaNacimiento = @pFechaNacimiento, genero = @pGenero, fotoPerfil = @pFotoPerfil, telefono = @pTelefono, direccion = @pDireccion, paisId = @pPaisId, distritoId = @pDistritoId, provinciaId = @pProvinciaId, cantonId = @pCantonId
+	set nombre = @pNombre, apellidos = @pApellidos, contrasena = @pContrasena, correoElectronico = @pCorreoElectronico, fechaNacimiento = @pFechaNacimiento, genero = @pGenero, fotoPerfil = @pFotoPerfil, telefono = @pTelefono, direccion = @pDireccion, paisId = @pPaisId, distritoId = @pDistritoId, provinciaId = @pProvinciaId, cantonId = @pCantonId, Usuario_ID = @pUsuario_ID
 	WHERE userId = @pUsuarioId;
 
 END
@@ -385,26 +387,26 @@ CREATE PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pfecha date,
 	@pDescripcion text,
 	@pImpuesto int,
-	@pTipo varchar(25),
-	@pCantidad int,
+	@pTipo varchar(25)
+	/*@pCantidad int,
 	@pProductId int,
-	@pUsuario int
+	@pUsuario int*/
 AS
 
- DECLARE @ultimaFacturacion int;
+ /*DECLARE @ultimaFacturacion int;
  DECLARE @pSubtotal float;
  DECLARE @pTotal float;
- DECLARE @impuestoConvertido float;
+ DECLARE @impuestoConvertido float;*/
 BEGIN
 	 
-	 SET @pTotal = (SELECT (precio * @pCantidad) FROM productos WHERE productoId = @pProductId);
+	/* SET @pTotal = (SELECT (precio * @pCantidad) FROM productos WHERE productoId = @pProductId);
 	 set @impuestoConvertido = CAST(@pImpuesto AS FLOAT) /   CAST(100 AS FLOAT)
-	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );
+	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );*/
 	 
 	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
-	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, @pSubtotal, @pTotal, @pTipo);
+	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, null, null, @pTipo);
 
-
+	/*
 	SET @ultimaFacturacion = (select max(facturacionId) from dbo.facturaciones);
 
 	INSERT INTO dbo.facturacion_producto(facturacionId,productoId,cantidad)
@@ -413,8 +415,62 @@ BEGIN
 	INSERT INTO dbo.usuario_facturaciones(usuarioId, facturacionId)
 	VALUES(@pUsuario, @ultimaFacturacion);
 
-	update dbo.productos set cantidad = (cantidad - @pCantidad ) where productoId = @pProductId;
+	update dbo.productos set cantidad = (cantidad - @pCantidad ) where productoId = @pProductId;*/
 END
+
+/**
+*
+*  actualizar FACTURACION
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create PROCEDURE [dbo].[sp_actualizarFacturacion]
+	@pIdFacturacion int,
+	@pNombre varchar(250),
+	@pfecha date,
+	@pDescripcion text,
+	@pImpuesto int,
+	@pTipo varchar(25)
+AS
+
+
+ DECLARE @pSubtotal float;
+ DECLARE @pTotal float;
+ DECLARE @impuestoConvertido float;
+ DECLARE @precio float;
+BEGIN
+	
+	
+		
+	 SET @pTotal = (SELECT sum(p.precio * fp.cantidad) FROM dbo.productos p
+					inner join dbo.facturacion_producto fp on p.productoId=fp.productoId
+					where facturacionId = @pIdFacturacion);
+
+	 SET @impuestoConvertido = CAST(@pImpuesto AS FLOAT) /   CAST(100 AS FLOAT)
+	 
+	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );
+	 
+	
+	UPDATE dbo.facturaciones 
+	SET  
+	nombre = @pNombre, 
+	fecha= @pfecha, 
+	descripcion = @pDescripcion,
+	impuesto = @pImpuesto,
+	subtotal = @pSubtotal,
+	total = @pTotal,
+	tipo = @pTipo
+	WHERE facturacionId = @pIdFacturacion;
+
+END
+
+
+
 /**
 *
 *  Obtener FACTURACIONES
@@ -452,6 +508,79 @@ BEGIN
 END
 GO
 
+
+/**
+*
+*  eliminar FACTURACION 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_eliminarFacturaciones
+	@pIdFacturacion int
+AS
+BEGIN
+	delete from dbo.facturaciones where facturacionId = @pIdFacturacion;
+END
+GO
+
+/**
+*
+*  agregar facturacionProductos
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+Create PROCEDURE [dbo].[sp_agregarFacturacionProducto]
+	
+	@pFacturacionId int,
+	@pProductoId int,
+	@pCantidad int
+	
+AS
+BEGIN
+
+	INSERT INTO dbo.facturacion_producto(productoId,facturacionId, cantidad)
+	VALUES(@pProductoId, @pFacturacionId, @pCantidad);
+
+	update dbo.productos set cantidad = (cantidad - @pCantidad) 
+	where productoId =  @pProductoId;
+
+END
+
+/**
+*
+*  actualizar FACTURACION por PRODUCTO 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_actualizarFacturacionesProducto
+	@pIdProducto int,
+	@pIdFacturacion int,
+	@cantidad int
+AS
+BEGIN
+	update dbo.facturacion_producto
+	set 
+	productoId = @pIdProducto,
+	cantidad = @cantidad
+	where 
+	facturacionId = @pIdFacturacion and productoId = @pIdProducto;
+END
+GO
 /**
 *
 *  Obtener FACTURACION por PRODUCTO 
@@ -464,13 +593,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE sp_obtenerFacturacionesProducto
-	@pId int
+	
 AS
 BEGIN
 	SELECT f.facturacionId, f.nombre, p.productoId, p.nombre FROM dbo.facturacion_producto fp 
 	inner join dbo.productos p on fp.productoId = p.productoId
-	inner join dbo.facturaciones f on f.facturacionId = fp.facturacionId
-	where p.productoId = @pId;
+	inner join dbo.facturaciones f on f.facturacionId = fp.facturacionId;
 END
 GO
 
@@ -487,13 +615,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE sp_obtenerFacturacionesUsuario
-	@pId int
 AS
 BEGIN
 	select f.facturacionId, f.nombre, u.userId, u.nombre from dbo.usuario_facturaciones uf
 	inner join dbo.usuarios u on u.userId = uf.usuarioId
 	inner join dbo.facturaciones f on f.facturacionId = uf.facturacionId
-	where u.userId = @pId;
 END
 GO
 
