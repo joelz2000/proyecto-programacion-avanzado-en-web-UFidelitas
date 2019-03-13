@@ -10,7 +10,7 @@ namespace UnitTestProject
     [TestClass]
     public class TestProductos
     {
-        
+
 
         [TestMethod]
         public void agregarProducto()
@@ -26,7 +26,7 @@ namespace UnitTestProject
 
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
-                
+
                 productos productos = new productos
                 {
                     nombre = "Samsung galaxy 222",
@@ -75,7 +75,7 @@ namespace UnitTestProject
         [TestMethod]
         public void obtenerProductoId()
         {
-          productos productos;
+            productos productos;
 
             int resultado;
 
@@ -99,7 +99,7 @@ namespace UnitTestProject
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
 
-                 productos = new productos
+                productos = new productos
                 {
                     productoId = 1,
                     nombre = "Samsung galaxy 222",
@@ -117,7 +117,7 @@ namespace UnitTestProject
                 unidad.Complete();
             }
 
-            result = (double) productos.precio;
+            result = (double)productos.precio;
             Assert.AreEqual(1000, result);
         }
 
@@ -152,6 +152,116 @@ namespace UnitTestProject
             }
 
             Assert.AreEqual(resultadoAnterior - 1, resultado);
+        }
+
+        [TestMethod]
+
+        public void agregarImagenProducto()
+        {
+            imagen_producto imagen;
+
+            int resultadoAnterior;
+            int resultado;
+
+
+            using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+            {
+                resultadoAnterior = unidad.genericDAL.GetAll().ToList().Count;
+            }
+
+            using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+            {
+                unidad.genericDAL.Add(imagen = new imagen_producto()
+                {
+                    IMAGEN = "img/imagen2.jpg",
+                    productoId = 1
+                });
+
+                unidad.Complete();
+            }
+
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+                resultado = unidad.genericDAL.GetAll().ToList().Count;
+            }
+
+            Assert.AreEqual(resultadoAnterior + 1, resultado);
+        }
+
+
+        [TestMethod]
+        public void obtenerImagenesProducto()
+        {
+            List<imagen_producto> imagen_producto;
+
+            int resultado;
+
+            using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+            {
+                imagen_producto = unidad.genericDAL.GetAll().ToList();
+            }
+
+            resultado = imagen_producto.Count;
+
+            Assert.AreEqual(1, resultado);
+        }
+
+        [TestMethod]
+        public void actualizarImagenProducto()
+        {
+            string result;
+            imagen_producto imagen_producto;
+
+            using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+            {
+
+                imagen_producto = new imagen_producto
+                {
+                   productoId = 1,
+                   IMAGEN = "img/imagen.jpg"
+                };
+
+                unidad.genericDAL.Update(imagen_producto);
+                unidad.Complete();
+            }
+
+            result = imagen_producto.IMAGEN;
+            Assert.AreEqual("img/imagen.jpg", result);
+        }
+
+
+
+        [TestMethod]
+        public void eliminarImagenProducto()
+        {
+            /* int resultadoAnterior;
+             int resultado;
+             imagen_producto imagen_producto;
+
+
+             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+             {
+                 resultadoAnterior = unidad.genericDAL.GetAll().ToList().Count;
+             }
+
+             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+             {
+                 imagen_producto = unidad.genericDAL.Get(1);
+             }
+
+             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+             {
+                 unidad.genericDAL.Remove(imagen_producto);
+                 unidad.Complete();
+             }
+
+             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+             {
+                 resultado = unidad.genericDAL.GetAll().ToList().Count;
+             }
+
+             Assert.AreEqual(resultadoAnterior - 1, resultado); */
+
         }
     }
 }
