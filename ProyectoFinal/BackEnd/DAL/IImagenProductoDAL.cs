@@ -11,7 +11,7 @@ namespace BackEnd.DAL
     {
         sp_obtenerImagenProducto_Result obtenerImagenProducto(int idProducto, string imagen);
 
-        List<sp_obtenerImagenProducto_Result> obtenerImagenesProductoId(int idProducto);
+        List<sp_obtenerImagenesProductoId> obtenerImagenesProductoId(int idProducto);
 
     }
 }
