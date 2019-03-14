@@ -1,6 +1,6 @@
 USE BDprogramacionV
 GO
-
+/*
 delete from Pais;
 delete from Provincia;
 delete from Canton;
@@ -9,7 +9,7 @@ delete from Distrito;
 DBCC CHECKIDENT ('[Pais]', RESEED, 0);
 DBCC CHECKIDENT ('[Provincia]', RESEED, 0);
 DBCC CHECKIDENT ('[Canton]', RESEED, 0);
-DBCC CHECKIDENT ('[Distrito]', RESEED, 0);
+DBCC CHECKIDENT ('[Distrito]', RESEED, 0);*/
 
 insert into Pais values ('Costa Rica');
 Insert into Provincia values('SAN JOSE', 1);
