@@ -207,7 +207,7 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarRolUser", pRolIdParameter, pUserIdParameter);
         }
     
-        public virtual int sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId)
+        public virtual ObjectResult<Nullable<bool>> sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId)
         {
             var pNombreParameter = pNombre != null ?
                 new ObjectParameter("pNombre", pNombre) :
@@ -261,7 +261,7 @@ namespace BackEnd.Entities
                 new ObjectParameter("pCantonId", pCantonId) :
                 new ObjectParameter("pCantonId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter);
         }
     
         public virtual int sp_deleteRol(Nullable<int> pRolId)
@@ -354,6 +354,28 @@ namespace BackEnd.Entities
                 new ObjectParameter("pUsuarioId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerUsuariosId_Result>("sp_obtenerUsuariosId", pUsuarioIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerImagenProducto_Result> sp_obtenerImagenProducto(Nullable<int> pIdProducto, string pImagen)
+        {
+            var pIdProductoParameter = pIdProducto.HasValue ?
+                new ObjectParameter("pIdProducto", pIdProducto) :
+                new ObjectParameter("pIdProducto", typeof(int));
+    
+            var pImagenParameter = pImagen != null ?
+                new ObjectParameter("pImagen", pImagen) :
+                new ObjectParameter("pImagen", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenProducto_Result>("sp_obtenerImagenProducto", pIdProductoParameter, pImagenParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerImagenesProductoId_Result> sp_obtenerImagenesProductoId(Nullable<int> pIdProducto)
+        {
+            var pIdProductoParameter = pIdProducto.HasValue ?
+                new ObjectParameter("pIdProducto", pIdProducto) :
+                new ObjectParameter("pIdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenesProductoId_Result>("sp_obtenerImagenesProductoId", pIdProductoParameter);
         }
     }
 }

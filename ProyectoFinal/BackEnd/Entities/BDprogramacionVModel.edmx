@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="cantonId" />
@@ -607,6 +607,13 @@
         <Function Name="sp_obtenerFacturacionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_obtenerImagenesProductoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pIdProducto" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerImagenProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pIdProducto" Type="int" Mode="In" />
+          <Parameter Name="pImagen" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_obtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ObtenerRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerRolId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -748,8 +755,7 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDprogramacionVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1380,17 +1386,17 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
           <FunctionImport Name="sp_actualizarRol">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
+            <Parameter Name="pId" Mode="In" Type="Int32" />
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_actualizarRolesUser">
-          <Parameter Name="idRolOriginal" Mode="In" Type="Int32" />
+            <Parameter Name="idRolOriginal" Mode="In" Type="Int32" />
             <Parameter Name="idUser" Mode="In" Type="Int32" />
             <Parameter Name="idRolNueva" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_actualizarUsuario">
-          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
@@ -1406,7 +1412,7 @@
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarFacturacion">
-          <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pfecha" Mode="In" Type="DateTime" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
             <Parameter Name="pImpuesto" Mode="In" Type="Int32" />
@@ -1416,15 +1422,15 @@
             <Parameter Name="pUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarRol">
-          <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarRolUser">
-          <Parameter Name="pRolId" Mode="In" Type="Int32" />
+            <Parameter Name="pRolId" Mode="In" Type="Int32" />
             <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarUsuario" ReturnType="Collection(Boolean)">
-          <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
             <Parameter Name="pCorreoElectronico" Mode="In" Type="String" />
@@ -1439,34 +1445,41 @@
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_deleteRol">
-            <Parameter Name="pRolId" Mode="In" Type="Int32" />
+          <Parameter Name="pRolId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarUsuario">
-            <Parameter Name="pUserId" Mode="In" Type="Int32" />
+          <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
           <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
           <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
           <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
-            <Parameter Name="idUser" Mode="In" Type="Int32" />
+          <Parameter Name="idUser" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
           <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
-            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="sysdiagrams" EntityType="BDprogramacionVModel.sysdiagrams" />
+          <FunctionImport Name="sp_obtenerImagenProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="pImagen" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerImagenesProductoId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -1566,6 +1579,14 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <ComplexType Name="sp_obtenerImagenProducto_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerImagenesProductoId_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1941,6 +1962,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenProducto" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenProducto_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenesProductoId" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenesProductoId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenesProductoId_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

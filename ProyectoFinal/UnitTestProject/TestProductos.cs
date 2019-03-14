@@ -173,7 +173,7 @@ namespace UnitTestProject
             {
                 unidad.genericDAL.Add(imagen = new imagen_producto()
                 {
-                    IMAGEN = "img/imagen2.jpg",
+                    IMAGEN = "img/imagen.jpg",
                     productoId = 1
                 });
 
@@ -229,38 +229,66 @@ namespace UnitTestProject
             Assert.AreEqual("img/imagen.jpg", result);
         }
 
+        [TestMethod]
 
+        public void obtenerImagenProducto()
+        {
+            int idProducto = 1;
+            string imagen = "img/imagen2.jpg";
+
+            string resultadoImagen;
+          
+            IImagenProductoDAL imagenProductoDAL = new ImagenDALImpl();
+
+            resultadoImagen = imagenProductoDAL.obtenerImagenProducto(idProducto, imagen).IMAGEN;
+
+
+            Assert.AreEqual("img/imagen2.jpg", resultadoImagen);
+
+        }
+
+        [TestMethod]
+
+        public void obtenerImagenesProductoId()
+        {
+
+         
+
+            
+
+        }
 
         [TestMethod]
         public void eliminarImagenProducto()
         {
-            /* int resultadoAnterior;
-             int resultado;
-             imagen_producto imagen_producto;
+            int idProducto = 1;
+            string imagen = "img/imagen2.jpg";
+
+            int resultadoAnterior;
+            int resultado;
+              
+            sp_obtenerImagenProducto_Result imagen_producto;
+            IImagenProductoDAL imagenProductoDAL = new ImagenDALImpl();
 
 
-             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
-             {
-                 resultadoAnterior = unidad.genericDAL.GetAll().ToList().Count;
-             }
+            //Obtener total de imagenes anterior
+            using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
+            {
+                resultadoAnterior = unidad.genericDAL.GetAll().ToList().Count;
+            }
 
-             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
-             {
-                 imagen_producto = unidad.genericDAL.Get(1);
-             }
 
-             using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
-             {
-                 unidad.genericDAL.Remove(imagen_producto);
-                 unidad.Complete();
-             }
+          
+            
 
+            
+            //Resultado nuevo luego del o
              using (UnidadDeTrabajo<imagen_producto> unidad = new UnidadDeTrabajo<imagen_producto>(new BDContext()))
              {
                  resultado = unidad.genericDAL.GetAll().ToList().Count;
              }
 
-             Assert.AreEqual(resultadoAnterior - 1, resultado); */
+             Assert.AreEqual(resultadoAnterior - 1, resultado); 
 
         }
     }

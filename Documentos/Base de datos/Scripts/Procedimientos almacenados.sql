@@ -623,3 +623,45 @@ BEGIN
 END
 GO
 
+
+
+/**
+*
+*  Obtener una imagen de Productos 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerImagenProducto
+	@pIdProducto int,
+	@pImagen varchar(150)
+AS
+BEGIN
+	select * from dbo.imagen_producto 
+	where productoId = @pIdProducto and IMAGEN = @pImagen; 
+END
+GO
+
+/**
+*
+*  Obtener una imagenes de Productos con id 
+*
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE sp_obtenerImagenesProductoId
+	@pIdProducto int
+AS
+BEGIN
+	select * from dbo.imagen_producto 
+	where productoId = @pIdProducto; 
+END
+GO

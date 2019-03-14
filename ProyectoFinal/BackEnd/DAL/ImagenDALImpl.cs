@@ -10,11 +10,44 @@ namespace BackEnd.DAL
     public class ImagenDALImpl : IImagenProductoDAL
     {
         private BDContext context;
-        List<imagen_producto> imagen_Productos;
+        
 
-        public imagen_producto obtenerImagenesProducto(int idProducto, string imagen)
+        public List<sp_obtenerImagenProducto_Result> obtenerImagenesProductoId(int idProducto)
         {
-            throw new NotImplementedException();
+            
+            try
+            {
+                List<sp_obtenerImagenProducto_Result> imagen_Productos;
+                using (context = new BDContext())
+                {
+                    imagen_producto = context
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public sp_obtenerImagenProducto_Result obtenerImagenProducto(int idProducto, string imagen)
+        {
+            try
+            {
+                sp_obtenerImagenProducto_Result imagen_producto;
+
+                using (context = new BDContext())
+                {
+                    imagen_producto = context.sp_obtenerImagenProducto(idProducto, imagen).FirstOrDefault();
+                }
+
+                return imagen_producto;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
     }
 }

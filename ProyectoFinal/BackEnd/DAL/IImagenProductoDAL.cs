@@ -9,7 +9,9 @@ namespace BackEnd.DAL
 {
     public interface IImagenProductoDAL
     {
-        imagen_producto obtenerImagenesProducto(int idProducto, string imagen);
+        sp_obtenerImagenProducto_Result obtenerImagenProducto(int idProducto, string imagen);
+
+        List<sp_obtenerImagenProducto_Result> obtenerImagenesProductoId(int idProducto);
 
     }
 }
