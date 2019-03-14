@@ -37,10 +37,10 @@ namespace BackEnd.DAL
                 using (context = new BDContext())
                 {
                     context.sp_actualizarUsuario(
-                        usuario.userId, 
-                        usuario.nombre,
-                        usuario.apellidos,
-                        usuario.contrasena,
+                        usuario.userId,
+                        usuario.nombre, 
+                        usuario.apellidos, 
+                        usuario.contrasena, 
                         usuario.correoElectronico,
                         usuario.fechaNacimiento,
                         usuario.genero,
@@ -50,9 +50,8 @@ namespace BackEnd.DAL
                         usuario.paisId,
                         usuario.distritoId,
                         usuario.provinciaId,
-                        usuario.cantonId
-
-                    );
+                        usuario.cantonId,
+                        usuario.Usuario_ID);
 
                     context.SaveChanges();
                 }

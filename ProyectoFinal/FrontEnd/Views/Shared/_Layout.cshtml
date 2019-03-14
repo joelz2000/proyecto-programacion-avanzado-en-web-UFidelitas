@@ -9,32 +9,46 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-        @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Menu" aria-controls="Menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="Menu">
-            <div class="navbar-nav">
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-item nav-link active" })
-                @Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
-                @Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Menu" aria-controls="Menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="Menu">
+                <div class="navbar-nav">
+                    @{
+                        if (User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-item nav-link active" })
+                            @Html.ActionLink("Manejar Productos", "Index", "Productos", new { area = "" }, new { @class = "nav-item nav-link" })
+                            @Html.ActionLink("Manejar Usuarios", "Index", "Usuarios", new { area = "" }, new { @class = "nav-item nav-link" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-item nav-link active" })
+                            @Html.ActionLink("Nosotros", "About", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+                            @Html.ActionLink("Contactenos", "Contact", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+                        }
+                    }
+
+                </div>
+                @Html.Partial("_LoginPartial")
             </div>
-            @Html.Partial("_LoginPartial")
+        </nav>
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</p>
+            </footer>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</p>
-        </footer>
-    </div>
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/popper")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/popper")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

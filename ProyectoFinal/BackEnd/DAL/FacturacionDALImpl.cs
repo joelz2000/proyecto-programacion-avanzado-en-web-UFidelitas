@@ -15,23 +15,22 @@ namespace BackEnd.DAL
             throw new NotImplementedException();
         }
 
-        public bool agregarFactura(sp_obtenerFacturaciones_Result sp_ObtenerFacturaciones_Result)
+        public bool agregarFactura(sp_obtenerFacturaciones_Result factura)
         {
             try
             {
                 using (context = new BDContext())
                 {
-                   /* context.sp_agregarFacturacion
-                    (
-                        sp_ObtenerFacturaciones_Result.facturacionId,
-                        sp_ObtenerFacturaciones_Result.nombre,
-                        sp_ObtenerFacturaciones_Result.fecha,
-                        sp_ObtenerFacturaciones_Result.descripcion,
-                        sp_ObtenerFacturaciones_Result.impuesto,
-                        sp_ObtenerFacturaciones_Result.subtotal,
-                        sp_ObtenerFacturaciones_Result.total,
-                        sp_ObtenerFacturaciones_Result.tipo
-                      );*/
+                    context.sp_agregarFacturacion(
+                        factura.nombre,
+                        factura.fecha,
+                        factura.descripcion,
+                        factura.impuesto,
+                        factura.tipo,
+                        (int)factura.total,
+                        null,
+                        null
+                      );
 
                     context.SaveChanges();
                 }

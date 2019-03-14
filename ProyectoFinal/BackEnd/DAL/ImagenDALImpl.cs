@@ -12,6 +12,7 @@ namespace BackEnd.DAL
         private BDContext context;
         
 
+        /*
         public List<sp_obtenerImagenesProductoId_Result> obtenerImagenesProductoId(int idProducto)
         {
             
@@ -31,6 +32,7 @@ namespace BackEnd.DAL
                 throw;
             }
         }
+        */
 
         public sp_obtenerImagenProducto_Result obtenerImagenProducto(int idProducto, string imagen)
         {

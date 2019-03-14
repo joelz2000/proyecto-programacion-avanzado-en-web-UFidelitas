@@ -17,7 +17,7 @@ namespace FrontEnd.Controllers
         public ActionResult Index()
         {
 
-            usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(User.Identity.GetUserId())).Single();
+            // usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(User.Identity.GetUserId())).Single();
 
             return View();
         }

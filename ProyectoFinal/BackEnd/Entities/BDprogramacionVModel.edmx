@@ -557,6 +557,7 @@
           <Parameter Name="pDistritoId" Type="int" Mode="In" />
           <Parameter Name="pProvinciaId" Type="int" Mode="In" />
           <Parameter Name="pCantonId" Type="int" Mode="In" />
+          <Parameter Name="pUsuario_ID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_agregarFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -1410,6 +1411,7 @@
             <Parameter Name="pDistritoId" Mode="In" Type="Int32" />
             <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuario_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarFacturacion">
             <Parameter Name="pNombre" Mode="In" Type="String" />
@@ -1478,7 +1480,7 @@
             <Parameter Name="pImagen" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerImagenesProductoId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId_Result)">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+          <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
