@@ -540,6 +540,11 @@
           <Parameter Name="pImpuesto" Type="int" Mode="In" />
           <Parameter Name="pTipo" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_actualizarFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pIdProducto" Type="int" Mode="In" />
+          <Parameter Name="pIdFacturacion" Type="int" Mode="In" />
+          <Parameter Name="cantidad" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_actualizarRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pId" Type="int" Mode="In" />
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -565,6 +570,7 @@
           <Parameter Name="pDistritoId" Type="int" Mode="In" />
           <Parameter Name="pProvinciaId" Type="int" Mode="In" />
           <Parameter Name="pCantonId" Type="int" Mode="In" />
+          <Parameter Name="pUsuario_ID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_agregarFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -572,6 +578,11 @@
           <Parameter Name="pDescripcion" Type="text" Mode="In" />
           <Parameter Name="pImpuesto" Type="int" Mode="In" />
           <Parameter Name="pTipo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_agregarFacturacionProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pFacturacionId" Type="int" Mode="In" />
+          <Parameter Name="pProductoId" Type="int" Mode="In" />
+          <Parameter Name="pCantidad" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_agregarRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -595,6 +606,7 @@
           <Parameter Name="pDistritoId" Type="int" Mode="In" />
           <Parameter Name="pProvinciaId" Type="int" Mode="In" />
           <Parameter Name="pCantonId" Type="int" Mode="In" />
+          <Parameter Name="pUsuario_ID" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_deleteRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pRolId" Type="int" Mode="In" />
@@ -606,14 +618,17 @@
           <Parameter Name="pUserId" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="pId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_obtenerFacturacionesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="pId" Type="int" Mode="In" />
-        </Function>
+        <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_obtenerFacturacionesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerImagenesProductoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pIdProducto" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerImagenProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pIdProducto" Type="int" Mode="In" />
+          <Parameter Name="pImagen" Type="varchar" Mode="In" />
         </Function>
         <Function Name="sp_obtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ObtenerRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1411,6 +1426,7 @@
             <Parameter Name="pDistritoId" Mode="In" Type="Int32" />
             <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuario_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarFacturacion">
             <Parameter Name="pNombre" Mode="In" Type="String" />
@@ -1441,6 +1457,7 @@
             <Parameter Name="pDistritoId" Mode="In" Type="Int32" />
             <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
+            <Parameter Name="pUsuario_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_deleteRol">
           <Parameter Name="pRolId" Mode="In" Type="Int32" />
@@ -1450,10 +1467,8 @@
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
           <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
           <Parameter Name="pId" Mode="In" Type="Int32" />
@@ -1487,7 +1502,24 @@
             <Parameter Name="pTipo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarFacturaciones">
+          <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarFacturacionesProducto">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
             <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_agregarFacturacionProducto">
+            <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
+            <Parameter Name="pProductoId" Mode="In" Type="Int32" />
+            <Parameter Name="pCantidad" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerImagenesProductoId1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId1_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerImagenProducto1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto1_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="pImagen" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
@@ -1593,6 +1625,14 @@
           <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
         </ComplexType>
         <ComplexType Name="sp_obtenerImagenesProductoId_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerImagenesProductoId1_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerImagenProducto1_Result">
           <Property Type="Int32" Name="productoId" Nullable="false" />
           <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
         </ComplexType>
@@ -1979,6 +2019,24 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_actualizarFacturacion" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacion" />
           <FunctionImportMapping FunctionImportName="sp_eliminarFacturaciones" FunctionName="BDprogramacionVModel.Store.sp_eliminarFacturaciones" />
+          <FunctionImportMapping FunctionImportName="sp_actualizarFacturacionesProducto" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacionesProducto" />
+          <FunctionImportMapping FunctionImportName="sp_agregarFacturacionProducto" FunctionName="BDprogramacionVModel.Store.sp_agregarFacturacionProducto" />
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenesProductoId1" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenesProductoId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenesProductoId1_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenProducto1" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenProducto1_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

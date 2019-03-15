@@ -10,13 +10,10 @@
 namespace BackEnd.Entities
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class medida_producto
+    public partial class sp_obtenerImagenProducto1_Result
     {
         public int productoId { get; set; }
-        public Nullable<double> medida { get; set; }
-    
-        public virtual productos productos { get; set; }
+        public string IMAGEN { get; set; }
     }
 }
