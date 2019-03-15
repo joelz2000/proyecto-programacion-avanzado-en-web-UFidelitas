@@ -11,9 +11,29 @@ namespace BackEnd.DAL
     public class FacturacionDALImpl : IFacturacionDAL
     {
         private BDContext context;
-        public bool actualizarFactura(sp_obtenerFacturaciones_Result sp_ObtenerFacturaciones_Result)
+        public bool actualizarFactura(sp_obtenerFacturaciones_Result factura)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_actualizarFacturacion(
+                        factura.facturacionId,
+                        factura.nombre,
+                        factura.fecha,
+                        factura.descripcion,
+                        factura.impuesto,
+                        factura.tipo
+                      );
+
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool agregarFactura(sp_obtenerFacturaciones_Result factura)
@@ -27,10 +47,7 @@ namespace BackEnd.DAL
                         factura.fecha,
                         factura.descripcion,
                         factura.impuesto,
-                        factura.tipo,
-                        (int)factura.total,
-                        null,
-                        null
+                        factura.tipo
                       );
 
                     context.SaveChanges();
@@ -45,7 +62,20 @@ namespace BackEnd.DAL
 
         public bool eliminarFactura(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_eliminarFacturaciones(id);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public List<sp_obtenerFacturaciones_Result> obtenerFacturacion()

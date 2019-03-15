@@ -50,8 +50,7 @@ namespace BackEnd.DAL
                         usuario.paisId,
                         usuario.distritoId,
                         usuario.provinciaId,
-                        usuario.cantonId,
-                        usuario.Usuario_ID);
+                        usuario.cantonId);
 
                     context.SaveChanges();
                 }
