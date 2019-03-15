@@ -174,7 +174,7 @@ namespace UnitTestProject
                 unidad.genericDAL.Add(imagen = new imagen_producto()
                 {
                     IMAGEN = "img/imagen.jpg",
-                    productoId = 1
+                    productoId = 2
                 });
 
                 unidad.Complete();

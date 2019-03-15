@@ -12,13 +12,13 @@ namespace BackEnd.DAL
         private BDContext context;
         
 
-        /*
+        
         public List<sp_obtenerImagenesProductoId_Result> obtenerImagenesProductoId(int idProducto)
         {
             
             try
             {
-                List<sp_obtenerImagenProducto_Result> imagen_Productos;
+                List<sp_obtenerImagenesProductoId_Result> imagen_Productos;
                 using (context = new BDContext())
                 {
                     imagen_Productos = context.sp_obtenerImagenesProductoId(idProducto).ToList();
@@ -32,7 +32,7 @@ namespace BackEnd.DAL
                 throw;
             }
         }
-        */
+        
 
         public sp_obtenerImagenProducto_Result obtenerImagenProducto(int idProducto, string imagen)
         {

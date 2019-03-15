@@ -50,7 +50,8 @@ namespace BackEnd.DAL
                         usuario.paisId,
                         usuario.distritoId,
                         usuario.provinciaId,
-                        usuario.cantonId);
+                        usuario.cantonId,
+                        null);
 
                     context.SaveChanges();
                 }
@@ -106,7 +107,8 @@ namespace BackEnd.DAL
                         sp_ObtenerUsuarios_Result.paisId,
                         sp_ObtenerUsuarios_Result.distritoId,
                         sp_ObtenerUsuarios_Result.provinciaId,
-                        sp_ObtenerUsuarios_Result.cantonId
+                        sp_ObtenerUsuarios_Result.cantonId,
+                        null
                     );
 
                     context.SaveChanges();

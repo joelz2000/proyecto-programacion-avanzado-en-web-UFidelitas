@@ -1515,7 +1515,7 @@
             <Parameter Name="pCantidad" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerImagenesProductoId1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId1_Result)">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+          <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerImagenProducto1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto1_Result)">
             <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
@@ -1713,8 +1713,17 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="BDprogramacionVModel.facturaciones">
               <ModificationFunctionMapping>
-                <UpdateFunction FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacion" />
-                <DeleteFunction FunctionName="BDprogramacionVModel.Store.sp_eliminarFacturaciones" />
+                <UpdateFunction FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacion" >
+                  <ScalarProperty Name="tipo" ParameterName="pTipo" Version="Current" />
+                  <ScalarProperty Name="impuesto" ParameterName="pImpuesto" Version="Current" />
+                  <ScalarProperty Name="descripcion" ParameterName="pDescripcion" Version="Current" />
+                  <ScalarProperty Name="fecha" ParameterName="pfecha" Version="Current" />
+                  <ScalarProperty Name="nombre" ParameterName="pNombre" Version="Current" />
+                  <ScalarProperty Name="facturacionId" ParameterName="pIdFacturacion" Version="Current" />
+                </UpdateFunction>
+                <DeleteFunction FunctionName="BDprogramacionVModel.Store.sp_eliminarFacturaciones" >
+                  <ScalarProperty Name="facturacionId" ParameterName="pIdFacturacion" />
+                </DeleteFunction>
               </ModificationFunctionMapping>
             </EntityTypeMapping>
           </EntitySetMapping>
