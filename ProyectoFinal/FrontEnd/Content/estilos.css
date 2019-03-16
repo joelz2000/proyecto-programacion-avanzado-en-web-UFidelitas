@@ -9,10 +9,6 @@ li {
     list-style: none;
 }
 
-a {
-    color: #23527c;
-    text-decoration: none;
-}
 
 ion-icon {
     font-size: 45px;
@@ -27,8 +23,12 @@ body {
     margin-top:0;
     padding-top: 0;
     height: 100%;
+    font-size: 12pt;
 }
-
+.fondoBlanco {
+    background-color: white;
+    color: black;
+}
 .main-header, .main-content {
     margin-left: 130px;
 }
@@ -153,8 +153,8 @@ body {
             width: 100%;
             color: white;
             padding-top: 10px;
-            padding-bottom: 10px;
             transition: all 0.2s;
+            text-decoration:none;
         }
 
             .menu li a:hover {
