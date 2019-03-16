@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+
+    <div class="main">
+        <header class="main-header">
+            <div class="header">
+                <div class="menu-desplazable">
+                    <a><ion-icon name="menu"></ion-icon></a>
+                </div>
+
+                <p class="mensaje-bienvenida">Bienvenido Juan</p>
+                <div class="cerrar-sesion">
+                    <a href="">
+                        <ion-icon name="exit"></ion-icon>
+                        <p>Cerrar Sesion</p>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="menu-left-main">
+            <nav class="nav-main">
+                <div class="menu-nav-main">
+                    <ul class="menu">
+                        <li>
+                            <a href="">
+                                <p>Home</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="">
+                                <p>Inventario</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="">
+                                <p>Categorias</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="">
+                                <p>Marcas</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="">
+                                <p>Pagina Cliente</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <h1 class="center">Index</h1>
+        </div>
+    </div>
+
+  <!--  <nav class="nav flex-column position-fixed " ;>
+        <a class="nav-link active" href="#">Inventario</a>
+        <a class="nav-link" href="#">Categorias</a>
+        <a class="nav-link" href="#">Marcas</a>
+        <a class="nav-link" href="#">Regresar pagina cliente</a>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</p>
+        </footer>
+    </div>
+    -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

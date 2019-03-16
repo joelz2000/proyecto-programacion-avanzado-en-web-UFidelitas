@@ -173,7 +173,7 @@ namespace UnitTestProject
             {
                 unidad.genericDAL.Add(imagen = new imagen_producto()
                 {
-                    IMAGEN = "img/imagen.jpg",
+                    IMAGEN = "img/imagen2.jpg",
                     productoId = 2
                 });
 
@@ -233,8 +233,8 @@ namespace UnitTestProject
 
         public void obtenerImagenProducto()
         {
-            int idProducto = 1;
-            string imagen = "img/imagen2.jpg";
+            int idProducto = 2;
+            string imagen = "img/imagen.jpg";
 
             string resultadoImagen;
           
@@ -243,7 +243,7 @@ namespace UnitTestProject
             resultadoImagen = imagenProductoDAL.obtenerImagenProducto(idProducto, imagen).IMAGEN;
 
 
-            Assert.AreEqual("img/imagen2.jpg", resultadoImagen);
+            Assert.AreEqual("img/imagen.jpg", resultadoImagen);
 
         }
 
@@ -251,11 +251,16 @@ namespace UnitTestProject
 
         public void obtenerImagenesProductoId()
         {
+            int resultado = 0;
 
-         
+            IImagenProductoDAL imagenProductoDAL = new ImagenDALImpl();
+            List<sp_obtenerImagenesProductoId_Result> imagenesProducto = new List<sp_obtenerImagenesProductoId_Result>();
 
-            
+            imagenesProducto = imagenProductoDAL.obtenerImagenesProductoId(2).ToList();
 
+            resultado = imagenesProducto.Count;
+
+            Assert.AreEqual(1, resultado);
         }
 
         [TestMethod]
