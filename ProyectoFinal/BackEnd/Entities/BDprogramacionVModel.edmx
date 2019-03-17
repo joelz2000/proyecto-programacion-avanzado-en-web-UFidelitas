@@ -621,6 +621,10 @@
         <Function Name="sp_eliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUserId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_eliminarUsuarioPromocion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsuarioId" Type="int" Mode="In" />
+          <Parameter Name="pPromocionId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -1529,6 +1533,10 @@
             <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
             <Parameter Name="pProductoId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_eliminarUsuarioPromocion">
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+            <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -2055,6 +2063,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_eliminarPromocionProducto" FunctionName="BDprogramacionVModel.Store.sp_eliminarPromocionProducto" />
+          <FunctionImportMapping FunctionImportName="sp_eliminarUsuarioPromocion" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuarioPromocion" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

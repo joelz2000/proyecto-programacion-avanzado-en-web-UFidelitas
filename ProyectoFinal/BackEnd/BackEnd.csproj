@@ -59,10 +59,12 @@
     <Compile Include="DAL\IProductoPromocionDAL.cs" />
     <Compile Include="DAL\IRolDAL.cs" />
     <Compile Include="DAL\IUsuarioDAL.cs" />
+    <Compile Include="DAL\IUsuarioPromocionDAL.cs" />
     <Compile Include="DAL\ProductoPromocionDALImpl.cs" />
     <Compile Include="DAL\RolDALImpl.cs" />
     <Compile Include="DAL\UnidadDeTrabajo.cs" />
     <Compile Include="DAL\usuarioDALImpl.cs" />
+    <Compile Include="DAL\UsuarioPromocionDALImpl.cs" />
     <Compile Include="Entities\BDprogramacionVModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

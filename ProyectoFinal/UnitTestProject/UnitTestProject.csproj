@@ -68,6 +68,7 @@
     <Compile Include="TestPais.cs" />
     <Compile Include="TestProductos.cs" />
     <Compile Include="TestPromocionProducto.cs" />
+    <Compile Include="TestUsuarioPromocion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

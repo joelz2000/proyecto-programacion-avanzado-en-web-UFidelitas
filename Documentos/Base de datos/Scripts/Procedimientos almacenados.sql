@@ -689,3 +689,28 @@ BEGIN
 
 
 END
+
+
+/**
+*
+*  Eliminar una Promocion Usuario
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create or ALTER PROCEDURE [dbo].[sp_eliminarUsuarioPromocion]
+	@pUsuarioId int,
+	@pPromocionId int
+AS
+BEGIN
+	
+	delete from usuarios_promocion 
+	where	usuarioId = @pUsuarioId AND
+			promocionId = @pPromocionId;
+
+
+
+END
