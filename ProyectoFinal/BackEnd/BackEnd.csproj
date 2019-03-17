@@ -56,8 +56,10 @@
     <Compile Include="DAL\IFacturacionDAL.cs" />
     <Compile Include="DAL\IImagenProductoDAL.cs" />
     <Compile Include="DAL\ImagenDALImpl.cs" />
+    <Compile Include="DAL\IProductoPromocionDAL.cs" />
     <Compile Include="DAL\IRolDAL.cs" />
     <Compile Include="DAL\IUsuarioDAL.cs" />
+    <Compile Include="DAL\ProductoPromocionDALImpl.cs" />
     <Compile Include="DAL\RolDALImpl.cs" />
     <Compile Include="DAL\UnidadDeTrabajo.cs" />
     <Compile Include="DAL\usuarioDALImpl.cs" />

@@ -459,5 +459,18 @@ namespace BackEnd.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenProducto1_Result>("sp_obtenerImagenProducto1", pIdProductoParameter, pImagenParameter);
         }
+    
+        public virtual int sp_eliminarPromocionProducto(Nullable<int> pPromocionId, Nullable<int> pProductoId)
+        {
+            var pPromocionIdParameter = pPromocionId.HasValue ?
+                new ObjectParameter("pPromocionId", pPromocionId) :
+                new ObjectParameter("pPromocionId", typeof(int));
+    
+            var pProductoIdParameter = pProductoId.HasValue ?
+                new ObjectParameter("pProductoId", pProductoId) :
+                new ObjectParameter("pProductoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarPromocionProducto", pPromocionIdParameter, pProductoIdParameter);
+        }
     }
 }

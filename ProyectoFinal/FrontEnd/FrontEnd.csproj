@@ -7171,7 +7171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BackEnd\BackEnd.csproj">
-      <Project>{CFA1122D-8DA6-4D97-AB77-B9BBA5F1AEF4}</Project>
+      <Project>{cfa1122d-8da6-4d97-ab77-b9bba5f1aef4}</Project>
       <Name>BackEnd</Name>
     </ProjectReference>
   </ItemGroup>

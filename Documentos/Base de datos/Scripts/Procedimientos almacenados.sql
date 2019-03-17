@@ -665,3 +665,27 @@ BEGIN
 	where productoId = @pIdProducto; 
 END
 GO
+
+/**
+*
+*  Eliminar un PromocionProducto
+**/
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create or ALTER PROCEDURE [dbo].[sp_eliminarPromocionProducto]
+	@pPromocionId int,
+	@pProductoId int
+AS
+BEGIN
+	
+	delete from promociones_productos 
+	where	productoId = @pProductoId AND
+			promocionId = @pPromocionId;
+
+
+
+END
