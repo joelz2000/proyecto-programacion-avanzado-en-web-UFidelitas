@@ -15,6 +15,11 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin
         public ActionResult Index()
         {
+            string mensaje = "";
+            if (Session["mensaje"] != null)
+            {
+                mensaje = Session["mensaje"].ToString();
+            }
             List<categorias> categorias;
             using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
             {
@@ -46,17 +51,34 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Create
         public ActionResult Create()
         {
-            return View();
+            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml");
         }
 
         // POST: CategoriasAdmin/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CategoriasAdminViewModel categoriaVM)
         {
+            
             try
             {
                 // TODO: Add insert logic here
+                categorias categoria = new categorias
+                {
+                    nombre = categoriaVM.nombre,
+                    descripcion = categoriaVM.descripcion
+                };
 
+                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                {
+                    unidad.genericDAL.Add(categoria);
+                    unidad.Complete();
+                }
+                Session["mensaje"] =
+                        "<div class='alert alert-success alert-dismissible'>"+
+                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>'" +
+                        "   <h4><i class='icon fa fa - check'></i> Alert!</h4>'" +
+                        "</div> ";
+                     
                 return RedirectToAction("Index");
             }
             catch

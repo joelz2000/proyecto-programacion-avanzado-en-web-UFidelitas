@@ -7151,6 +7151,7 @@
     <Content Include="Views\Admin\Shared\_Layout.cshtml" />
     <Content Include="Views\Admin\HomeAdmin\Index.cshtml" />
     <Content Include="Views\Admin\CategoriasAdmin\Index.cshtml" />
+    <Content Include="Views\Admin\CategoriasAdmin\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

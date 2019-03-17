@@ -5,9 +5,9 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
-
+@Session["mensaje"]
 <div class="btn-group">
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-block btn-success" })
+    @Html.ActionLink("Agregar Nueva Categoria", "Create", null, new { @class = "btn btn-block btn-success" })
     <br><br><br>
 </div>
 
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="box-body table-responsive no-padding">
+            <div class="box-body table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -38,7 +38,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.descripcion)
                             </th>
-                            <th></th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
 
@@ -53,12 +53,10 @@
                                     @Html.DisplayFor(modelItem => item.descripcion)
                                 </td>
                                 <td>
-                                    <div class="btn-group">
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning margin" })
-                                        @Html.ActionLink("Details", "Details", new { id = item.id_categoria }, new { @class = "btn btn-default btn-info margin" })
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-default  btn-danger margin" })
-                                    </div>
-                                   
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning" })
+                                    @Html.ActionLink("Ver Detalles", "Details", new { id = item.id_categoria }, new { @class = "btn btn-default btn-info " })
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-default  btn-danger" })
+
                                 </td>
                             </tr>
                         }
