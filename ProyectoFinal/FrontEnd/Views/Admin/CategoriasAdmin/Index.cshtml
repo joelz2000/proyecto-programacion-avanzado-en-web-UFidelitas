@@ -1,0 +1,71 @@
+﻿@model IEnumerable<FrontEnd.Models.Admin.CategoriasAdminViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+<div class="btn-group">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-block btn-success" })
+    <br><br><br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <div class="box-header">
+                <h2 class="box-title">Categorias</h2>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.descripcion)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.descripcion)
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning margin" })
+                                        @Html.ActionLink("Details", "Details", new { id = item.id_categoria }, new { @class = "btn btn-default btn-info margin" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-default  btn-danger margin" })
+                                    </div>
+                                   
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
