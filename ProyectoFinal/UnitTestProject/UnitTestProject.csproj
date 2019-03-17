@@ -70,6 +70,8 @@
     <Compile Include="TestPromocionProducto.cs" />
     <Compile Include="TestUsuarioPromocion.cs" />
     <Compile Include="TestPromocion.cs" />
+    <Compile Include="TestGeneroProducto.cs" />
+    <Compile Include="TestMedidaProducto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
