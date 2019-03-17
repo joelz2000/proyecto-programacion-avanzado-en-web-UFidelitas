@@ -17,6 +17,9 @@ namespace FrontEnd
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
                         "~/Scripts/umd/popper.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/popper").Include(
+                        "~/dist/js/adminlte.min.js"));
+
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
@@ -29,7 +32,9 @@ namespace FrontEnd
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/theme.min.css",
-                      "~/Content/estilos.css"));
+                      "~/dist/css/AdminLTE.min.css",
+                      "~/dist/css/skins/skin-blue.min.css"
+                      ));
 
           
         }
