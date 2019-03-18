@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace FrontEnd.Models.Admin
+namespace FrontEnd.Models
 {
-    public class CategoriasAdminViewModel
+    public class CategoriasViewModel
     {
         [Key]
         [Display(Name = "Id")]

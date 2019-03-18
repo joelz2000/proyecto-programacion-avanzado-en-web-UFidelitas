@@ -1,6 +1,6 @@
 ﻿using BackEnd.DAL;
 using BackEnd.Entities;
-using FrontEnd.Models.Admin;
+using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +26,12 @@ namespace FrontEnd.Controllers.Admin
                 categorias = unidad.genericDAL.GetAll().ToList();
             }
 
-            List<CategoriasAdminViewModel> categoriasVM = new List<CategoriasAdminViewModel>();
-            CategoriasAdminViewModel categoriaVM;
+            List<CategoriasViewModel> categoriasVM = new List<CategoriasViewModel>();
+            CategoriasViewModel categoriaVM;
 
             foreach (var item in categorias)
             {
-                categoriaVM = new CategoriasAdminViewModel {
+                categoriaVM = new CategoriasViewModel {
                     id_categoria = item.id_categoria,
                     nombre = item.nombre,
                     descripcion = item.descripcion
@@ -56,7 +56,7 @@ namespace FrontEnd.Controllers.Admin
 
         // POST: CategoriasAdmin/Create
         [HttpPost]
-        public ActionResult Create(CategoriasAdminViewModel categoriaVM)
+        public ActionResult Create(CategoriasViewModel categoriaVM)
         {
             
             try
