@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "../Shared/_Layout.cshtml";
+    
 }
 
-@Session["mensaje"]
+@Html.Raw(Session["mensaje"])
 <div class="btn-group">
     @Html.ActionLink("Agregar Nueva Categoria", "Create", null, new { @class = "btn btn-block btn-success" })
     <br><br><br>

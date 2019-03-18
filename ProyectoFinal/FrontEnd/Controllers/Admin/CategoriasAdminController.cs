@@ -75,8 +75,9 @@ namespace FrontEnd.Controllers.Admin
                 }
                 Session["mensaje"] =
                         "<div class='alert alert-success alert-dismissible'>"+
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>'" +
-                        "   <h4><i class='icon fa fa - check'></i> Alert!</h4>'" +
+                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
+                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
+                        "       Categoria Agregada"+
                         "</div> ";
                      
                 return RedirectToAction("Index");
@@ -90,17 +91,49 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            CategoriasViewModel categoriasViewModel;
+            categorias categoria;
+            using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+            {
+                categoria = unidad.genericDAL.Get(id);
+            }
+
+            categoriasViewModel = new CategoriasViewModel {
+                id_categoria = categoria.id_categoria,
+                nombre = categoria.nombre,
+                descripcion = categoria.descripcion
+            };
+
+            
+            return View("~/Views/Admin/CategoriasAdmin/Edit.cshtml", categoriasViewModel);
         }
 
         // POST: CategoriasAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(CategoriasViewModel categoriasViewModel)
         {
             try
             {
-                // TODO: Add update logic here
+                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                {
+                    categorias categoria = new categorias
+                    {
+                        id_categoria = categoriasViewModel.id_categoria,
+                        nombre = categoriasViewModel.nombre,
+                        descripcion = categoriasViewModel.descripcion
 
+                    };
+
+                    unidad.genericDAL.Update(categoria);
+                    unidad.Complete();
+                }
+                // TODO: Add update logic here
+                Session["mensaje"] =
+                        "<div class='alert alert-success alert-dismissible'>" +
+                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
+                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
+                        "       Categoria actualizada correctamente" +
+                        "</div> ";
                 return RedirectToAction("Index");
             }
             catch
