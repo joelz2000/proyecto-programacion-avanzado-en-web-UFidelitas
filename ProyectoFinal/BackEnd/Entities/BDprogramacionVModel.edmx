@@ -614,16 +614,8 @@
         <Function Name="sp_eliminarFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pIdFacturacion" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_eliminarPromocionProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="pPromocionId" Type="int" Mode="In" />
-          <Parameter Name="pProductoId" Type="int" Mode="In" />
-        </Function>
         <Function Name="sp_eliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUserId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_eliminarUsuarioPromocion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="pUsuarioId" Type="int" Mode="In" />
-          <Parameter Name="pPromocionId" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -2062,8 +2054,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_eliminarPromocionProducto" FunctionName="BDprogramacionVModel.Store.sp_eliminarPromocionProducto" />
-          <FunctionImportMapping FunctionImportName="sp_eliminarUsuarioPromocion" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuarioPromocion" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,7 +1,52 @@
 ﻿
 @{
-    
+
     ViewBag.Title = "Index";
 }
-<h2>Index</h2>
+<h2>Productos</h2>
+<hr />
+<div class="container">
+    <table class="table table-striped table-hover table-bordered nowrap" style="width:100%" id="productosTabla">
+        <thead>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Descripcion</th>
+            <th>Modelo</th>
+            <th>Cantidad</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+        </thead>
+        <tbody>
+            @{
+                foreach (var producto in Model)
+                {
+                    <tr>
+                        <td>@producto.Id_Producto</td>
+                        <td>@producto.Nombre</td>
+                        <td>@producto.Precio</td>
+                        <td>@producto.Descripcion</td>
+                        <td>@producto.Modelo</td>
+                        <td>@producto.cantidad</td>
+                        <td>@producto.marca</td>
+                        <td>
+                            @Html.ActionLink("Detalles", "Detalles", "HomeAdmin", new { id = producto.Id_Producto }, null) |
+                            @Html.ActionLink("Editar", "Editar", "HomeAdmin", new { id = producto.Id_Producto }, null) |
+                            @Html.ActionLink("Eliminar", "Eliminar", "HomeAdmin", new { id = producto.Id_Producto }, null)
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#productosTabla").DataTable();
+        });
+    </script>
+}
 

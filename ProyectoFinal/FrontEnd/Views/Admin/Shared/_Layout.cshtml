@@ -55,7 +55,7 @@
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                       
+
                         <!-- User Account Menu -->
                         <li class="dropdown user user-menu">
                             <!-- Menu Toggle Button -->
@@ -133,7 +133,6 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">HEADER</li>
 
-                    <!-- Optionally, you can add icons to the links -->
                     <li class="active">
                         @Html.ActionLink("Productos", "Index", "ProductosAdmin", new { area = "" }, new { @class = "active nav-link" })
                     </li>
@@ -284,8 +283,7 @@
     <!-- AdminLTE App -->
     <script src="~/Content/dist/js/adminlte.min.js"></script>
 
-    <!-- DataTables -->
-    <script src="~/Content/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

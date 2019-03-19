@@ -9,10 +9,14 @@ namespace FrontEnd
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.min.js"));
+                        "~/Scripts/jquery-{version}.slim.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/DataTables/jquery.dataTables.min.js",
+                        "~/Scripts/DataTables/dataTables.bootstrap4.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/popper").Include(
                         "~/Scripts/umd/popper.min.js"));
@@ -31,6 +35,7 @@ namespace FrontEnd
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
+                      "~/Content/DataTables/dataTables.bootstrap4.min.css",
                       "~/Content/theme.min.css",
                       "~/dist/css/AdminLTE.min.css",
                       "~/dist/css/skins/skin-blue.min.css"
