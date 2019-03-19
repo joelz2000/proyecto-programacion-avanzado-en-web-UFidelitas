@@ -145,7 +145,38 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+                categorias categoria;
+                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                {
+
+                    categoria= unidad.genericDAL.Get(id);
+                }
+                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                {
+                 
+                    unidad.genericDAL.Remove(categoria);
+                    unidad.Complete();
+                }
+                Session["mensaje"] =
+                       "<div class='alert alert-success alert-dismissible'>" +
+                       "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
+                       "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
+                       "      Categoria Eliminada Correctamente" +
+                       "</div> ";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                Session["mensaje"] =
+                      "<div class='alertalert-danger alert-dismissible'>" +
+                      "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
+                      "   <h4><i class='icon fa fa-ban'></i> Alerta!</h4>" +
+                      "      Categoria Eliminada Correctamente" +
+                      "</div> ";
+                return View("~/Views/Admin/CategoriasAdmin/Index.cshtml");
+            }
         }
 
         // POST: CategoriasAdmin/Delete/5

@@ -7158,6 +7158,7 @@
     <Content Include="Views\Admin\CategoriasAdmin\Create.cshtml" />
     <Content Include="Views\Admin\CategoriasAdmin\Edit.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\CategoriasAdmin\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
