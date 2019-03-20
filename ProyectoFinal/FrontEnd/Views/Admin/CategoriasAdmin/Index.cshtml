@@ -45,8 +45,9 @@
                                 </td>
                                 <td>
                                     @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning" })
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-default  btn-danger" })
-
+                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-eliminar-@item.id_categoria">
+                                        Eliminar
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -55,5 +56,32 @@
                 </table>
             </div>
         </div>
+
+        /*Modal Eliminar*/
+        @foreach (var item in Model)
+        {
+            <div class="modal fade" id="modal-eliminar-@item.id_categoria">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">Eliminar Categoria</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro quieres Eliminar <b>@item.nombre</b>?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Regresar</button>
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_categoria }, new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        }
+
     </div>
 </div>
