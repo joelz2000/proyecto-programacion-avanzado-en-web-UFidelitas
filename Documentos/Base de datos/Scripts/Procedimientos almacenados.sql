@@ -735,7 +735,7 @@ BEGIN
 	 from dbo.facturacion_producto fp
 	inner join dbo.productos p on fp.productoId = p.productoId
 	inner join dbo.facturaciones f on f.facturacionId = fp.facturacionId
-	where facturacionId = @pFacturacionId;
+	where fp.facturacionId = @pFacturacionId;
 
 
 
