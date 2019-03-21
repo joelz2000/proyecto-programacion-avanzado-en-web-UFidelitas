@@ -129,7 +129,7 @@ namespace FrontEnd.Controllers.Admin
 
             IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
 
-            productosFacturacion = facturacionDAL.obtenerProductosFacturacion(id).ToList();
+            productosFacturacion = facturacionDAL.obtenerProductosFacturacion(id);
 
             List<FacturacionProductosViewModels> facturacionesProductosVM = new List<FacturacionProductosViewModels>();
 
