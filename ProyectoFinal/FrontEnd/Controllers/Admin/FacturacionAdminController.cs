@@ -122,7 +122,7 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: Facturacion/Details/5
-        public ActionResult ProductosFacturacion(int id)
+      /*  public ActionResult ProductosFacturacion(int id)
         {
 
             List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
@@ -150,6 +150,6 @@ namespace FrontEnd.Controllers.Admin
                 facturacionesProductosVM.Add(facturacionProductoVM);
             }
             return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml", facturacionesProductosVM);
-        }
+        }*/
     }
 }
