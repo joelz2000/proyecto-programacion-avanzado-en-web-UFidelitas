@@ -3,12 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+ 
 
 <div class="row">
     <div class="col-xs-12">
@@ -21,6 +16,9 @@
                 <table id="tablaFacturaciones" class="table table-bordered table-striped">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.facturacionId)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.nombre)
                             </th>
@@ -42,7 +40,12 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.tipo)
                             </th>
-                            <th></th>
+                            <th>
+                                Productos
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
                         </tr>
                     </thead>
                   
@@ -50,6 +53,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.facturacionId)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.nombre)
                                 </td>
@@ -71,10 +77,10 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.tipo)
                                 </td>
+                                <td>@Html.ActionLink("Ver", "ProductosFacturacion", new { id = item.facturacionId })</td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.facturacionId }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.facturacionId }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.facturacionId })
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.facturacionId }) |
+                                    @Html.ActionLink("Detalles", "Details", new { id = item.facturacionId })
                                 </td>
                             </tr>
                         }

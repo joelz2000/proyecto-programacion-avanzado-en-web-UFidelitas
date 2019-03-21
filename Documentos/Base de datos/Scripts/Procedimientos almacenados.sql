@@ -714,3 +714,29 @@ BEGIN
 
 
 END
+
+/**
+*
+*  Obtener Facturaciones productos by idFacturacion
+**/
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+create or ALTER PROCEDURE [dbo].[sp_obtenerFacturacionProductoByIdFacturacion]
+	@pFacturacionId int
+AS
+BEGIN
+	
+	select f.facturacionId, f.nombre, p.productoId, p.nombre, fp.cantidad, p.precio
+	 from dbo.facturacion_producto fp
+	inner join dbo.productos p on fp.productoId = p.productoId
+	inner join dbo.facturaciones f on f.facturacionId = fp.facturacionId
+	where facturacionId = @pFacturacionId;
+
+
+
+END

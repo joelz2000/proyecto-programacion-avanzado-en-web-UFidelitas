@@ -18,5 +18,7 @@ namespace BackEnd.DAL
         bool actualizarFactura(sp_obtenerFacturaciones_Result sp_ObtenerFacturaciones_Result);
 
         bool eliminarFactura(int id);
+
+        List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id);
     }
 }

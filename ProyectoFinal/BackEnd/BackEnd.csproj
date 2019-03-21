@@ -146,6 +146,9 @@
     <Compile Include="Entities\sp_obtenerFacturacionId_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_obtenerFacturacionProductoByIdFacturacion_Result.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_obtenerImagenesProductoId1_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>

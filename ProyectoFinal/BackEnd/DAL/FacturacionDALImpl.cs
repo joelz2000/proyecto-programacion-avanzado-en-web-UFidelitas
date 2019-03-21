@@ -117,5 +117,23 @@ namespace BackEnd.DAL
                 return null;
             }
         }
+
+        public List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id)
+        {
+            try
+            {
+                List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
+                using (context = new BDContext())
+                {
+                    productosFacturacion = context.sp_obtenerFacturacionProductoByIdFacturacion(id).ToList();
+                }
+                return productosFacturacion;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
     }
 }

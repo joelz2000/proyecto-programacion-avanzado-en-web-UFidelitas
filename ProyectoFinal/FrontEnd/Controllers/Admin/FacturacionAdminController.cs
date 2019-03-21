@@ -54,6 +54,7 @@ namespace FrontEnd.Controllers.Admin
             return View();
         }
 
+
         // GET: Facturacion/Create
         public ActionResult Create()
         {
@@ -118,6 +119,37 @@ namespace FrontEnd.Controllers.Admin
             {
                 return View();
             }
+        }
+
+        // GET: Facturacion/Details/5
+        public ActionResult ProductosFacturacion(int id)
+        {
+
+            List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
+
+            IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
+
+            productosFacturacion = facturacionDAL.obtenerProductosFacturacion(id).ToList();
+
+            List<FacturacionProductosViewModels> facturacionesProductosVM = new List<FacturacionProductosViewModels>();
+
+            FacturacionProductosViewModels facturacionProductoVM;
+
+            foreach (var item in productosFacturacion)
+            {
+                facturacionProductoVM = new FacturacionProductosViewModels
+                {
+                    facturacionId = item.facturacionId,
+                    nombre = item.nombre,//nombre facturacion
+                    productoId = item.productoId,
+                    nombre1 = item.nombre1, //nombre producto
+                    cantidad = item.cantidad,
+                    precio = item.precio
+                };
+
+                facturacionesProductosVM.Add(facturacionProductoVM);
+            }
+            return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml", facturacionesProductosVM);
         }
     }
 }

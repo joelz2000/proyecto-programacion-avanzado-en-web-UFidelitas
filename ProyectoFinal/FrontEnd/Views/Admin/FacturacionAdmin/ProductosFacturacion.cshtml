@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FrontEnd.Models.FacturacionProductosViewModels>
+
+@{
+    ViewBag.Title = "ProductosFacturacion";
+}
+
+<h2>ProductosFacturacion</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.facturacionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.productoId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.precio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.facturacionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productoId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.precio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.facturacionId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.facturacionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.facturacionId })
+        </td>
+    </tr>
+}
+
+</table>
