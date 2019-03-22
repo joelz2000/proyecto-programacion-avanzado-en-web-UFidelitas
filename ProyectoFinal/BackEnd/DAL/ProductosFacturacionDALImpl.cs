@@ -10,14 +10,14 @@ namespace BackEnd.DAL
     public class ProductosFacturacionDALImpl : IProductosFacturacionDAL
     {
         private BDContext context;
-        public List<sp_obtenerFacturacionesProducto_Result> obtenerProductosFacturacion()
+        public List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id)
         {
             try
             {
-                List<sp_obtenerFacturacionesProducto_Result> productosFacturacion;
+                List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
                 using (context = new BDContext())
                 {
-                    productosFacturacion = context.sp_obtenerFacturacionesProducto().ToList();
+                    productosFacturacion = context.sp_obtenerFacturacionProductoByIdFacturacion(id).ToList();
                 }
                 return productosFacturacion;
             }
