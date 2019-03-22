@@ -57,3 +57,23 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            cargarTabla();
+        });
+
+        // funcion para cargar DataTable con información de historial
+        var cargarTabla = function () {
+            var tabla = $("#tablaCategorias").DataTable({
+                responsive: true,
+                "destroy": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        }
+    </script>
+}

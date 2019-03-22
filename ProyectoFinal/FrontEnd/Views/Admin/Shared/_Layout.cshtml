@@ -39,7 +39,7 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="@Url.Action("Index", "Home")" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>E</b></span>
                 <!-- logo for regular state and mobile devices -->
@@ -133,33 +133,33 @@
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">HEADER</li>
 
-                    <li class="active">
-                        @Html.ActionLink("Productos", "Index", "ProductosAdmin", new { area = "" }, new { @class = "active nav-link" })
+                    <li>
+                        @Html.ActionLink("Productos", "Index", "HomeAdmin")
                     </li>
 
                     <li>
-                        @Html.ActionLink("Categorias", "Index", "CategoriasAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Categorias", "Index", "CategoriasAdmin")
                     </li>
 
 
                     <li>
-                        @Html.ActionLink("Marcas", "Index", "MarcasAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Marcas", "Index", "MarcasAdmin")
                     </li>
 
                     <li>
-                        @Html.ActionLink("Facturaciones", "Index", "FacturacionesAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Facturaciones", "Index", "FacturacionesAdmin")
                     </li>
 
                     <li>
-                        @Html.ActionLink("Promociones", "Index", "PromocionesAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Promociones", "Index", "PromocionesAdmin")
                     </li>
 
                     <li>
-                        @Html.ActionLink("Usuarios", "Index", "UsuariosAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Usuarios", "Index", "UsuariosAdmin")
                     </li>
 
                     <li>
-                        @Html.ActionLink("Ventas", "Index", "VentasAdmin", new { area = "" }, new { @class = "active" })
+                        @Html.ActionLink("Ventas", "Index", "VentasAdmin")
                     </li>
 
                     <!--<li class="treeview">
@@ -194,10 +194,10 @@
         <footer class="main-footer">
             <!-- To the right -->
             <div class="pull-right hidden-xs">
-                Anything you want
+                Gabriel | Randall | Bryan | Joel
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+            <strong>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</strong>
         </footer>
 
         <!-- Control Sidebar -->
@@ -287,10 +287,5 @@
     <script src="~/Content/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
     @RenderSection("scripts", required: false)
-    <script>
-        $(function () {
-            $('#tablaCategorias').DataTable()
-        })
-    </script>
 </body>
 </html>

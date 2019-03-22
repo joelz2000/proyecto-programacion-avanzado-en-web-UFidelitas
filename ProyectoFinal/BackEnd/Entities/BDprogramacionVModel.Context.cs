@@ -485,5 +485,6 @@ namespace BackEnd.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarUsuarioPromocion", pUsuarioIdParameter, pPromocionIdParameter);
         }
+
     }
 }

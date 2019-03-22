@@ -65,9 +65,38 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: HomeAdmin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Detalles(int? id)
         {
-            return View();
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == null || id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // buscar el producto y los demas datos
+            productos producto = unidad_productos.genericDAL.Get((int) id);
+            marcas marca = unidad_marcas.genericDAL.Get((int) producto.id_marca);
+            colecciones coleccion = unidad_colecciones.genericDAL.Get((int) producto.id_coleccion);
+            categorias categoria = unidad_categorias.genericDAL.Get((int) producto.id_categoria);
+            distribuidor distribuidor = unidad_distribuidor.genericDAL.Get((int) producto.id_distribuidor);
+
+            // asignar datos al view model correspondiente
+            DetallesProductoViewModels producto_VM = new DetallesProductoViewModels
+            {
+                Id_Producto = producto.productoId,
+                Nombre = producto.nombre,
+                Precio = producto.precio,
+                Descripcion = producto.descripcion,
+                Modelo = producto.modelo,
+                cantidad = producto.cantidad,
+                marca = marca.nombre,
+                coleccion = coleccion.nombre,
+                categoria = categoria.nombre,
+                distribuidor = distribuidor.nombre
+            };
+
+
+            return View("~/Views/Admin/HomeAdmin/Detalles.cshtml", producto_VM);
         }
 
         // GET: HomeAdmin/Create
