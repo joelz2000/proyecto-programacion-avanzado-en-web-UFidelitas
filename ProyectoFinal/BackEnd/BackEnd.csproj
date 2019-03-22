@@ -61,10 +61,12 @@
     <Compile Include="DAL\IImagenProductoDAL.cs" />
     <Compile Include="DAL\ImagenDALImpl.cs" />
     <Compile Include="DAL\IProductoPromocionDAL.cs" />
+    <Compile Include="DAL\IProductosFacturacionDAL.cs" />
     <Compile Include="DAL\IRolDAL.cs" />
     <Compile Include="DAL\IUsuarioDAL.cs" />
     <Compile Include="DAL\IUsuarioPromocionDAL.cs" />
     <Compile Include="DAL\ProductoPromocionDALImpl.cs" />
+    <Compile Include="DAL\ProductosFacturacionDALImpl.cs" />
     <Compile Include="DAL\RolDALImpl.cs" />
     <Compile Include="DAL\UnidadDeTrabajo.cs" />
     <Compile Include="DAL\usuarioDALImpl.cs" />
@@ -148,6 +150,9 @@
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionId_Result.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerFacturacionProductoByIdFacturacion_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerImagenesProductoId1_Result.cs">

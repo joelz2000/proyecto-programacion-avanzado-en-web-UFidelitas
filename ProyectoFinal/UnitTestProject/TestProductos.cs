@@ -29,12 +29,12 @@ namespace UnitTestProject
 
                 productos productos = new productos
                 {
-                    nombre = "Samsung galaxy 222",
+                    nombre = "Producto 3",
                     precio = 2000,
                     descripcion = "Computadoras,tablets,celulares",
                     modelo = "122SS11",
-                    id_categoria = 1,
-                    id_marca = 1,
+                    id_categoria = 10,
+                    id_marca = 2,
                     id_coleccion = null,
                     id_bodega = null,
                     id_distribuidor = null

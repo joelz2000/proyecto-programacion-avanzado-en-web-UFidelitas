@@ -195,7 +195,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Admin\CategoriasAdminController.cs" />
+    <Compile Include="Controllers\Admin\FacturacionAdminController.cs" />
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
+    <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -203,8 +205,11 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CategoriasViewModel.cs" />
+    <Compile Include="Models\FacturacionesViewModels.cs" />
+    <Compile Include="Models\FacturacionProductosViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MarcasViewModel.cs" />
     <Compile Include="Models\ProductosViewModels.cs" />
     <Compile Include="Models\UsuariosViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -7160,6 +7165,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
+    <Content Include="Views\Admin\MarcasAdmin\Edit.cshtml" />
+    <Content Include="Views\Admin\MarcasAdmin\Delete.cshtml" />
+    <Content Include="Views\Admin\MarcasAdmin\Create.cshtml" />
+    <Content Include="Views\Admin\FacturacionAdmin\Index.cshtml" />
+    <Content Include="Views\Admin\FacturacionAdmin\ProductosFacturacion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\ProductosAdmin\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

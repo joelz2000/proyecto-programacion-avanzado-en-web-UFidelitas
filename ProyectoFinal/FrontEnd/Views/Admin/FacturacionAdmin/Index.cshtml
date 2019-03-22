@@ -1,0 +1,97 @@
+﻿@model IEnumerable<FrontEnd.Models.FacturacionesViewModels>
+
+@{
+    ViewBag.Title = "Index";
+}
+ 
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Facturaciones</h3>
+            </div>
+
+            <div class="box-body">
+                <table id="tablaFacturaciones" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.facturacionId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.fecha)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.impuesto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.subtotal)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.total)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.tipo)
+                            </th>
+                            <th>
+                                Productos
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                  
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.facturacionId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.fecha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.descripcion)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.impuesto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.subtotal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.total)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.tipo)
+                                </td>
+                                <td>@Html.ActionLink("Ver", "ProductosFacturacion", new { id = item.facturacionId })</td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.facturacionId }) |
+                                    @Html.ActionLink("Detalles", "Details", new { id = item.facturacionId })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    

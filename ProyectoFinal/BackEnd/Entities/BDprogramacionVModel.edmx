@@ -623,6 +623,9 @@
         <Function Name="sp_obtenerFacturacionId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_obtenerFacturacionProductoByIdFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pFacturacionId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_obtenerImagenesProductoId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pIdProducto" Type="int" Mode="In" />
         </Function>
@@ -1529,6 +1532,9 @@
             <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_obtenerFacturacionProductoByIdFacturacion" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result)">
+          <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -1643,6 +1649,14 @@
         <ComplexType Name="sp_obtenerImagenProducto1_Result">
           <Property Type="Int32" Name="productoId" Nullable="false" />
           <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerFacturacionProductoByIdFacturacion_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="nombre1" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="cantidad" Nullable="true" />
+          <Property Type="Double" Name="precio" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2051,6 +2065,18 @@
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenProducto1_Result">
                 <ScalarProperty Name="productoId" ColumnName="productoId" />
                 <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionProductoByIdFacturacion" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionProductoByIdFacturacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

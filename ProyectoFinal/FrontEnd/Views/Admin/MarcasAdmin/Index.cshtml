@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FrontEnd.Models.MarcasViewModel>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@Html.Raw(Session["mensaje"])
+<div class="btn-group">
+    @Html.ActionLink("Agregar Nueva Marca", "Create", null, new { @class = "btn btn-block btn-success" })
+    <br><br><br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <div class="box-header">
+                <h2 class="box-title">Marcas</h2>
+            </div>
+
+            <div class="box-body table-responsive">
+                <table id="tablaMarcas" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.descripcion)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.descripcion)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_marca }, new { @class = "btn btn-default btn-warning" })
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.id_marca }, new { @class = "btn btn-default  btn-danger" })
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,8 @@
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="~/Content/dist/css/skins/_all-skins.min.css">
 
+    <link rel="stylesheet" href="~/Content/estilos.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -135,6 +137,8 @@
 
                     <li>
                         @Html.ActionLink("Productos", "Index", "HomeAdmin")
+                    <li class="active">
+                        @Html.ActionLink("Productos", "Index", "HomeAdmin", new { area = "" }, new { @class = "active nav-link" })
                     </li>
 
                     <li>
@@ -148,6 +152,7 @@
 
                     <li>
                         @Html.ActionLink("Facturaciones", "Index", "FacturacionesAdmin")
+                        @Html.ActionLink("Facturaciones", "Index", "FacturacionAdmin", new { area = "" }, new { @class = "active" })
                     </li>
 
                     <li>
@@ -287,5 +292,13 @@
     <script src="~/Content/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
     @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            $('#tablaCategorias').DataTable()
+            $('#tablaFacturaciones').DataTable()
+        })
+
+
+    </script>
 </body>
 </html>
