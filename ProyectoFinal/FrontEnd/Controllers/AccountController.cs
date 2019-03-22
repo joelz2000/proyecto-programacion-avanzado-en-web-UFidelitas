@@ -83,7 +83,16 @@ namespace FrontEnd.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    // obtener el usuario y revisar si es admin. Si si, redireccionar a home del admin
+                    var user = new ClaimsPrincipal(AuthenticationManager.AuthenticationResponseGrant.Identity);
+                    if (user.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "HomeAdmin");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
