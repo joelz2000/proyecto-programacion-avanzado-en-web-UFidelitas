@@ -10,6 +10,6 @@ namespace BackEnd.DAL
     public interface IProductosFacturacionDAL
     {
 
-        List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id);
+        List<sp_obtenerFacturacionesProducto_Result> obtenerProductosFacturacion();
     }
 }

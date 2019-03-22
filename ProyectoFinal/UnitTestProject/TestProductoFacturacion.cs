@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BackEnd.DAL;
 using BackEnd.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,14 +13,23 @@ namespace UnitTestProject
         [TestMethod]
         public void obtenerProductosFacturacionByIdFacturacion()
         {
-            List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
+            int cantidad;
+            List<facturacion_producto> productos;
+            using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
+            {
+                productos = unidad.genericDAL.GetAll().ToList();
+            }
+
+            cantidad = productos.Count;
+           /* List<sp_obtenerFacturacionesProducto_Result> productosFacturacion;
             IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
 
-            productosFacturacion = productosFacturacionDAL.obtenerProductosFacturacion(1);
+            productosFacturacion = productosFacturacionDAL.obtenerProductosFacturacion();
+
             int cantidad = productosFacturacion.Count;
+            */
 
-
-            Assert.AreEqual(1, cantidad);
+            Assert.AreEqual(2, cantidad);
 
         }
     }
