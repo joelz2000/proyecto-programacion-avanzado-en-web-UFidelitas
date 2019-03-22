@@ -13,21 +13,21 @@ namespace UnitTestProject
         [TestMethod]
         public void obtenerProductosFacturacionByIdFacturacion()
         {
-            int cantidad;
+           /* int cantidad;
             List<facturacion_producto> productos;
             using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
             {
                 productos = unidad.genericDAL.GetAll().ToList();
             }
 
-            cantidad = productos.Count;
-           /* List<sp_obtenerFacturacionesProducto_Result> productosFacturacion;
+            cantidad = productos.Count;*/
+            List<sp_obtenerFacturacionesProducto_Result> productosFacturacion;
             IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
 
-            productosFacturacion = productosFacturacionDAL.obtenerProductosFacturacion();
+            productosFacturacion = productosFacturacionDAL.obtenerProductosFacturacion().ToList();
 
             int cantidad = productosFacturacion.Count;
-            */
+            
 
             Assert.AreEqual(2, cantidad);
 
