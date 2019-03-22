@@ -124,7 +124,7 @@ namespace FrontEnd.Controllers.Admin
         // GET: Facturacion/Details/5
         public ActionResult ProductosFacturacion(int id)
         {
-
+            return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml");
             /*
             List<facturacion_producto> productosFacturacion;
             using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
