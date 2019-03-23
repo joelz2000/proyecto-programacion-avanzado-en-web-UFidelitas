@@ -21,9 +21,24 @@
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="../Content/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                            <p>
-                               @Model.nombre
+                            <p id="saludo">
                             </p>
+                            <script>
+                                var today = new Date()
+                                var curHr = today.getHours()
+
+                                if (curHr < 12) {
+                                    document.getElementById("saludo").innerHTML = "Buenos dias, ";
+                                } else if (curHr < 18) {
+                                    document.getElementById("saludo").innerHTML = "Buenas tardes, ";
+                                } else {
+                                    document.getElementById("saludo").innerHTML = "Buenas noches, ";
+                                }
+                            </script>
+                            <p>
+                                <strong>@Model.nombre</strong>
+                            </p>
+
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">

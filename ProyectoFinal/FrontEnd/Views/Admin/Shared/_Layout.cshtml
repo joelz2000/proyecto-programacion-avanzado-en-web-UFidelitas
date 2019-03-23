@@ -41,7 +41,7 @@
         <!-- Main Header -->
         <header class="main-header">
             <!-- Logo -->
-            <a href="@Url.Action("Index", "Home")" class="logo">
+            <a href="@Url.Action("Index", "HomeAdmin")" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>E</b></span>
                 <!-- logo for regular state and mobile devices -->
@@ -63,25 +63,12 @@
 
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-
-                <!-- search form (Optional) -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">HEADER</li>
+                    <li class="header">Menu</li>
 
                     <li>
-                        @Html.ActionLink("Productos", "Index", "HomeAdmin")
+                        @Html.ActionLink("Productos", "Index", "ProductosAdmin")
                     </li>
 
                     <li>
