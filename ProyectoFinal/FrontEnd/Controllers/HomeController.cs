@@ -9,20 +9,26 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private static BDContext context = new BDContext();
         private UnidadDeTrabajo<usuarios> unidad_Usuario = new UnidadDeTrabajo<usuarios>(context);
         public ActionResult Index()
         {
-
-            // usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(User.Identity.GetUserId())).Single();
-
-            return View();
+            // revisar si el usuario no es administrador
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "HomeAdmin");
+            }
+            // usuario no es admin, continuar
+            else
+            {
+                // usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(User.Identity.GetUserId())).Single();
+                return View();
+            }
         }
 
-        [AllowAnonymous]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -30,7 +36,6 @@ namespace FrontEnd.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

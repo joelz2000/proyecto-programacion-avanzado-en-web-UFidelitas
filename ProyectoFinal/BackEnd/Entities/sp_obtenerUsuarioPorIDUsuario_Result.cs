@@ -11,7 +11,7 @@ namespace BackEnd.Entities
 {
     using System;
     
-    public partial class sp_obtenerUsuariosId_Result
+    public partial class sp_obtenerUsuarioPorIDUsuario_Result
     {
         public int userId { get; set; }
         public string nombre { get; set; }

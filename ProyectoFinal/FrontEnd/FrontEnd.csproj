@@ -197,6 +197,7 @@
     <Compile Include="Controllers\Admin\CategoriasAdminController.cs" />
     <Compile Include="Controllers\Admin\FacturacionAdminController.cs" />
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
+    <Compile Include="Controllers\Admin\LayoutController.cs" />
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -7162,9 +7163,9 @@
     <Content Include="Views\Admin\_ViewStart.cshtml" />
     <Content Include="Views\Admin\CategoriasAdmin\Delete.cshtml" />
     <Content Include="Views\Admin\HomeAdmin\Detalles.cshtml" />
+    <Content Include="Views\Admin\Shared\_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
     <Content Include="Views\Admin\MarcasAdmin\Edit.cshtml" />
     <Content Include="Views\Admin\MarcasAdmin\Delete.cshtml" />
@@ -7175,6 +7176,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Admin\ProductosAdmin\" />
+    <Folder Include="Views\Layout\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

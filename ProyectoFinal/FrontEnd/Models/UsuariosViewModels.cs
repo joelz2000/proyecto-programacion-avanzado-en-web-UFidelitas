@@ -31,6 +31,14 @@ namespace FrontEnd.Models
 
         [Required]
         private int rol;
+    }
+
+    public class NavbarUsuarioViewModel
+    {
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nombre")]
+        public string nombre;
 
     }
 

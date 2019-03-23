@@ -179,13 +179,13 @@
     <Compile Include="Entities\sp_obtenerRolUserId_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_obtenerUsuarioPorIDUsuario_Result.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_obtenerUsuariosId_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerUsuarios_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\sysdiagrams.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\usuarios.cs">
