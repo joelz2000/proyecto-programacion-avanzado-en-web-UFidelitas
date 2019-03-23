@@ -124,7 +124,56 @@ namespace FrontEnd.Controllers.Admin
         // GET: Facturacion/Details/5
         public ActionResult ProductosFacturacion(int id)
         {
-            return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml");
+            List<facturacion_producto> productosFacturacion;
+            List<productos> productos;
+
+            using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
+            {
+                productosFacturacion = unidad.genericDAL.GetAll().ToList();
+            }
+
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+                productos = unidad.genericDAL.GetAll().ToList();
+            }
+
+            List<FacturacionProductosViewModels> productoVM = new List<FacturacionProductosViewModels>();
+            FacturacionProductosViewModels facturacion_Producto;
+            productos producto = new productos();
+
+            foreach (var item in productosFacturacion)
+            {
+                if (item.facturacionId == 1)
+                {
+                    facturacion_Producto = new FacturacionProductosViewModels
+                    {
+                      
+                        facturacionId = item.facturacionId,
+                        cantidad = item.cantidad
+                    };
+
+                    foreach (var itemProducto in productos)
+                    {
+                        if (itemProducto.productoId == item.productoId)
+                        {
+                            producto = new productos
+                            {
+                                nombre =itemProducto.nombre
+                            };
+                        }
+
+
+                    }
+                    facturacion_Producto = new FacturacionProductosViewModels
+                    {
+
+                        nombre1 = producto.nombre,
+                        precio = producto.precio
+                    };
+                    productoVM.Add(facturacion_Producto);
+                }
+            }
+            return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml", productoVM);
             /*
             List<facturacion_producto> productosFacturacion;
             using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))

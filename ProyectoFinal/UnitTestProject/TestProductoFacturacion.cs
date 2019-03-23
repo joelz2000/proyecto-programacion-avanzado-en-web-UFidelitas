@@ -14,7 +14,6 @@ namespace UnitTestProject
         public void obtenerProductosFacturacionByIdFacturacion()
         {
             int resultado;
-
             
 
             List<facturacion_producto> productosFacturacion;
@@ -25,11 +24,14 @@ namespace UnitTestProject
                 productosFacturacion = unidad.genericDAL.GetAll().ToList();
             }
 
-
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+                productos = unidad.genericDAL.GetAll().ToList();
+            }
 
             List<facturacion_producto> productoVM = new List<facturacion_producto>();
             facturacion_producto facturacion_Producto;
-
+            productos producto;
             
             foreach (var item in productosFacturacion)
             {
@@ -41,7 +43,19 @@ namespace UnitTestProject
                         facturacionId = item.facturacionId,
                         cantidad = item.cantidad
                     };
-                  
+
+                    foreach (var itemProducto in productos)
+                    {
+                        if (itemProducto.productoId == item.productoId)
+                        {
+                            producto = new productos
+                            {
+                                nombre = itemProducto.nombre
+                            };
+                        }
+
+                            
+                    }
                     productoVM.Add(facturacion_Producto);
                 }
             }
@@ -49,13 +63,13 @@ namespace UnitTestProject
 
             
             resultado = productoVM.Count;
-
-            /* List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
+            /*
+            List<sp_obtenerFacturacionProductoByIdFacturacion_Result> productosFacturacion;
              IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
 
              productosFacturacion = productosFacturacionDAL.obtenerProductosFacturacion(1).ToList();
 
-             int cantidad = productosFacturacion.Count;
+              resultado = productosFacturacion.Count;
 
              */
              Assert.AreEqual(1, resultado);

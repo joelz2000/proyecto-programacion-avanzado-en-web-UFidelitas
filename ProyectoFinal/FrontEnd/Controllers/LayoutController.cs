@@ -20,21 +20,26 @@ namespace FrontEnd.Controllers.Admin
         [ChildActionOnly]
         public virtual PartialViewResult Navbar()
         {
-
-            string usuario_id = User.Identity.GetUserId();
-            // usuarios usuario = context.sp_obtenerUsuarioPorIDUsuario(usuario_id).FirstOrDefault();
-            usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(usuario_id)).FirstOrDefault();
-            NavbarUsuarioViewModel info_usuario = new NavbarUsuarioViewModel();
-            info_usuario.nombre = usuario.nombre + " " + usuario.apellidos;
-            if (User.IsInRole("Admin"))
+            if (Request.IsAuthenticated)
             {
-                return PartialView("~/Views/Admin/Shared/_Login.cshtml", info_usuario);
+                string usuario_id = User.Identity.GetUserId();
+                // usuarios usuario = context.sp_obtenerUsuarioPorIDUsuario(usuario_id).FirstOrDefault();
+                usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(usuario_id)).FirstOrDefault();
+                NavbarUsuarioViewModel info_usuario = new NavbarUsuarioViewModel();
+                info_usuario.nombre = usuario.nombre + " " + usuario.apellidos;
+                if (User.IsInRole("Admin"))
+                {
+                    return PartialView("~/Views/Admin/Shared/_Login.cshtml", info_usuario);
+                }
+                else
+                {
+                    return PartialView("~/Views/Shared/_LoginPartial.cshtml", info_usuario);
+                }
             }
             else
             {
-                return PartialView("~/Views/Shared/_LoginPartial.cshtml", info_usuario);
+                return PartialView("~/Views/Shared/_LoginPartial.cshtml");
             }
-            
         }
     }
 }
