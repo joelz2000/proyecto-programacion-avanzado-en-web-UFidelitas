@@ -16,10 +16,11 @@ namespace FrontEnd.Controllers.Admin
         private static BDContext context = new BDContext();
         private UnidadDeTrabajo<usuarios> unidad_Usuario = new UnidadDeTrabajo<usuarios>(context);
 
-        // GET: Layout/AdminNavbar
+        // GET: Layout/Navbar
         [ChildActionOnly]
-        public virtual PartialViewResult AdminNavbar()
+        public virtual PartialViewResult Navbar()
         {
+
             string usuario_id = User.Identity.GetUserId();
             // usuarios usuario = context.sp_obtenerUsuarioPorIDUsuario(usuario_id).FirstOrDefault();
             usuarios usuario = context.usuarios.Where(u => u.Usuario_ID.Equals(usuario_id)).FirstOrDefault();

@@ -4,11 +4,13 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class MarcasAdminController : Controller
     {
         // GET: MarcasAdmin
@@ -58,7 +60,6 @@ namespace FrontEnd.Controllers.Admin
         [HttpPost]
         public ActionResult Create(MarcasViewModel marcaVM)
         {
-
             try
             {
                 // TODO: Add insert logic here

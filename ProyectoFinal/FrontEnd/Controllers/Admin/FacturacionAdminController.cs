@@ -4,14 +4,16 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class FacturacionAdminController : Controller
     {
-        // GET: Facturacion
+        // GET: FacturacionC:\Users\gfumanaf\Documents\Universidad\I_CUA_2019\proyecto-programacion-avanzado-en-web-UFidelitas\ProyectoFinal\FrontEnd\Controllers\Admin\FacturacionAdminController.cs
         public ActionResult Index()
         {
             string mensaje = "";
@@ -86,7 +88,7 @@ namespace FrontEnd.Controllers.Admin
         // POST: Facturacion/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
-        {
+        {    
             try
             {
                 // TODO: Add update logic here
@@ -111,8 +113,6 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch

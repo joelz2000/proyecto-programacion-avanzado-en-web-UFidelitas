@@ -197,10 +197,11 @@
     <Compile Include="Controllers\Admin\CategoriasAdminController.cs" />
     <Compile Include="Controllers\Admin\FacturacionAdminController.cs" />
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
-    <Compile Include="Controllers\Admin\LayoutController.cs" />
+    <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

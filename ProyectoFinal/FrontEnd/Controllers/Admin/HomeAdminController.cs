@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
-    [Authorize]
+    [CustomAuthorize(Roles = "Admin")]
     public class HomeAdminController : Controller
     {
 
@@ -24,44 +24,36 @@ namespace FrontEnd.Controllers.Admin
         // GET: HomeAdmin
         public ActionResult Index()
         {
-            // revisar si el usuario no es administrador
-            if (!User.IsInRole("Admin"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            // usuario es admin, continuar
-            else
-            {
-                List<productos> lista_productos = unidad_productos.genericDAL.GetAll().ToList();
-                List<marcas> lista_marcas = unidad_marcas.genericDAL.GetAll().ToList();
-                IndexProductoViewModels producto_VM;
-                List<IndexProductoViewModels> lista_productos_VM = new List<IndexProductoViewModels>();
+            
+            List<productos> lista_productos = unidad_productos.genericDAL.GetAll().ToList();
+            List<marcas> lista_marcas = unidad_marcas.genericDAL.GetAll().ToList();
+            IndexProductoViewModels producto_VM;
+            List<IndexProductoViewModels> lista_productos_VM = new List<IndexProductoViewModels>();
 
-                // asignar valores correspondientes
-                foreach(var producto in lista_productos)
+            // asignar valores correspondientes
+            foreach(var producto in lista_productos)
+            {
+                foreach(var marca in lista_marcas)
                 {
-                    foreach(var marca in lista_marcas)
+                    if(marca.id_marca == producto.id_marca)
                     {
-                        if(marca.id_marca == producto.id_marca)
+                        producto_VM = new IndexProductoViewModels()
                         {
-                            producto_VM = new IndexProductoViewModels()
-                            {
-                                Id_Producto = producto.productoId,
-                                Nombre = producto.nombre,
-                                Precio = producto.precio,
-                                Descripcion = producto.descripcion,
-                                Modelo = producto.modelo,
-                                cantidad = producto.cantidad,
-                                marca = marca.nombre
-                            };
-                            lista_productos_VM.Add(producto_VM);
-                            break;
-                        }
+                            Id_Producto = producto.productoId,
+                            Nombre = producto.nombre,
+                            Precio = producto.precio,
+                            Descripcion = producto.descripcion,
+                            Modelo = producto.modelo,
+                            cantidad = producto.cantidad,
+                            marca = marca.nombre
+                        };
+                        lista_productos_VM.Add(producto_VM);
+                        break;
                     }
                 }
-
-                return View("~/Views/Admin/HomeAdmin/Index.cshtml", lista_productos_VM);
             }
+
+            return View("~/Views/Admin/HomeAdmin/Index.cshtml", lista_productos_VM);
         }
 
         // GET: HomeAdmin/Details/5
@@ -131,16 +123,8 @@ namespace FrontEnd.Controllers.Admin
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
+            
         }
 
         // GET: HomeAdmin/Delete/5
@@ -153,16 +137,7 @@ namespace FrontEnd.Controllers.Admin
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }
