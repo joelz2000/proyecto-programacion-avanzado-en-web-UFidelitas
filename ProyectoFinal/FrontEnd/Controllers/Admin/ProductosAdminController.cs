@@ -96,6 +96,7 @@ namespace FrontEnd.Controllers.Admin
             List<distribuidor> distribuidores = unidad_distribuidor.genericDAL.GetAll().ToList();
             List<categorias> categorias = unidad_categorias.genericDAL.GetAll().ToList();
             List<marcas> marcas = unidad_marcas.genericDAL.GetAll().ToList();
+            List<colecciones> colecciones = unidad_colecciones.genericDAL.GetAll().ToList();
 
             AgregarProductoViewModels productoVM = new AgregarProductoViewModels();
 
@@ -127,6 +128,15 @@ namespace FrontEnd.Controllers.Admin
                 });
             }
 
+            foreach(var coleccion in colecciones)
+            {
+                productoVM.lista_colecciones.Add(new SelectListItem()
+                {
+                    Text = coleccion.nombre,
+                    Value = coleccion.id_coleccion.ToString()
+                });
+            }
+
             return View("~/Views/Admin/ProductosAdmin/Create.cshtml", productoVM);
         }
 
@@ -147,7 +157,8 @@ namespace FrontEnd.Controllers.Admin
                     cantidad = productoVM.cantidad,
                     id_marca = productoVM.id_marca,
                     id_distribuidor = productoVM.id_distribuidor,
-                    id_categoria = productoVM.id_categoria
+                    id_categoria = productoVM.id_categoria,
+                    id_coleccion = productoVM.id_coleccion
                 };
 
                 unidad_productos.genericDAL.Add(producto);

@@ -52,6 +52,11 @@
             @Html.ValidationMessageFor(producto => producto.id_categoria, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
+            @Html.LabelFor(producto => producto.id_coleccion)
+            @Html.DropDownListFor(producto => producto.id_coleccion, new SelectList(Model.lista_colecciones, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.id_coleccion, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Guardar" />
         </div>
     </div>

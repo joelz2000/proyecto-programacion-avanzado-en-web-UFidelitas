@@ -4,6 +4,7 @@
 
     ViewBag.Title = "Index";
 }
+@Html.Raw(Session["mensaje"])
 <div class="btn-group">
     @Html.ActionLink("Agregar nuevo producto", "Create", null, new { @class = "btn btn-block btn-success" })
     <br><br><br>
@@ -61,9 +62,9 @@
                                     <td>@producto.cantidad</td>
                                     <td>@producto.marca</td>
                                     <td>
-                                        @Html.ActionLink("Detalles", "Detalles", "HomeAdmin", new { id = producto.Id_Producto }, null) |
-                                        @Html.ActionLink("Editar", "Editar", "HomeAdmin", new { id = producto.Id_Producto }, null) |
-                                        @Html.ActionLink("Eliminar", "Eliminar", "HomeAdmin", new { id = producto.Id_Producto }, null)
+                                        @Html.ActionLink("Detalles", "Detalles", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
+                                        @Html.ActionLink("Editar", "Editar", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
+                                        @Html.ActionLink("Eliminar", "Eliminar", "ProductosAdmin", new { id = producto.Id_Producto }, null)
                                     </td>
                                 </tr>
                             }
