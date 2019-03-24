@@ -4,60 +4,78 @@
     ViewBag.Title = "ProductosFacturacion";
 }
 
-<h2>ProductosFacturacion</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Productos facturacion</h3>
+            </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.facturacionId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.productoId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cantidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.precio)
-        </th>
-        <th></th>
-    </tr>
+            <div class="box-body">
+                <table id="tablaProductosFacturacion" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.productoId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre1)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.cantidad)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.precio)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.productoId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.cantidad)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.precio)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.facturacionId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productoId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.precio)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.facturacionId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.facturacionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.facturacionId })
-        </td>
-    </tr>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            cargarTabla();
+        });
+
+        // funcion para cargar DataTable con información de historial
+        var cargarTabla = function () {
+            var tabla = $("#tablaProductosFacturacion").DataTable({
+                responsive: true,
+                "destroy": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        }
+    </script>
 }
-
-</table>
