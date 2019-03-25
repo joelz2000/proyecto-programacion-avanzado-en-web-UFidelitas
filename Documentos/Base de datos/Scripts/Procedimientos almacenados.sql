@@ -539,13 +539,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-Create PROCEDURE [dbo].[sp_agregarFacturacionProducto]
+Create or alter PROCEDURE [dbo].[sp_agregarFacturacionProducto]
 	
 	@pFacturacionId int,
 	@pProductoId int,
 	@pCantidad int
 	
 AS
+DECLARE @pSubtotal float;
+ DECLARE @pTotal float;
+ DECLARE @impuestoConvertido float;
+ DECLARE @precio float;
+ DECLARE @pImpuesto int;
 BEGIN
 
 	INSERT INTO dbo.facturacion_producto(productoId,facturacionId, cantidad)
@@ -553,6 +558,24 @@ BEGIN
 
 	update dbo.productos set cantidad = (cantidad - @pCantidad) 
 	where productoId =  @pProductoId;
+
+	SET @pTotal = (SELECT sum(p.precio * fp.cantidad) FROM dbo.productos p
+					inner join dbo.facturacion_producto fp on p.productoId=fp.productoId
+					where facturacionId = @pFacturacionId);
+
+	 set @pImpuesto = (select  impuesto from dbo.facturaciones where facturacionId = @pFacturacionId);
+
+	 SET @impuestoConvertido = CAST(@pImpuesto AS FLOAT) /   CAST(100 AS FLOAT)
+	 
+	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );
+	 
+	
+	UPDATE dbo.facturaciones 
+	SET  
+	impuesto = @pImpuesto,
+	subtotal = @pSubtotal,
+	total = @pTotal
+	WHERE facturacionId = @pFacturacionId;
 
 END
 
