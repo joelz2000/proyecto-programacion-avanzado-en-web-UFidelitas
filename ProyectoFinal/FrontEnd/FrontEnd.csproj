@@ -7168,6 +7168,7 @@
     <Content Include="Views\Admin\ProductosAdmin\Index.cshtml" />
     <Content Include="Views\Admin\ProductosAdmin\Detalles.cshtml" />
     <Content Include="Views\Admin\ProductosAdmin\Create.cshtml" />
+    <Content Include="Views\Admin\ProductosAdmin\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />

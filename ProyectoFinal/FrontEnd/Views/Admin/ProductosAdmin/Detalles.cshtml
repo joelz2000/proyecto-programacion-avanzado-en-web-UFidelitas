@@ -4,87 +4,43 @@
     ViewBag.Title = "Detalles";
 }
 
-<h2>Detalles</h2>
+<div class="container">
+    <h2>Detalles</h2>
 
-<div>
-    <h4>Mostrando detalles de @Model.Nombre</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Modelo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Modelo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.cantidad)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.cantidad)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.marca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.marca)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.distribuidor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.distribuidor)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.coleccion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.coleccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.categoria)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.categoria)
-        </dd>
-
-    </dl>
+    <div>
+        <h4>Mostrando detalles de @Model.Nombre</h4>
+        <hr />
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                        <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                        <th>@Html.DisplayNameFor(model => model.Modelo)</th>
+                        <th>@Html.DisplayNameFor(model => model.cantidad)</th>
+                        <th>@Html.DisplayNameFor(model => model.marca)</th>
+                        <th>@Html.DisplayNameFor(model => model.distribuidor)</th>
+                        <th>@Html.DisplayFor(model => model.distribuidor)</th>
+                        <th>@Html.DisplayNameFor(model => model.categoria)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Html.DisplayFor(model => model.Nombre)</td>
+                        <td>@Html.DisplayFor(model => model.Precio)</td>
+                        <td>@Html.DisplayFor(model => model.Descripcion)</td>
+                        <td>@Html.DisplayFor(model => model.Modelo)</td>
+                        <td>@Html.DisplayFor(model => model.cantidad)</td>
+                        <td>@Html.DisplayFor(model => model.marca)</td>
+                        <td>@Html.DisplayFor(model => model.distribuidor)</td>
+                        <td>@Html.DisplayFor(model => model.coleccion)</td>
+                        <td>@Html.DisplayFor(model => model.categoria)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+    @Html.ActionLink("Editar", "Editar", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.Id_Producto }) |
-    @Html.ActionLink("Volver", "Index")
-</p>

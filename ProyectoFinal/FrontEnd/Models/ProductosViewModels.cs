@@ -92,22 +92,27 @@ namespace FrontEnd.Models
 
         [Required]
         [Display(Name = "Producto")]
+        [DataType(DataType.Text)]
         public string Nombre { get; set; }
 
         [Required]
         [Display(Name = "Precio")]
+        [DataType(DataType.Currency)]
         public double? Precio { get; set; }
 
         [Required]
         [Display(Name = "Descripcion")]
+        [DataType(DataType.MultilineText)]
         public string Descripcion { get; set; }
 
         [Required]
         [Display(Name = "Modelo")]
+        [DataType(DataType.MultilineText)]
         public string Modelo { get; set; }
 
         [Required]
         [Display(Name = "Cantidad")]
+        [DataType(DataType.Currency)]
         public int? cantidad { get; set; }
 
         [Required]
@@ -128,7 +133,64 @@ namespace FrontEnd.Models
         [Display(Name = "Coleccion")]
         public int id_coleccion { get; set; }
         public List<SelectListItem> lista_colecciones = new List<SelectListItem>();
-        
-
     }
+
+    // clase utilizada para obtener los datos de producto para editar
+    public class EditarProductoViewModels
+    {
+        [Required]
+        [Key]
+        [Display(Name = "Codigo")]
+        public int Id_Producto { get; set; }
+
+        [Required]
+        [Display(Name = "Producto")]
+        [DataType(DataType.Text)]
+        public string Nombre { get; set; }
+
+        [Required]
+        [Display(Name = "Precio")]
+        [DataType(DataType.Currency)]
+        public double? Precio { get; set; }
+
+        [Required]
+        [Display(Name = "Descripcion")]
+        [DataType(DataType.MultilineText)]
+        public string Descripcion { get; set; }
+
+        [Required]
+        [Display(Name = "Modelo")]
+        [DataType(DataType.MultilineText)]
+        public string Modelo { get; set; }
+
+        [Required]
+        [Display(Name = "Cantidad")]
+        [DataType(DataType.Currency)]
+        public int? cantidad { get; set; }
+
+        [Required]
+        [Display(Name = "Marca")]
+        public int? id_marca_seleccionada { get; set; }
+        public marcas marca { get; set; }
+        public List<SelectListItem> lista_marcas = new List<SelectListItem>();
+
+        [Required]
+        [Display(Name = "Distribuidor")]
+        public int? id_distribuidor_seleccionado { get; set; }
+        public distribuidor distribuidor { get; set; }
+        public List<SelectListItem> lista_distribuidores = new List<SelectListItem>();
+
+        [Required]
+        [Display(Name = "Categoria")]
+        public int? id_categoria_seleccionada { get; set; }
+        public categorias categoria { get; set; }
+        public List<SelectListItem> lista_categorias = new List<SelectListItem>();
+
+        [Display(Name = "Coleccion")]
+        public int? id_coleccion_seleccionada { get; set; }
+        public colecciones coleccion { get; set; }        
+        public List<SelectListItem> lista_colecciones = new List<SelectListItem>();
+    }
+
+
 }

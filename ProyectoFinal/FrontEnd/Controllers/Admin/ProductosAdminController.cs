@@ -3,6 +3,7 @@ using BackEnd.Entities;
 using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -185,16 +186,168 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: HomeAdmin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Editar(int id)
         {
-            return View();
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // buscar el producto y los demas datos
+            productos producto = unidad_productos.genericDAL.Get(id);
+            List<marcas> lista_marcas = unidad_marcas.genericDAL.GetAll().ToList();
+            List<colecciones> lista_colecciones = unidad_colecciones.genericDAL.GetAll().ToList();
+            List<categorias> lista_categorias = unidad_categorias.genericDAL.GetAll().ToList();
+            List<distribuidor> lista_distribuidor = unidad_distribuidor.genericDAL.GetAll().ToList();
+
+            // asignar los valores necesarios al objecto de producto 
+            EditarProductoViewModels producto_VM = new EditarProductoViewModels
+            {
+                Id_Producto = producto.productoId,
+                Nombre = producto.nombre,
+                Precio = producto.precio,
+                Descripcion = producto.descripcion,
+                Modelo = producto.modelo,
+                cantidad = producto.cantidad
+            };
+
+            // obtener el objeto de marcas que tiene todos los datos de la marca del producto
+            foreach (var marca in lista_marcas)
+            {
+                if (producto.id_marca == marca.id_marca)
+                {
+                    producto_VM.marca = marca;
+                    break;
+                }
+            }
+
+            // obtener el objeto de coleccion que tiene todos los datos de la coleccion del producto
+            foreach (var coleccion in lista_colecciones)
+            {
+                if(producto.id_coleccion == coleccion.id_coleccion)
+                {
+                    producto_VM.coleccion = coleccion;
+                    break;
+                }
+            }
+
+            // obtener el objeto de coleccion que tiene todos los datos de la coleccion del producto
+            foreach(var categoria in lista_categorias)
+            {
+                if(producto.id_categoria == categoria.id_categoria)
+                {
+                    producto_VM.categoria = categoria;
+                    break;
+                }
+            }
+
+            // obtener el objeto de coleccion que tiene todos los datos de la coleccion del producto
+            foreach(var distribuidor in lista_distribuidor)
+            {
+                if(producto.id_distribuidor == distribuidor.id_distribuidor)
+                {
+                    producto_VM.distribuidor = distribuidor;
+                    break;
+                }
+            }
+
+            // agregar a una lista todas las marcas
+            foreach (var marca in lista_marcas)
+            {
+                if (marca.id_marca != producto.id_marca)
+                {
+                    producto_VM.lista_marcas.Add(new SelectListItem()
+                    {
+                        Text = marca.nombre,
+                        Value = marca.id_marca.ToString()
+                    });
+                }
+            }
+
+            // agregar a una lista todas las colecciones
+            foreach (var coleccion in lista_colecciones)
+            {
+                if (coleccion.id_coleccion != producto.id_coleccion)
+                {
+                    producto_VM.lista_categorias.Add(new SelectListItem()
+                    {
+                        Text = coleccion.nombre,
+                        Value = coleccion.id_coleccion.ToString()
+                    });
+                }
+            }
+
+            // agregar a una lista todas las categorias
+            foreach (var categoria in lista_categorias)
+            {
+                if(categoria.id_categoria != producto.id_categoria)
+                {
+                    producto_VM.lista_categorias.Add(new SelectListItem()
+                    {
+                        Text = categoria.nombre,
+                        Value = categoria.id_categoria.ToString()
+                    });
+                }
+            }
+
+            // agregar a una lista todos los distribuidores
+            foreach (var distribuidor in lista_distribuidor)
+            {
+                if(distribuidor.id_distribuidor == producto.id_distribuidor)
+                {
+                    producto_VM.lista_distribuidores.Add(new SelectListItem()
+                    {
+                        Text = distribuidor.nombre,
+                        Value = distribuidor.id_distribuidor.ToString()
+                    });
+                }
+            }
+
+            producto_VM.lista_marcas.Insert(0, new SelectListItem() { Text = producto_VM.marca.nombre, Value = producto_VM.marca.id_marca.ToString()});
+            producto_VM.lista_colecciones.Insert(0, new SelectListItem() { Text = producto_VM.coleccion.nombre, Value = producto_VM.coleccion.id_coleccion.ToString()});
+            producto_VM.lista_categorias.Insert(0, new SelectListItem() { Text = producto_VM.categoria.nombre, Value = producto_VM.categoria.id_categoria.ToString()});
+            producto_VM.lista_distribuidores.Insert(0, new SelectListItem() { Text = producto_VM.distribuidor.nombre, Value = producto_VM.distribuidor.id_distribuidor.ToString()});
+
+
+            return View("~/Views/Admin/ProductosAdmin/Editar.cshtml", producto_VM);
         }
 
         // POST: HomeAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(EditarProductoViewModels producto_VM)
         {
-            return View();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    productos producto = new productos
+                    {
+                        productoId = producto_VM.Id_Producto,
+                        nombre = producto_VM.Nombre,
+                        precio = producto_VM.Precio,
+                        descripcion = producto_VM.Descripcion,
+                        modelo = producto_VM.Modelo,
+                        cantidad = producto_VM.cantidad,
+                        id_marca = producto_VM.id_marca_seleccionada,
+                        id_categoria = producto_VM.id_categoria_seleccionada,
+                        id_coleccion = producto_VM.id_coleccion_seleccionada,
+                        id_distribuidor = producto_VM.id_distribuidor_seleccionado
+
+                    };
+                    unidad_productos.genericDAL.Update(producto);
+                    unidad_productos.Complete();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException /* dex */ )
+            {
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                ModelState.AddModelError("", "Ocurrio un error, por favor intentelo de nuevo");
+            }
+            return View("~/Views/Admin/ProductosAdmin/Editar.cshtml");
 
         }
 

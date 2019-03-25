@@ -1,9 +1,10 @@
-﻿@model FrontEnd.Models.AgregarProductoViewModels
+﻿@model FrontEnd.Models.EditarProductoViewModels
 @{
-    ViewBag.Title = "Agregar";
+    /**/
+    ViewBag.Title = "Editar";
 }
 
-<h2>Agregar nuevo producto</h2>
+<h2>Editando @Model.Nombre</h2>
 <div class="container">
     <hr />
     @using (Html.BeginForm())
@@ -11,6 +12,7 @@
         @Html.AntiForgeryToken();
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(producto => producto.Id_Producto, new { id = "Id_Producto" })
             <div class="form-group">
                 @Html.LabelFor(producto => producto.Nombre)
                 @Html.TextBoxFor(producto => producto.Nombre, new { @class = "form-control" })
@@ -37,29 +39,31 @@
                 @Html.ValidationMessageFor(producto => producto.cantidad, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(producto => producto.id_distribuidor)
-                @Html.DropDownListFor(producto => producto.id_distribuidor, new SelectList(Model.lista_distribuidores, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_distribuidor, "", new { @class = "text-danger" })
+                @Html.LabelFor(producto => producto.id_distribuidor_seleccionado)
+                @Html.DropDownListFor(producto => producto.id_distribuidor_seleccionado, new SelectList(Model.lista_distribuidores, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(producto => producto.id_distribuidor_seleccionado, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(producto => producto.id_marca)
-                @Html.DropDownListFor(producto => producto.id_marca, new SelectList(Model.lista_marcas, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_marca, "", new { @class = "text-danger" })
+                @Html.LabelFor(producto => producto.id_marca_seleccionada)
+                @Html.DropDownListFor(producto => producto.id_marca_seleccionada, new SelectList(Model.lista_marcas, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(producto => producto.id_marca_seleccionada, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(producto => producto.id_categoria)
-                @Html.DropDownListFor(producto => producto.id_categoria, new SelectList(Model.lista_categorias, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_categoria, "", new { @class = "text-danger" })
+                @Html.LabelFor(producto => producto.id_categoria_seleccionada)
+                @Html.DropDownListFor(producto => producto.id_categoria_seleccionada, new SelectList(Model.lista_categorias, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(producto => producto.id_categoria_seleccionada, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(producto => producto.id_coleccion)
-                @Html.DropDownListFor(producto => producto.id_coleccion, new SelectList(Model.lista_colecciones, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_coleccion, "", new { @class = "text-danger" })
+                @Html.LabelFor(producto => producto.id_coleccion_seleccionada)
+                @Html.DropDownListFor(producto => producto.id_coleccion_seleccionada, new SelectList(Model.lista_colecciones, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(producto => producto.id_coleccion_seleccionada, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-                <input type="submit" class="btn btn-primary" value="Guardar" />
+                <input type="submit" class="pull-right btn btn-primary" value="Editar" />
             </div>
         </div>
     }
 </div>
+
+<br /> <br />
