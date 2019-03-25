@@ -10,10 +10,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_agregarRol 
+CREATE or alter PROCEDURE sp_agregarRol 
 	-- Add the parameters for the stored procedure here
 	@pNombre varchar(25),
-	@pDescripcion text
+	@pDescripcion text,
+	@pEstadoId int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -21,7 +22,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO dbo.Rol(NOMBRE, DESCRIPCION) VALUES(@pNombre, @pDescripcion);
+	INSERT INTO dbo.Rol(NOMBRE, DESCRIPCION, id_estado) VALUES(@pNombre, @pDescripcion, @pEstadoId);
 END
 GO
 
@@ -91,10 +92,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_actualizarRol
+CREATE or alter PROCEDURE sp_actualizarRol
 	@pId int,
 	@pNombre varchar(25),
-	@pDescripcion text
+	@pDescripcion text,
+	@pEstadoId int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -103,7 +105,7 @@ BEGIN
 
     -- Insert statements for procedure here
 	UPDATE dbo.rol 
-	set NOMBRE = @pNombre, DESCRIPCION = @pDescripcion 
+	set NOMBRE = @pNombre, DESCRIPCION = @pDescripcion, id_estado = @pEstadoId
 	WHERE ROLID = @pId;
 END
 GO
@@ -139,7 +141,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_agregarUsuario
+CREATE or alter PROCEDURE sp_agregarUsuario
 	@pNombre varchar(25),
 	@pApellidos varchar(125),
 	@pContrasena varchar(125),
@@ -153,13 +155,14 @@ CREATE PROCEDURE sp_agregarUsuario
 	@pDistritoId int,
 	@pProvinciaId int,
 	@pCantonId int,
-	@pUsuario_ID nvarchar(128)
+	@pUsuario_ID nvarchar(128),
+	@pEstadoId int
 
 
 AS
 BEGIN
 	INSERT INTO dbo.usuarios 
-	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @pTelefono,@pDireccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId, @pUsuario_ID);
+	VALUES(@pNombre,@pApellidos,@pContrasena,@pCorreoElectronico,@pFechaNacimiento,@pGenero, @pFotoPerfil, @pTelefono,@pDireccion,@pPaisId,@pDistritoId,@pProvinciaId, @pCantonId, @pUsuario_ID, @pEstadoId);
 END
 GO
 
@@ -282,14 +285,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_agregarRolUser
+CREATE or alter PROCEDURE sp_agregarRolUser
 	@pRolId int,
-	@pUserId int
+	@pUserId int,
+	@pEstadoId int
 	
 AS
 BEGIN
 	
-	INSERT INTO dbo.rol_user(rolId, userId) VALUES (@pRolId, @pUserId);
+	INSERT INTO dbo.rol_user(rolId, userId, id_estado) VALUES (@pRolId, @pUserId, @pEstadoId);
 
 END
 GO
@@ -357,14 +361,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_actualizarRolesUser
+CREATE or alter  PROCEDURE sp_actualizarRolesUser
 	@idRolOriginal int,
 	@idUser int,
-	@idRolNueva int
+	@idRolNueva int,
+	@pEstadoId int
 AS
 BEGIN
 	
-	UPDATE dbo.rol_user SET rolId = @idRolNueva 
+	UPDATE dbo.rol_user SET rolId = @idRolNueva, id_estado = @pEstadoId 
 	WHERE rolId = @idRolOriginal and userId = @idUser;
 
 END
@@ -382,12 +387,13 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_agregarFacturacion]
+CREATE or alter PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
 	@pImpuesto int,
-	@pTipo varchar(25)
+	@pTipo varchar(25),
+	@pEstadoId int
 	/*@pCantidad int,
 	@pProductId int,
 	@pUsuario int*/
@@ -403,8 +409,8 @@ BEGIN
 	 set @impuestoConvertido = CAST(@pImpuesto AS FLOAT) /   CAST(100 AS FLOAT)
 	 SET @pSubtotal = ((@pTotal * @impuestoConvertido) + @pTotal );*/
 	 
-	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo)
-	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, null, null, @pTipo);
+	INSERT INTO dbo.facturaciones(nombre,fecha, descripcion, impuesto, subtotal, total, tipo, id_estado)
+	VALUES(@pNombre, @pfecha, @pDescripcion, @pImpuesto, null, null, @pTipo, @pEstadoId);
 
 	/*
 	SET @ultimaFacturacion = (select max(facturacionId) from dbo.facturaciones);
@@ -429,13 +435,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create PROCEDURE [dbo].[sp_actualizarFacturacion]
+create or alter PROCEDURE [dbo].[sp_actualizarFacturacion]
 	@pIdFacturacion int,
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
 	@pImpuesto int,
-	@pTipo varchar(25)
+	@pTipo varchar(25),
+	@pEstadoId int
 AS
 
 
@@ -464,7 +471,8 @@ BEGIN
 	impuesto = @pImpuesto,
 	subtotal = @pSubtotal,
 	total = @pTotal,
-	tipo = @pTipo
+	tipo = @pTipo,
+	id_estado = @pEstadoId
 	WHERE facturacionId = @pIdFacturacion;
 
 END
@@ -543,7 +551,8 @@ Create or alter PROCEDURE [dbo].[sp_agregarFacturacionProducto]
 	
 	@pFacturacionId int,
 	@pProductoId int,
-	@pCantidad int
+	@pCantidad int,
+	@pEstadoId int
 	
 AS
 DECLARE @pSubtotal float;
@@ -553,8 +562,8 @@ DECLARE @pSubtotal float;
  DECLARE @pImpuesto int;
 BEGIN
 
-	INSERT INTO dbo.facturacion_producto(productoId,facturacionId, cantidad)
-	VALUES(@pProductoId, @pFacturacionId, @pCantidad);
+	INSERT INTO dbo.facturacion_producto(productoId,facturacionId, cantidad, id_estado)
+	VALUES(@pProductoId, @pFacturacionId, @pCantidad, @pEstadoId);
 
 	update dbo.productos set cantidad = (cantidad - @pCantidad) 
 	where productoId =  @pProductoId;
@@ -590,16 +599,18 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_actualizarFacturacionesProducto
+CREATE or alter PROCEDURE sp_actualizarFacturacionesProducto
 	@pIdProducto int,
 	@pIdFacturacion int,
-	@cantidad int
+	@cantidad int,
+	@pEstadoId int
 AS
 BEGIN
 	update dbo.facturacion_producto
 	set 
 	productoId = @pIdProducto,
-	cantidad = @cantidad
+	cantidad = @cantidad,
+	id_estado = @pEstadoId
 	where 
 	facturacionId = @pIdFacturacion and productoId = @pIdProducto;
 END
