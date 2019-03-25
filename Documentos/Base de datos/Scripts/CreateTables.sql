@@ -1,6 +1,6 @@
 USE [BDprogramacionV]
 GO
-/****** Object:  Table [dbo].[Canton]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[Canton]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -9,13 +9,14 @@ CREATE TABLE [dbo].[Canton](
 	[provinciaId] [int] NOT NULL,
 	[cantonId] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](85) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_Canton_1] PRIMARY KEY CLUSTERED 
 (
 	[cantonId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[categorias]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[categorias]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -24,13 +25,14 @@ CREATE TABLE [dbo].[categorias](
 	[id_categoria] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](120) NULL,
 	[descripcion] [text] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_categorias] PRIMARY KEY CLUSTERED 
 (
 	[id_categoria] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[colecciones]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[colecciones]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -39,13 +41,14 @@ CREATE TABLE [dbo].[colecciones](
 	[id_coleccion] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](120) NULL,
 	[descripcion] [text] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_colecciones] PRIMARY KEY CLUSTERED 
 (
 	[id_coleccion] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[distribuidor]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[distribuidor]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -55,13 +58,14 @@ CREATE TABLE [dbo].[distribuidor](
 	[nombre] [varchar](250) NULL,
 	[email] [varchar](450) NULL,
 	[direccion] [text] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_distribuidor] PRIMARY KEY CLUSTERED 
 (
 	[id_distribuidor] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Distrito]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[Distrito]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -71,13 +75,28 @@ CREATE TABLE [dbo].[Distrito](
 	[cantonId] [int] NOT NULL,
 	[distritoId] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](85) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_Distrito_1] PRIMARY KEY CLUSTERED 
 (
 	[distritoId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[facturacion_producto]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[estados]    Script Date: 25/03/2019 8:50:20 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[estados](
+	[id_estado] [int] IDENTITY(1,1) NOT NULL,
+	[estado] [varchar](80) NULL,
+ CONSTRAINT [PK_estados] PRIMARY KEY CLUSTERED 
+(
+	[id_estado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[facturacion_producto]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -86,6 +105,7 @@ CREATE TABLE [dbo].[facturacion_producto](
 	[productoId] [int] NOT NULL,
 	[facturacionId] [int] NOT NULL,
 	[cantidad] [int] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_facturacion_producto] PRIMARY KEY CLUSTERED 
 (
 	[productoId] ASC,
@@ -93,7 +113,7 @@ CREATE TABLE [dbo].[facturacion_producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[facturaciones]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[facturaciones]    Script Date: 25/03/2019 8:50:20 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -107,13 +127,14 @@ CREATE TABLE [dbo].[facturaciones](
 	[subtotal] [float] NULL,
 	[total] [float] NULL,
 	[tipo] [varchar](250) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_facturaciones] PRIMARY KEY CLUSTERED 
 (
 	[facturacionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[formas_pago_facturacion]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[formas_pago_facturacion]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,13 +142,14 @@ GO
 CREATE TABLE [dbo].[formas_pago_facturacion](
 	[facturacionId] [int] NOT NULL,
 	[forma_pago] [varchar](250) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_formas_pago_facturacion] PRIMARY KEY CLUSTERED 
 (
 	[facturacionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[genero_producto]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[genero_producto]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -141,7 +163,7 @@ CREATE TABLE [dbo].[genero_producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[imagen_producto]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[imagen_producto]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +178,7 @@ CREATE TABLE [dbo].[imagen_producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[marcas]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[marcas]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -165,13 +187,14 @@ CREATE TABLE [dbo].[marcas](
 	[id_marca] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](120) NULL,
 	[descripcion] [text] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_marcas] PRIMARY KEY CLUSTERED 
 (
 	[id_marca] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[medida_producto]    Script Date: 04/03/2019 8:16:16 ******/
+/****** Object:  Table [dbo].[medida_producto]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -185,7 +208,7 @@ CREATE TABLE [dbo].[medida_producto](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Pais]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[Pais]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -193,13 +216,14 @@ GO
 CREATE TABLE [dbo].[Pais](
 	[paisId] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](85) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_Pais] PRIMARY KEY CLUSTERED 
 (
 	[paisId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[productos]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[productos]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -216,13 +240,14 @@ CREATE TABLE [dbo].[productos](
 	[id_bodega] [int] NULL,
 	[id_distribuidor] [int] NULL,
 	[cantidad] [int] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_producto] PRIMARY KEY CLUSTERED 
 (
 	[productoId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[promociones]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[promociones]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -232,13 +257,14 @@ CREATE TABLE [dbo].[promociones](
 	[nombre] [varchar](150) NULL,
 	[descripcion] [text] NULL,
 	[valor] [int] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_promociones] PRIMARY KEY CLUSTERED 
 (
 	[promocionId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[promociones_productos]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[promociones_productos]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -248,6 +274,7 @@ CREATE TABLE [dbo].[promociones_productos](
 	[promocionId] [int] NOT NULL,
 	[fecha_inicial_promocion] [date] NULL,
 	[fecha_final_promocion] [date] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_promociones_productos] PRIMARY KEY CLUSTERED 
 (
 	[productoId] ASC,
@@ -255,7 +282,7 @@ CREATE TABLE [dbo].[promociones_productos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Provincia]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[Provincia]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -264,13 +291,14 @@ CREATE TABLE [dbo].[Provincia](
 	[provinciaId] [int] IDENTITY(1,1) NOT NULL,
 	[nombre] [varchar](85) NULL,
 	[paisId] [int] NOT NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_Provincia] PRIMARY KEY CLUSTERED 
 (
 	[provinciaId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[rol]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[rol]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -279,13 +307,14 @@ CREATE TABLE [dbo].[rol](
 	[ROLID] [int] IDENTITY(1,1) NOT NULL,
 	[NOMBRE] [varchar](25) NULL,
 	[DESCRIPCION] [text] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_rol] PRIMARY KEY CLUSTERED 
 (
 	[ROLID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[rol_user]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[rol_user]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -293,6 +322,7 @@ GO
 CREATE TABLE [dbo].[rol_user](
 	[rolId] [int] NOT NULL,
 	[userId] [int] NOT NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_rol_user] PRIMARY KEY CLUSTERED 
 (
 	[rolId] ASC,
@@ -300,7 +330,7 @@ CREATE TABLE [dbo].[rol_user](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuario_facturaciones]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[usuario_facturaciones]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -308,6 +338,7 @@ GO
 CREATE TABLE [dbo].[usuario_facturaciones](
 	[usuarioId] [int] NOT NULL,
 	[facturacionId] [int] NOT NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_usuario_facturaciones] PRIMARY KEY CLUSTERED 
 (
 	[usuarioId] ASC,
@@ -315,7 +346,7 @@ CREATE TABLE [dbo].[usuario_facturaciones](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuarios]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[usuarios]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -335,14 +366,15 @@ CREATE TABLE [dbo].[usuarios](
 	[distritoId] [int] NULL,
 	[provinciaId] [int] NULL,
 	[cantonId] [int] NULL,
-	Usuario_ID NVARCHAR (128)
+	[Usuario_ID] [nvarchar](128) NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[userId] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[usuarios_promocion]    Script Date: 04/03/2019 8:16:17 ******/
+/****** Object:  Table [dbo].[usuarios_promocion]    Script Date: 25/03/2019 8:50:21 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -352,6 +384,7 @@ CREATE TABLE [dbo].[usuarios_promocion](
 	[promocionId] [int] NOT NULL,
 	[fecha_inicial_promocion] [date] NULL,
 	[fecha_final_promocion] [date] NULL,
+	[id_estado] [int] NULL,
  CONSTRAINT [PK_usuarios_promocion] PRIMARY KEY CLUSTERED 
 (
 	[usuarioId] ASC,

@@ -1,5 +1,9 @@
 INSERT INTO Rol (NOMBRE, DESCRIPCION) VALUES ('Admin', 'Admin')
 INSERT INTO Rol (NOMBRE, DESCRIPCION) VALUES ('Usuario', 'Usuario')
+
+INSERT INTO dbo.estados(estado) values('Bloqueado');
+INSERT INTO dbo.estados(estado) values('Disponible');
+
 INSERT INTO Usuarios (nombre, apellidos, contrasena, correoElectronico)
 VALUES ('Admin', 'Admin','Admin', 'Admin@correo.com')
 INSERT INTO Usuarios (nombre, apellidos, contrasena, correoElectronico)
