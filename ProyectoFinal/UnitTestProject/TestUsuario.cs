@@ -124,8 +124,9 @@ namespace UnitTestProject
             int rolIdActual = 1;
             int userId = 1;
             int rolIdNueva = 2;
+            int idEstado = 1;
 
-            result = usuarioDAL.actualizarRolUsuario(rolIdActual, userId, rolIdNueva);
+            result = usuarioDAL.actualizarRolUsuario(rolIdActual, userId, rolIdNueva, idEstado);
 
             Assert.AreEqual(true, result);
         }
