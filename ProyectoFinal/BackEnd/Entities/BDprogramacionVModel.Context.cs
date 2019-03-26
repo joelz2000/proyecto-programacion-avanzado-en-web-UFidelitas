@@ -32,6 +32,7 @@ namespace BackEnd.Entities
         public virtual DbSet<colecciones> colecciones { get; set; }
         public virtual DbSet<distribuidor> distribuidor { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
+        public virtual DbSet<estados> estados { get; set; }
         public virtual DbSet<facturacion_producto> facturacion_producto { get; set; }
         public virtual DbSet<facturaciones> facturaciones { get; set; }
         public virtual DbSet<formas_pago_facturacion> formas_pago_facturacion { get; set; }
@@ -45,10 +46,65 @@ namespace BackEnd.Entities
         public virtual DbSet<promociones_productos> promociones_productos { get; set; }
         public virtual DbSet<Provincia> Provincia { get; set; }
         public virtual DbSet<rol> rol { get; set; }
+        public virtual DbSet<rol_user> rol_user { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<usuario_facturaciones> usuario_facturaciones { get; set; }
         public virtual DbSet<usuarios> usuarios { get; set; }
         public virtual DbSet<usuarios_promocion> usuarios_promocion { get; set; }
-        public virtual DbSet<estados> estados { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+    
+        public virtual int sp_actualizarFacturacion(Nullable<int> pIdFacturacion, string pNombre, Nullable<System.DateTime> pfecha, string pDescripcion, Nullable<int> pImpuesto, string pTipo, Nullable<int> pEstadoId)
+        {
+            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
+                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
+                new ObjectParameter("pIdFacturacion", typeof(int));
+    
+            var pNombreParameter = pNombre != null ?
+                new ObjectParameter("pNombre", pNombre) :
+                new ObjectParameter("pNombre", typeof(string));
+    
+            var pfechaParameter = pfecha.HasValue ?
+                new ObjectParameter("pfecha", pfecha) :
+                new ObjectParameter("pfecha", typeof(System.DateTime));
+    
+            var pDescripcionParameter = pDescripcion != null ?
+                new ObjectParameter("pDescripcion", pDescripcion) :
+                new ObjectParameter("pDescripcion", typeof(string));
+    
+            var pImpuestoParameter = pImpuesto.HasValue ?
+                new ObjectParameter("pImpuesto", pImpuesto) :
+                new ObjectParameter("pImpuesto", typeof(int));
+    
+            var pTipoParameter = pTipo != null ?
+                new ObjectParameter("pTipo", pTipo) :
+                new ObjectParameter("pTipo", typeof(string));
+    
+            var pEstadoIdParameter = pEstadoId.HasValue ?
+                new ObjectParameter("pEstadoId", pEstadoId) :
+                new ObjectParameter("pEstadoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarFacturacion", pIdFacturacionParameter, pNombreParameter, pfechaParameter, pDescripcionParameter, pImpuestoParameter, pTipoParameter, pEstadoIdParameter);
+        }
+    
+        public virtual int sp_actualizarFacturacionesProducto(Nullable<int> pIdProducto, Nullable<int> pIdFacturacion, Nullable<int> cantidad, Nullable<int> pEstadoId)
+        {
+            var pIdProductoParameter = pIdProducto.HasValue ?
+                new ObjectParameter("pIdProducto", pIdProducto) :
+                new ObjectParameter("pIdProducto", typeof(int));
+    
+            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
+                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
+                new ObjectParameter("pIdFacturacion", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("cantidad", cantidad) :
+                new ObjectParameter("cantidad", typeof(int));
+    
+            var pEstadoIdParameter = pEstadoId.HasValue ?
+                new ObjectParameter("pEstadoId", pEstadoId) :
+                new ObjectParameter("pEstadoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarFacturacionesProducto", pIdProductoParameter, pIdFacturacionParameter, cantidadParameter, pEstadoIdParameter);
+        }
     
         public virtual int sp_actualizarRol(Nullable<int> pId, string pNombre, string pDescripcion, Nullable<int> pEstadoId)
         {
@@ -186,6 +242,27 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarFacturacion", pNombreParameter, pfechaParameter, pDescripcionParameter, pImpuestoParameter, pTipoParameter, pEstadoIdParameter);
         }
     
+        public virtual int sp_agregarFacturacionProducto(Nullable<int> pFacturacionId, Nullable<int> pProductoId, Nullable<int> pCantidad, Nullable<int> pEstadoId)
+        {
+            var pFacturacionIdParameter = pFacturacionId.HasValue ?
+                new ObjectParameter("pFacturacionId", pFacturacionId) :
+                new ObjectParameter("pFacturacionId", typeof(int));
+    
+            var pProductoIdParameter = pProductoId.HasValue ?
+                new ObjectParameter("pProductoId", pProductoId) :
+                new ObjectParameter("pProductoId", typeof(int));
+    
+            var pCantidadParameter = pCantidad.HasValue ?
+                new ObjectParameter("pCantidad", pCantidad) :
+                new ObjectParameter("pCantidad", typeof(int));
+    
+            var pEstadoIdParameter = pEstadoId.HasValue ?
+                new ObjectParameter("pEstadoId", pEstadoId) :
+                new ObjectParameter("pEstadoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarFacturacionProducto", pFacturacionIdParameter, pProductoIdParameter, pCantidadParameter, pEstadoIdParameter);
+        }
+    
         public virtual int sp_agregarRol(string pNombre, string pDescripcion, Nullable<int> pEstadoId)
         {
             var pNombreParameter = pNombre != null ?
@@ -220,7 +297,7 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarRolUser", pRolIdParameter, pUserIdParameter, pEstadoIdParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId, string pUsuario_ID, Nullable<int> pEstadoId)
+        public virtual int sp_agregarUsuario(string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId, string pUsuario_ID, Nullable<int> pEstadoId)
         {
             var pNombreParameter = pNombre != null ?
                 new ObjectParameter("pNombre", pNombre) :
@@ -282,7 +359,49 @@ namespace BackEnd.Entities
                 new ObjectParameter("pEstadoId", pEstadoId) :
                 new ObjectParameter("pEstadoId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter, pUsuario_IDParameter, pEstadoIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarUsuario", pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter, pUsuario_IDParameter, pEstadoIdParameter);
+        }
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
     
         public virtual int sp_deleteRol(Nullable<int> pRolId)
@@ -294,6 +413,41 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_deleteRol", pRolIdParameter);
         }
     
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_eliminarFacturaciones(Nullable<int> pIdFacturacion)
+        {
+            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
+                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
+                new ObjectParameter("pIdFacturacion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarFacturaciones", pIdFacturacionParameter);
+        }
+    
+        public virtual int sp_eliminarPromocionProducto(Nullable<int> pPromocionId, Nullable<int> pProductoId)
+        {
+            var pPromocionIdParameter = pPromocionId.HasValue ?
+                new ObjectParameter("pPromocionId", pPromocionId) :
+                new ObjectParameter("pPromocionId", typeof(int));
+    
+            var pProductoIdParameter = pProductoId.HasValue ?
+                new ObjectParameter("pProductoId", pProductoId) :
+                new ObjectParameter("pProductoId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarPromocionProducto", pPromocionIdParameter, pProductoIdParameter);
+        }
+    
         public virtual int sp_eliminarUsuario(Nullable<int> pUserId)
         {
             var pUserIdParameter = pUserId.HasValue ?
@@ -301,6 +455,45 @@ namespace BackEnd.Entities
                 new ObjectParameter("pUserId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarUsuario", pUserIdParameter);
+        }
+    
+        public virtual int sp_eliminarUsuarioPromocion(Nullable<int> pUsuarioId, Nullable<int> pPromocionId)
+        {
+            var pUsuarioIdParameter = pUsuarioId.HasValue ?
+                new ObjectParameter("pUsuarioId", pUsuarioId) :
+                new ObjectParameter("pUsuarioId", typeof(int));
+    
+            var pPromocionIdParameter = pPromocionId.HasValue ?
+                new ObjectParameter("pPromocionId", pPromocionId) :
+                new ObjectParameter("pPromocionId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarUsuarioPromocion", pUsuarioIdParameter, pPromocionIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
         public virtual ObjectResult<sp_obtenerFacturaciones_Result> sp_obtenerFacturaciones()
@@ -325,6 +518,37 @@ namespace BackEnd.Entities
                 new ObjectParameter("pId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerFacturacionId_Result>("sp_obtenerFacturacionId", pIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerFacturacionProductoByIdFacturacion_Result> sp_obtenerFacturacionProductoByIdFacturacion(Nullable<int> pFacturacionId)
+        {
+            var pFacturacionIdParameter = pFacturacionId.HasValue ?
+                new ObjectParameter("pFacturacionId", pFacturacionId) :
+                new ObjectParameter("pFacturacionId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerFacturacionProductoByIdFacturacion_Result>("sp_obtenerFacturacionProductoByIdFacturacion", pFacturacionIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerImagenesProductoId_Result> sp_obtenerImagenesProductoId(Nullable<int> pIdProducto)
+        {
+            var pIdProductoParameter = pIdProducto.HasValue ?
+                new ObjectParameter("pIdProducto", pIdProducto) :
+                new ObjectParameter("pIdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenesProductoId_Result>("sp_obtenerImagenesProductoId", pIdProductoParameter);
+        }
+    
+        public virtual ObjectResult<sp_obtenerImagenProducto_Result> sp_obtenerImagenProducto(Nullable<int> pIdProducto, string pImagen)
+        {
+            var pIdProductoParameter = pIdProducto.HasValue ?
+                new ObjectParameter("pIdProducto", pIdProducto) :
+                new ObjectParameter("pIdProducto", typeof(int));
+    
+            var pImagenParameter = pImagen != null ?
+                new ObjectParameter("pImagen", pImagen) :
+                new ObjectParameter("pImagen", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenProducto_Result>("sp_obtenerImagenProducto", pIdProductoParameter, pImagenParameter);
         }
     
         public virtual ObjectResult<sp_obtenerRoles_Result> sp_obtenerRoles()
@@ -369,193 +593,26 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerUsuariosId_Result>("sp_obtenerUsuariosId", pUsuarioIdParameter);
         }
     
-        public virtual ObjectResult<sp_obtenerImagenProducto_Result> sp_obtenerImagenProducto(Nullable<int> pIdProducto, string pImagen)
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
-            var pIdProductoParameter = pIdProducto.HasValue ?
-                new ObjectParameter("pIdProducto", pIdProducto) :
-                new ObjectParameter("pIdProducto", typeof(int));
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
     
-            var pImagenParameter = pImagen != null ?
-                new ObjectParameter("pImagen", pImagen) :
-                new ObjectParameter("pImagen", typeof(string));
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenProducto_Result>("sp_obtenerImagenProducto", pIdProductoParameter, pImagenParameter);
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
-        public virtual ObjectResult<sp_obtenerImagenesProductoId_Result> sp_obtenerImagenesProductoId(Nullable<int> pIdProducto)
+        public virtual int sp_upgraddiagrams()
         {
-            var pIdProductoParameter = pIdProducto.HasValue ?
-                new ObjectParameter("pIdProducto", pIdProducto) :
-                new ObjectParameter("pIdProducto", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenesProductoId_Result>("sp_obtenerImagenesProductoId", pIdProductoParameter);
-        }
-    
-        public virtual int sp_actualizarFacturacion(Nullable<int> pIdFacturacion, string pNombre, Nullable<System.DateTime> pfecha, string pDescripcion, Nullable<int> pImpuesto, string pTipo, Nullable<int> pEstadoId)
-        {
-            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
-                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
-                new ObjectParameter("pIdFacturacion", typeof(int));
-    
-            var pNombreParameter = pNombre != null ?
-                new ObjectParameter("pNombre", pNombre) :
-                new ObjectParameter("pNombre", typeof(string));
-    
-            var pfechaParameter = pfecha.HasValue ?
-                new ObjectParameter("pfecha", pfecha) :
-                new ObjectParameter("pfecha", typeof(System.DateTime));
-    
-            var pDescripcionParameter = pDescripcion != null ?
-                new ObjectParameter("pDescripcion", pDescripcion) :
-                new ObjectParameter("pDescripcion", typeof(string));
-    
-            var pImpuestoParameter = pImpuesto.HasValue ?
-                new ObjectParameter("pImpuesto", pImpuesto) :
-                new ObjectParameter("pImpuesto", typeof(int));
-    
-            var pTipoParameter = pTipo != null ?
-                new ObjectParameter("pTipo", pTipo) :
-                new ObjectParameter("pTipo", typeof(string));
-    
-            var pEstadoIdParameter = pEstadoId.HasValue ?
-                new ObjectParameter("pEstadoId", pEstadoId) :
-                new ObjectParameter("pEstadoId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarFacturacion", pIdFacturacionParameter, pNombreParameter, pfechaParameter, pDescripcionParameter, pImpuestoParameter, pTipoParameter, pEstadoIdParameter);
-        }
-    
-        public virtual int sp_eliminarFacturaciones(Nullable<int> pIdFacturacion)
-        {
-            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
-                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
-                new ObjectParameter("pIdFacturacion", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarFacturaciones", pIdFacturacionParameter);
-        }
-    
-        public virtual int sp_actualizarFacturacionesProducto(Nullable<int> pIdProducto, Nullable<int> pIdFacturacion, Nullable<int> cantidad, Nullable<int> pEstadoId)
-        {
-            var pIdProductoParameter = pIdProducto.HasValue ?
-                new ObjectParameter("pIdProducto", pIdProducto) :
-                new ObjectParameter("pIdProducto", typeof(int));
-    
-            var pIdFacturacionParameter = pIdFacturacion.HasValue ?
-                new ObjectParameter("pIdFacturacion", pIdFacturacion) :
-                new ObjectParameter("pIdFacturacion", typeof(int));
-    
-            var cantidadParameter = cantidad.HasValue ?
-                new ObjectParameter("cantidad", cantidad) :
-                new ObjectParameter("cantidad", typeof(int));
-    
-            var pEstadoIdParameter = pEstadoId.HasValue ?
-                new ObjectParameter("pEstadoId", pEstadoId) :
-                new ObjectParameter("pEstadoId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarFacturacionesProducto", pIdProductoParameter, pIdFacturacionParameter, cantidadParameter, pEstadoIdParameter);
-        }
-    
-        public virtual int sp_agregarFacturacionProducto(Nullable<int> pFacturacionId, Nullable<int> pProductoId, Nullable<int> pCantidad, Nullable<int> pEstadoId)
-        {
-            var pFacturacionIdParameter = pFacturacionId.HasValue ?
-                new ObjectParameter("pFacturacionId", pFacturacionId) :
-                new ObjectParameter("pFacturacionId", typeof(int));
-    
-            var pProductoIdParameter = pProductoId.HasValue ?
-                new ObjectParameter("pProductoId", pProductoId) :
-                new ObjectParameter("pProductoId", typeof(int));
-    
-            var pCantidadParameter = pCantidad.HasValue ?
-                new ObjectParameter("pCantidad", pCantidad) :
-                new ObjectParameter("pCantidad", typeof(int));
-    
-            var pEstadoIdParameter = pEstadoId.HasValue ?
-                new ObjectParameter("pEstadoId", pEstadoId) :
-                new ObjectParameter("pEstadoId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_agregarFacturacionProducto", pFacturacionIdParameter, pProductoIdParameter, pCantidadParameter, pEstadoIdParameter);
-        }
-    
-        public virtual ObjectResult<sp_obtenerImagenesProductoId1_Result> sp_obtenerImagenesProductoId1(Nullable<int> pIdProducto)
-        {
-            var pIdProductoParameter = pIdProducto.HasValue ?
-                new ObjectParameter("pIdProducto", pIdProducto) :
-                new ObjectParameter("pIdProducto", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenesProductoId1_Result>("sp_obtenerImagenesProductoId1", pIdProductoParameter);
-        }
-    
-        public virtual ObjectResult<sp_obtenerImagenProducto1_Result> sp_obtenerImagenProducto1(Nullable<int> pIdProducto, string pImagen)
-        {
-            var pIdProductoParameter = pIdProducto.HasValue ?
-                new ObjectParameter("pIdProducto", pIdProducto) :
-                new ObjectParameter("pIdProducto", typeof(int));
-    
-            var pImagenParameter = pImagen != null ?
-                new ObjectParameter("pImagen", pImagen) :
-                new ObjectParameter("pImagen", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerImagenProducto1_Result>("sp_obtenerImagenProducto1", pIdProductoParameter, pImagenParameter);
-        }
-    
-        public virtual int sp_eliminarPromocionProducto(Nullable<int> pPromocionId, Nullable<int> pProductoId)
-        {
-            var pPromocionIdParameter = pPromocionId.HasValue ?
-                new ObjectParameter("pPromocionId", pPromocionId) :
-                new ObjectParameter("pPromocionId", typeof(int));
-    
-            var pProductoIdParameter = pProductoId.HasValue ?
-                new ObjectParameter("pProductoId", pProductoId) :
-                new ObjectParameter("pProductoId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarPromocionProducto", pPromocionIdParameter, pProductoIdParameter);
-        }
-    
-        public virtual int sp_eliminarUsuarioPromocion(Nullable<int> pUsuarioId, Nullable<int> pPromocionId)
-        {
-            var pUsuarioIdParameter = pUsuarioId.HasValue ?
-                new ObjectParameter("pUsuarioId", pUsuarioId) :
-                new ObjectParameter("pUsuarioId", typeof(int));
-    
-            var pPromocionIdParameter = pPromocionId.HasValue ?
-                new ObjectParameter("pPromocionId", pPromocionId) :
-                new ObjectParameter("pPromocionId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarUsuarioPromocion", pUsuarioIdParameter, pPromocionIdParameter);
-        }
-    
-        public virtual ObjectResult<sp_obtenerFacturacionProductoByIdFacturacion_Result> sp_obtenerFacturacionProductoByIdFacturacion(Nullable<int> pFacturacionId)
-        {
-            var pFacturacionIdParameter = pFacturacionId.HasValue ?
-                new ObjectParameter("pFacturacionId", pFacturacionId) :
-                new ObjectParameter("pFacturacionId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerFacturacionProductoByIdFacturacion_Result>("sp_obtenerFacturacionProductoByIdFacturacion", pFacturacionIdParameter);
-        }
-    
-        public virtual int sp_eliminarPromocionProducto1(Nullable<int> pPromocionId, Nullable<int> pProductoId)
-        {
-            var pPromocionIdParameter = pPromocionId.HasValue ?
-                new ObjectParameter("pPromocionId", pPromocionId) :
-                new ObjectParameter("pPromocionId", typeof(int));
-    
-            var pProductoIdParameter = pProductoId.HasValue ?
-                new ObjectParameter("pProductoId", pProductoId) :
-                new ObjectParameter("pProductoId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarPromocionProducto1", pPromocionIdParameter, pProductoIdParameter);
-        }
-    
-        public virtual int sp_eliminarUsuarioPromocion1(Nullable<int> pUsuarioId, Nullable<int> pPromocionId)
-        {
-            var pUsuarioIdParameter = pUsuarioId.HasValue ?
-                new ObjectParameter("pUsuarioId", pUsuarioId) :
-                new ObjectParameter("pUsuarioId", typeof(int));
-    
-            var pPromocionIdParameter = pPromocionId.HasValue ?
-                new ObjectParameter("pPromocionId", pPromocionId) :
-                new ObjectParameter("pPromocionId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarUsuarioPromocion1", pUsuarioIdParameter, pPromocionIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     }
 }

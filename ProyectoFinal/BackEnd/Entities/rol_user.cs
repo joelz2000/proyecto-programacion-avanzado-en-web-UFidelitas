@@ -10,10 +10,16 @@
 namespace BackEnd.Entities
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_obtenerImagenesProductoId1_Result
+    public partial class rol_user
     {
-        public int productoId { get; set; }
-        public string IMAGEN { get; set; }
+        public int rolId { get; set; }
+        public int userId { get; set; }
+        public Nullable<int> id_estado { get; set; }
+    
+        public virtual estados estados { get; set; }
+        public virtual rol rol { get; set; }
+        public virtual usuarios usuarios { get; set; }
     }
 }

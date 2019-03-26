@@ -18,7 +18,7 @@ namespace BackEnd.Entities
         public string forma_pago { get; set; }
         public Nullable<int> id_estado { get; set; }
     
-        public virtual facturaciones facturaciones { get; set; }
         public virtual estados estados { get; set; }
+        public virtual facturaciones facturaciones { get; set; }
     }
 }

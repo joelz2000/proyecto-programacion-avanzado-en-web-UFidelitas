@@ -16,5 +16,6 @@ namespace BackEnd.Entities
         public int ROLID { get; set; }
         public string NOMBRE { get; set; }
         public string DESCRIPCION { get; set; }
+        public Nullable<int> id_estado { get; set; }
     }
 }

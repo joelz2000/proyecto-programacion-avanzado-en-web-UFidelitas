@@ -18,7 +18,7 @@ namespace BackEnd.Entities
         public facturaciones()
         {
             this.facturacion_producto = new HashSet<facturacion_producto>();
-            this.usuarios = new HashSet<usuarios>();
+            this.usuario_facturaciones = new HashSet<usuario_facturaciones>();
         }
     
         public int facturacionId { get; set; }
@@ -31,11 +31,11 @@ namespace BackEnd.Entities
         public string tipo { get; set; }
         public Nullable<int> id_estado { get; set; }
     
+        public virtual estados estados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<facturacion_producto> facturacion_producto { get; set; }
         public virtual formas_pago_facturacion formas_pago_facturacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<usuarios> usuarios { get; set; }
-        public virtual estados estados { get; set; }
+        public virtual ICollection<usuario_facturaciones> usuario_facturaciones { get; set; }
     }
 }

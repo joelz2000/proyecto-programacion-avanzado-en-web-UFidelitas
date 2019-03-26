@@ -28,5 +28,6 @@ namespace BackEnd.Entities
         public Nullable<int> provinciaId { get; set; }
         public Nullable<int> cantonId { get; set; }
         public string Usuario_ID { get; set; }
+        public Nullable<int> id_estado { get; set; }
     }
 }

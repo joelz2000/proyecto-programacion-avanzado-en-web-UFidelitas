@@ -32,6 +32,8 @@ namespace BackEnd.Entities
             this.promociones_productos = new HashSet<promociones_productos>();
             this.Provincia = new HashSet<Provincia>();
             this.rol = new HashSet<rol>();
+            this.rol_user = new HashSet<rol_user>();
+            this.usuario_facturaciones = new HashSet<usuario_facturaciones>();
             this.usuarios = new HashSet<usuarios>();
             this.usuarios_promocion = new HashSet<usuarios_promocion>();
         }
@@ -69,6 +71,10 @@ namespace BackEnd.Entities
         public virtual ICollection<Provincia> Provincia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rol> rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rol_user> rol_user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuario_facturaciones> usuario_facturaciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuarios> usuarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

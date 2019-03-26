@@ -19,8 +19,8 @@ namespace BackEnd.Entities
         public Nullable<int> cantidad { get; set; }
         public Nullable<int> id_estado { get; set; }
     
+        public virtual estados estados { get; set; }
         public virtual facturaciones facturaciones { get; set; }
         public virtual productos productos { get; set; }
-        public virtual estados estados { get; set; }
     }
 }

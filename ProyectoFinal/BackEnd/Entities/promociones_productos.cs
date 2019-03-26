@@ -20,8 +20,8 @@ namespace BackEnd.Entities
         public Nullable<System.DateTime> fecha_final_promocion { get; set; }
         public Nullable<int> id_estado { get; set; }
     
+        public virtual estados estados { get; set; }
         public virtual productos productos { get; set; }
         public virtual promociones promociones { get; set; }
-        public virtual estados estados { get; set; }
     }
 }

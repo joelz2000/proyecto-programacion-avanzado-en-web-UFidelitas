@@ -31,9 +31,9 @@ namespace BackEnd.Entities
         public virtual ICollection<Canton> Canton { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Distrito> Distrito { get; set; }
+        public virtual estados estados { get; set; }
         public virtual Pais Pais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuarios> usuarios { get; set; }
-        public virtual estados estados { get; set; }
     }
 }

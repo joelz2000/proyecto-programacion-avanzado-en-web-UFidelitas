@@ -21,5 +21,6 @@ namespace BackEnd.Entities
         public Nullable<double> subtotal { get; set; }
         public Nullable<double> total { get; set; }
         public string tipo { get; set; }
+        public Nullable<int> id_estado { get; set; }
     }
 }

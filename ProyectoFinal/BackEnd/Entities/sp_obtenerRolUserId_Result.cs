@@ -13,9 +13,9 @@ namespace BackEnd.Entities
     
     public partial class sp_obtenerRolUserId_Result
     {
-        public string Rol { get; set; }
-        public string Usuario { get; set; }
         public int rolId { get; set; }
+        public string Rol { get; set; }
         public int userId { get; set; }
+        public string Usuario { get; set; }
     }
 }

@@ -38,6 +38,7 @@ namespace BackEnd.Entities
         public virtual categorias categorias { get; set; }
         public virtual colecciones colecciones { get; set; }
         public virtual distribuidor distribuidor { get; set; }
+        public virtual estados estados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<facturacion_producto> facturacion_producto { get; set; }
         public virtual genero_producto genero_producto { get; set; }
@@ -47,6 +48,5 @@ namespace BackEnd.Entities
         public virtual medida_producto medida_producto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<promociones_productos> promociones_productos { get; set; }
-        public virtual estados estados { get; set; }
     }
 }

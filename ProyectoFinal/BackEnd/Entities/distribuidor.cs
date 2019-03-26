@@ -26,8 +26,8 @@ namespace BackEnd.Entities
         public string direccion { get; set; }
         public Nullable<int> id_estado { get; set; }
     
+        public virtual estados estados { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productos> productos { get; set; }
-        public virtual estados estados { get; set; }
     }
 }

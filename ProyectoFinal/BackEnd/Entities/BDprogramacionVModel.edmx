@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="cantonId" />
@@ -786,6 +786,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_actualizarFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pIdFacturacion" Type="int" Mode="In" />
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -871,8 +872,24 @@
           <Parameter Name="pUsuario_ID" Type="nvarchar" Mode="In" />
           <Parameter Name="pEstadoId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
         <Function Name="sp_deleteRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pRolId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_eliminarFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pIdFacturacion" Type="int" Mode="In" />
@@ -887,6 +904,14 @@
         <Function Name="sp_eliminarUsuarioPromocion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUsuarioId" Type="int" Mode="In" />
           <Parameter Name="pPromocionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -916,6 +941,12 @@
         <Function Name="sp_obtenerUsuariosId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUsuarioId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BDprogramacionVModelStoreContainer">
           <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categorias" EntityType="Self.categorias" Schema="dbo" store:Type="Tables" />
@@ -1122,11 +1153,1102 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDprogramacionVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Canton">
+          <Key>
+            <PropertyRef Name="cantonId" />
+          </Key>
+          <Property Name="provinciaId" Type="Int32" Nullable="false" />
+          <Property Name="cantonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_Canton_estados" FromRole="Canton" ToRole="estados" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Canton_Provincia" FromRole="Canton" ToRole="Provincia" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Canton" FromRole="Canton" ToRole="Distrito" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_Canton" FromRole="Canton" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="categorias">
+          <Key>
+            <PropertyRef Name="id_categoria" />
+          </Key>
+          <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_categorias_estados" FromRole="categorias" ToRole="estados" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_categorias_productos" FromRole="categorias" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="colecciones">
+          <Key>
+            <PropertyRef Name="id_coleccion" />
+          </Key>
+          <Property Name="id_coleccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_colecciones_estados" FromRole="colecciones" ToRole="estados" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_colecciones_productos" FromRole="colecciones" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="distribuidor">
+          <Key>
+            <PropertyRef Name="id_distribuidor" />
+          </Key>
+          <Property Name="id_distribuidor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_distribuidor_estados" FromRole="distribuidor" ToRole="estados" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_distribuidor_productos" FromRole="distribuidor" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="Distrito">
+          <Key>
+            <PropertyRef Name="distritoId" />
+          </Key>
+          <Property Name="provinciaId" Type="Int32" Nullable="false" />
+          <Property Name="cantonId" Type="Int32" Nullable="false" />
+          <Property Name="distritoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_Distrito_Canton" FromRole="Distrito" ToRole="Canton" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_Distrito_estados" FromRole="Distrito" ToRole="estados" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Distrito_Provincia" FromRole="Distrito" ToRole="Provincia" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_Distrito" FromRole="Distrito" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="estados">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_Canton_estados" FromRole="estados" ToRole="Canton" />
+          <NavigationProperty Name="categorias" Relationship="Self.FK_categorias_estados" FromRole="estados" ToRole="categorias" />
+          <NavigationProperty Name="colecciones" Relationship="Self.FK_colecciones_estados" FromRole="estados" ToRole="colecciones" />
+          <NavigationProperty Name="distribuidor" Relationship="Self.FK_distribuidor_estados" FromRole="estados" ToRole="distribuidor" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_estados" FromRole="estados" ToRole="Distrito" />
+          <NavigationProperty Name="facturacion_producto" Relationship="Self.FK_facturacion_producto_estados" FromRole="estados" ToRole="facturacion_producto" />
+          <NavigationProperty Name="facturaciones" Relationship="Self.FK_facturaciones_estados" FromRole="estados" ToRole="facturaciones" />
+          <NavigationProperty Name="formas_pago_facturacion" Relationship="Self.FK_formas_pago_facturacion_estados" FromRole="estados" ToRole="formas_pago_facturacion" />
+          <NavigationProperty Name="marcas" Relationship="Self.FK_marcas_estados" FromRole="estados" ToRole="marcas" />
+          <NavigationProperty Name="Pais" Relationship="Self.FK_Pais_estados" FromRole="estados" ToRole="Pais" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_productos_estados" FromRole="estados" ToRole="productos" />
+          <NavigationProperty Name="promociones" Relationship="Self.FK_promociones_estados" FromRole="estados" ToRole="promociones" />
+          <NavigationProperty Name="promociones_productos" Relationship="Self.FK_promociones_productos_estados" FromRole="estados" ToRole="promociones_productos" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Provincia_estados" FromRole="estados" ToRole="Provincia" />
+          <NavigationProperty Name="rol" Relationship="Self.FK_rol_estados" FromRole="estados" ToRole="rol" />
+          <NavigationProperty Name="rol_user" Relationship="Self.FK_rol_user_estados" FromRole="estados" ToRole="rol_user" />
+          <NavigationProperty Name="usuario_facturaciones" Relationship="Self.FK_usuario_facturaciones_estados" FromRole="estados" ToRole="usuario_facturaciones" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_estados" FromRole="estados" ToRole="usuarios" />
+          <NavigationProperty Name="usuarios_promocion" Relationship="Self.FK_usuarios_promocion_estados" FromRole="estados" ToRole="usuarios_promocion" />
+        </EntityType>
+        <EntityType Name="facturacion_producto">
+          <Key>
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="facturacionId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="facturacionId" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_facturacion_producto_estados" FromRole="facturacion_producto" ToRole="estados" />
+          <NavigationProperty Name="facturaciones" Relationship="Self.FK_facturacion_facturacion_producto" FromRole="facturacion_producto" ToRole="facturaciones" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_producto_facturacion_producto" FromRole="facturacion_producto" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="facturaciones">
+          <Key>
+            <PropertyRef Name="facturacionId" />
+          </Key>
+          <Property Name="facturacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="0" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="impuesto" Type="Int32" />
+          <Property Name="subtotal" Type="Double" />
+          <Property Name="total" Type="Double" />
+          <Property Name="tipo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_facturaciones_estados" FromRole="facturaciones" ToRole="estados" />
+          <NavigationProperty Name="facturacion_producto" Relationship="Self.FK_facturacion_facturacion_producto" FromRole="facturaciones" ToRole="facturacion_producto" />
+          <NavigationProperty Name="formas_pago_facturacion" Relationship="Self.FK_facturacion_formas_pago_facturacion" FromRole="facturaciones" ToRole="formas_pago_facturacion" />
+          <NavigationProperty Name="usuario_facturaciones" Relationship="Self.FK_facturaciones_usuario_facturaciones" FromRole="facturaciones" ToRole="usuario_facturaciones" />
+        </EntityType>
+        <EntityType Name="formas_pago_facturacion">
+          <Key>
+            <PropertyRef Name="facturacionId" />
+          </Key>
+          <Property Name="facturacionId" Type="Int32" Nullable="false" />
+          <Property Name="forma_pago" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_formas_pago_facturacion_estados" FromRole="formas_pago_facturacion" ToRole="estados" />
+          <NavigationProperty Name="facturaciones" Relationship="Self.FK_facturacion_formas_pago_facturacion" FromRole="formas_pago_facturacion" ToRole="facturaciones" />
+        </EntityType>
+        <EntityType Name="genero_producto">
+          <Key>
+            <PropertyRef Name="productoId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="genero" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_producto_genero_producto" FromRole="genero_producto" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="imagen_producto">
+          <Key>
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="IMAGEN" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="IMAGEN" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_producto_imagen_producto" FromRole="imagen_producto" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="marcas">
+          <Key>
+            <PropertyRef Name="id_marca" />
+          </Key>
+          <Property Name="id_marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_marcas_estados" FromRole="marcas" ToRole="estados" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_marca_productos" FromRole="marcas" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="medida_producto">
+          <Key>
+            <PropertyRef Name="productoId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="medida" Type="Double" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_producto_medida_producto" FromRole="medida_producto" ToRole="productos" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="paisId" />
+          </Key>
+          <Property Name="paisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_Pais_estados" FromRole="Pais" ToRole="estados" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_Pais_Provincia" FromRole="Pais" ToRole="Provincia" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_Pais" FromRole="Pais" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="productos">
+          <Key>
+            <PropertyRef Name="productoId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Double" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="modelo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="id_categoria" Type="Int32" />
+          <Property Name="id_marca" Type="Int32" />
+          <Property Name="id_coleccion" Type="Int32" />
+          <Property Name="id_bodega" Type="Int32" />
+          <Property Name="id_distribuidor" Type="Int32" />
+          <Property Name="cantidad" Type="Int32" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="categorias" Relationship="Self.FK_categorias_productos" FromRole="productos" ToRole="categorias" />
+          <NavigationProperty Name="colecciones" Relationship="Self.FK_colecciones_productos" FromRole="productos" ToRole="colecciones" />
+          <NavigationProperty Name="distribuidor" Relationship="Self.FK_distribuidor_productos" FromRole="productos" ToRole="distribuidor" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_productos_estados" FromRole="productos" ToRole="estados" />
+          <NavigationProperty Name="facturacion_producto" Relationship="Self.FK_producto_facturacion_producto" FromRole="productos" ToRole="facturacion_producto" />
+          <NavigationProperty Name="genero_producto" Relationship="Self.FK_producto_genero_producto" FromRole="productos" ToRole="genero_producto" />
+          <NavigationProperty Name="imagen_producto" Relationship="Self.FK_producto_imagen_producto" FromRole="productos" ToRole="imagen_producto" />
+          <NavigationProperty Name="marcas" Relationship="Self.FK_marca_productos" FromRole="productos" ToRole="marcas" />
+          <NavigationProperty Name="medida_producto" Relationship="Self.FK_producto_medida_producto" FromRole="productos" ToRole="medida_producto" />
+          <NavigationProperty Name="promociones_productos" Relationship="Self.FK_productos_promociones_productos" FromRole="productos" ToRole="promociones_productos" />
+        </EntityType>
+        <EntityType Name="promociones">
+          <Key>
+            <PropertyRef Name="promocionId" />
+          </Key>
+          <Property Name="promocionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="valor" Type="Int32" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_promociones_estados" FromRole="promociones" ToRole="estados" />
+          <NavigationProperty Name="promociones_productos" Relationship="Self.FK_promociones_promociones_productos" FromRole="promociones" ToRole="promociones_productos" />
+          <NavigationProperty Name="usuarios_promocion" Relationship="Self.FK_user_usuarios_promocion" FromRole="promociones" ToRole="usuarios_promocion" />
+        </EntityType>
+        <EntityType Name="promociones_productos">
+          <Key>
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="promocionId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="promocionId" Type="Int32" Nullable="false" />
+          <Property Name="fecha_inicial_promocion" Type="DateTime" Precision="0" />
+          <Property Name="fecha_final_promocion" Type="DateTime" Precision="0" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_promociones_productos_estados" FromRole="promociones_productos" ToRole="estados" />
+          <NavigationProperty Name="productos" Relationship="Self.FK_productos_promociones_productos" FromRole="promociones_productos" ToRole="productos" />
+          <NavigationProperty Name="promociones" Relationship="Self.FK_promociones_promociones_productos" FromRole="promociones_productos" ToRole="promociones" />
+        </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="provinciaId" />
+          </Key>
+          <Property Name="provinciaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
+          <Property Name="paisId" Type="Int32" Nullable="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_Canton_Provincia" FromRole="Provincia" ToRole="Canton" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_Distrito_Provincia" FromRole="Provincia" ToRole="Distrito" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_Provincia_estados" FromRole="Provincia" ToRole="estados" />
+          <NavigationProperty Name="Pais" Relationship="Self.FK_Pais_Provincia" FromRole="Provincia" ToRole="Pais" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_Provincia" FromRole="Provincia" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="ROLID" />
+          </Key>
+          <Property Name="ROLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_rol_estados" FromRole="rol" ToRole="estados" />
+          <NavigationProperty Name="rol_user" Relationship="Self.FK_ROL_ROLUSER" FromRole="rol" ToRole="rol_user" />
+        </EntityType>
+        <EntityType Name="rol_user">
+          <Key>
+            <PropertyRef Name="rolId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="rolId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_rol_user_estados" FromRole="rol_user" ToRole="estados" />
+          <NavigationProperty Name="rol" Relationship="Self.FK_ROL_ROLUSER" FromRole="rol_user" ToRole="rol" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_rol_user_usuarios" FromRole="rol_user" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="usuario_facturaciones">
+          <Key>
+            <PropertyRef Name="usuarioId" />
+            <PropertyRef Name="facturacionId" />
+          </Key>
+          <Property Name="usuarioId" Type="Int32" Nullable="false" />
+          <Property Name="facturacionId" Type="Int32" Nullable="false" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_usuario_facturaciones_estados" FromRole="usuario_facturaciones" ToRole="estados" />
+          <NavigationProperty Name="facturaciones" Relationship="Self.FK_facturaciones_usuario_facturaciones" FromRole="usuario_facturaciones" ToRole="facturaciones" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuario_facturaciones_usuarios" FromRole="usuario_facturaciones" ToRole="usuarios" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="correoElectronico" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="fechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="genero" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fotoPerfil" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="paisId" Type="Int32" />
+          <Property Name="distritoId" Type="Int32" />
+          <Property Name="provinciaId" Type="Int32" />
+          <Property Name="cantonId" Type="Int32" />
+          <Property Name="Usuario_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="Canton" Relationship="Self.FK_usuarios_Canton" FromRole="usuarios" ToRole="Canton" />
+          <NavigationProperty Name="Distrito" Relationship="Self.FK_usuarios_Distrito" FromRole="usuarios" ToRole="Distrito" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_usuarios_estados" FromRole="usuarios" ToRole="estados" />
+          <NavigationProperty Name="Pais" Relationship="Self.FK_usuarios_Pais" FromRole="usuarios" ToRole="Pais" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK_usuarios_Provincia" FromRole="usuarios" ToRole="Provincia" />
+          <NavigationProperty Name="rol_user" Relationship="Self.FK_rol_user_usuarios" FromRole="usuarios" ToRole="rol_user" />
+          <NavigationProperty Name="usuario_facturaciones" Relationship="Self.FK_usuario_facturaciones_usuarios" FromRole="usuarios" ToRole="usuario_facturaciones" />
+          <NavigationProperty Name="usuarios_promocion" Relationship="Self.FK_usuarios_promocion_usuarios" FromRole="usuarios" ToRole="usuarios_promocion" />
+        </EntityType>
+        <EntityType Name="usuarios_promocion">
+          <Key>
+            <PropertyRef Name="usuarioId" />
+            <PropertyRef Name="promocionId" />
+          </Key>
+          <Property Name="usuarioId" Type="Int32" Nullable="false" />
+          <Property Name="promocionId" Type="Int32" Nullable="false" />
+          <Property Name="fecha_inicial_promocion" Type="DateTime" Precision="0" />
+          <Property Name="fecha_final_promocion" Type="DateTime" Precision="0" />
+          <Property Name="id_estado" Type="Int32" />
+          <NavigationProperty Name="estados" Relationship="Self.FK_usuarios_promocion_estados" FromRole="usuarios_promocion" ToRole="estados" />
+          <NavigationProperty Name="promociones" Relationship="Self.FK_user_usuarios_promocion" FromRole="usuarios_promocion" ToRole="promociones" />
+          <NavigationProperty Name="usuarios" Relationship="Self.FK_usuarios_promocion_usuarios" FromRole="usuarios_promocion" ToRole="usuarios" />
+        </EntityType>
+        <Association Name="FK_Canton_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Canton">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Canton_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Canton" Type="Self.Canton" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="provinciaId" />
+            </Principal>
+            <Dependent Role="Canton">
+              <PropertyRef Name="provinciaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distrito_Canton">
+          <End Role="Canton" Type="Self.Canton" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canton">
+              <PropertyRef Name="cantonId" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="cantonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_Canton">
+          <End Role="Canton" Type="Self.Canton" Multiplicity="0..1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Canton">
+              <PropertyRef Name="cantonId" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="cantonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categorias_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="categorias" Type="Self.categorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="categorias">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_categorias_productos">
+          <End Role="categorias" Type="Self.categorias" Multiplicity="0..1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias">
+              <PropertyRef Name="id_categoria" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_categoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_colecciones_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="colecciones" Type="Self.colecciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="colecciones">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_colecciones_productos">
+          <End Role="colecciones" Type="Self.colecciones" Multiplicity="0..1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="colecciones">
+              <PropertyRef Name="id_coleccion" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_coleccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_distribuidor_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="distribuidor" Type="Self.distribuidor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="distribuidor">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_distribuidor_productos">
+          <End Role="distribuidor" Type="Self.distribuidor" Multiplicity="0..1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="distribuidor">
+              <PropertyRef Name="id_distribuidor" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_distribuidor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distrito_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Distrito_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="provinciaId" />
+            </Principal>
+            <Dependent Role="Distrito">
+              <PropertyRef Name="provinciaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_Distrito">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="0..1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="distritoId" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="distritoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_facturacion_producto_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="facturacion_producto" Type="Self.facturacion_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="facturacion_producto">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_facturaciones_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="facturaciones" Type="Self.facturaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="facturaciones">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_formas_pago_facturacion_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="formas_pago_facturacion" Type="Self.formas_pago_facturacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="formas_pago_facturacion">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_marcas_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="marcas" Type="Self.marcas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="marcas">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pais_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="Pais" Type="Self.Pais" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Pais">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productos_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_promociones_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="promociones" Type="Self.promociones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="promociones">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_promociones_productos_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="promociones_productos" Type="Self.promociones_productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="promociones_productos">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Provincia_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="Provincia">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rol_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="rol" Type="Self.rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="rol">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rol_user_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="rol_user" Type="Self.rol_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="rol_user">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_facturaciones_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="usuario_facturaciones" Type="Self.usuario_facturaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="usuario_facturaciones">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_promocion_estados">
+          <End Role="estados" Type="Self.estados" Multiplicity="0..1" />
+          <End Role="usuarios_promocion" Type="Self.usuarios_promocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estados">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="usuarios_promocion">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_facturacion_facturacion_producto">
+          <End Role="facturaciones" Type="Self.facturaciones" Multiplicity="1" />
+          <End Role="facturacion_producto" Type="Self.facturacion_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="facturaciones">
+              <PropertyRef Name="facturacionId" />
+            </Principal>
+            <Dependent Role="facturacion_producto">
+              <PropertyRef Name="facturacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_facturacion_producto">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="facturacion_producto" Type="Self.facturacion_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="productoId" />
+            </Principal>
+            <Dependent Role="facturacion_producto">
+              <PropertyRef Name="productoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_facturacion_formas_pago_facturacion">
+          <End Role="facturaciones" Type="Self.facturaciones" Multiplicity="1" />
+          <End Role="formas_pago_facturacion" Type="Self.formas_pago_facturacion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="facturaciones">
+              <PropertyRef Name="facturacionId" />
+            </Principal>
+            <Dependent Role="formas_pago_facturacion">
+              <PropertyRef Name="facturacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_facturaciones_usuario_facturaciones">
+          <End Role="facturaciones" Type="Self.facturaciones" Multiplicity="1" />
+          <End Role="usuario_facturaciones" Type="Self.usuario_facturaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="facturaciones">
+              <PropertyRef Name="facturacionId" />
+            </Principal>
+            <Dependent Role="usuario_facturaciones">
+              <PropertyRef Name="facturacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_genero_producto">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="genero_producto" Type="Self.genero_producto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="productoId" />
+            </Principal>
+            <Dependent Role="genero_producto">
+              <PropertyRef Name="productoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_imagen_producto">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="imagen_producto" Type="Self.imagen_producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="productoId" />
+            </Principal>
+            <Dependent Role="imagen_producto">
+              <PropertyRef Name="productoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_marca_productos">
+          <End Role="marcas" Type="Self.marcas" Multiplicity="0..1" />
+          <End Role="productos" Type="Self.productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="marcas">
+              <PropertyRef Name="id_marca" />
+            </Principal>
+            <Dependent Role="productos">
+              <PropertyRef Name="id_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producto_medida_producto">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="medida_producto" Type="Self.medida_producto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="productoId" />
+            </Principal>
+            <Dependent Role="medida_producto">
+              <PropertyRef Name="productoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pais_Provincia">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="paisId" />
+            </Principal>
+            <Dependent Role="Provincia">
+              <PropertyRef Name="paisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="paisId" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="paisId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productos_promociones_productos">
+          <End Role="productos" Type="Self.productos" Multiplicity="1" />
+          <End Role="promociones_productos" Type="Self.promociones_productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productos">
+              <PropertyRef Name="productoId" />
+            </Principal>
+            <Dependent Role="promociones_productos">
+              <PropertyRef Name="productoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_promociones_promociones_productos">
+          <End Role="promociones" Type="Self.promociones" Multiplicity="1" />
+          <End Role="promociones_productos" Type="Self.promociones_productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="promociones">
+              <PropertyRef Name="promocionId" />
+            </Principal>
+            <Dependent Role="promociones_productos">
+              <PropertyRef Name="promocionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_usuarios_promocion">
+          <End Role="promociones" Type="Self.promociones" Multiplicity="1" />
+          <End Role="usuarios_promocion" Type="Self.usuarios_promocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="promociones">
+              <PropertyRef Name="promocionId" />
+            </Principal>
+            <Dependent Role="usuarios_promocion">
+              <PropertyRef Name="promocionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_Provincia">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="0..1" />
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="provinciaId" />
+            </Principal>
+            <Dependent Role="usuarios">
+              <PropertyRef Name="provinciaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROL_ROLUSER">
+          <End Role="rol" Type="Self.rol" Multiplicity="1" />
+          <End Role="rol_user" Type="Self.rol_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="ROLID" />
+            </Principal>
+            <Dependent Role="rol_user">
+              <PropertyRef Name="rolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rol_user_usuarios">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="rol_user" Type="Self.rol_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="rol_user">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_facturaciones_usuarios">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="usuario_facturaciones" Type="Self.usuario_facturaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="usuario_facturaciones">
+              <PropertyRef Name="usuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_promocion_usuarios">
+          <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+          <End Role="usuarios_promocion" Type="Self.usuarios_promocion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuarios">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="usuarios_promocion">
+              <PropertyRef Name="usuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BDContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Canton" EntityType="Self.Canton" />
+          <EntitySet Name="categorias" EntityType="Self.categorias" />
+          <EntitySet Name="colecciones" EntityType="Self.colecciones" />
+          <EntitySet Name="distribuidor" EntityType="Self.distribuidor" />
+          <EntitySet Name="Distrito" EntityType="Self.Distrito" />
+          <EntitySet Name="estados" EntityType="Self.estados" />
+          <EntitySet Name="facturacion_producto" EntityType="Self.facturacion_producto" />
+          <EntitySet Name="facturaciones" EntityType="Self.facturaciones" />
+          <EntitySet Name="formas_pago_facturacion" EntityType="Self.formas_pago_facturacion" />
+          <EntitySet Name="genero_producto" EntityType="Self.genero_producto" />
+          <EntitySet Name="imagen_producto" EntityType="Self.imagen_producto" />
+          <EntitySet Name="marcas" EntityType="Self.marcas" />
+          <EntitySet Name="medida_producto" EntityType="Self.medida_producto" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" />
+          <EntitySet Name="productos" EntityType="Self.productos" />
+          <EntitySet Name="promociones" EntityType="Self.promociones" />
+          <EntitySet Name="promociones_productos" EntityType="Self.promociones_productos" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
+          <EntitySet Name="rol" EntityType="Self.rol" />
+          <EntitySet Name="rol_user" EntityType="Self.rol_user" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="usuario_facturaciones" EntityType="Self.usuario_facturaciones" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+          <EntitySet Name="usuarios_promocion" EntityType="Self.usuarios_promocion" />
+          <AssociationSet Name="FK_Canton_estados" Association="Self.FK_Canton_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="Canton" EntitySet="Canton" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Canton_Provincia" Association="Self.FK_Canton_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Canton" EntitySet="Canton" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distrito_Canton" Association="Self.FK_Distrito_Canton">
+            <End Role="Canton" EntitySet="Canton" />
+            <End Role="Distrito" EntitySet="Distrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_Canton" Association="Self.FK_usuarios_Canton">
+            <End Role="Canton" EntitySet="Canton" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categorias_estados" Association="Self.FK_categorias_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="categorias" EntitySet="categorias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_categorias_productos" Association="Self.FK_categorias_productos">
+            <End Role="categorias" EntitySet="categorias" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_colecciones_estados" Association="Self.FK_colecciones_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="colecciones" EntitySet="colecciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_colecciones_productos" Association="Self.FK_colecciones_productos">
+            <End Role="colecciones" EntitySet="colecciones" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_distribuidor_estados" Association="Self.FK_distribuidor_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="distribuidor" EntitySet="distribuidor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_distribuidor_productos" Association="Self.FK_distribuidor_productos">
+            <End Role="distribuidor" EntitySet="distribuidor" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distrito_estados" Association="Self.FK_Distrito_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="Distrito" EntitySet="Distrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Distrito_Provincia" Association="Self.FK_Distrito_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Distrito" EntitySet="Distrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_Distrito" Association="Self.FK_usuarios_Distrito">
+            <End Role="Distrito" EntitySet="Distrito" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_facturacion_producto_estados" Association="Self.FK_facturacion_producto_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_facturaciones_estados" Association="Self.FK_facturaciones_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="facturaciones" EntitySet="facturaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_formas_pago_facturacion_estados" Association="Self.FK_formas_pago_facturacion_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="formas_pago_facturacion" EntitySet="formas_pago_facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_marcas_estados" Association="Self.FK_marcas_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="marcas" EntitySet="marcas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pais_estados" Association="Self.FK_Pais_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="Pais" EntitySet="Pais" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productos_estados" Association="Self.FK_productos_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_promociones_estados" Association="Self.FK_promociones_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="promociones" EntitySet="promociones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_promociones_productos_estados" Association="Self.FK_promociones_productos_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="promociones_productos" EntitySet="promociones_productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Provincia_estados" Association="Self.FK_Provincia_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="Provincia" EntitySet="Provincia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rol_estados" Association="Self.FK_rol_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="rol" EntitySet="rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rol_user_estados" Association="Self.FK_rol_user_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="rol_user" EntitySet="rol_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_facturaciones_estados" Association="Self.FK_usuario_facturaciones_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="usuario_facturaciones" EntitySet="usuario_facturaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_estados" Association="Self.FK_usuarios_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_promocion_estados" Association="Self.FK_usuarios_promocion_estados">
+            <End Role="estados" EntitySet="estados" />
+            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_facturacion_facturacion_producto" Association="Self.FK_facturacion_facturacion_producto">
+            <End Role="facturaciones" EntitySet="facturaciones" />
+            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_facturacion_producto" Association="Self.FK_producto_facturacion_producto">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_facturacion_formas_pago_facturacion" Association="Self.FK_facturacion_formas_pago_facturacion">
+            <End Role="facturaciones" EntitySet="facturaciones" />
+            <End Role="formas_pago_facturacion" EntitySet="formas_pago_facturacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_facturaciones_usuario_facturaciones" Association="Self.FK_facturaciones_usuario_facturaciones">
+            <End Role="facturaciones" EntitySet="facturaciones" />
+            <End Role="usuario_facturaciones" EntitySet="usuario_facturaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_genero_producto" Association="Self.FK_producto_genero_producto">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="genero_producto" EntitySet="genero_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_imagen_producto" Association="Self.FK_producto_imagen_producto">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="imagen_producto" EntitySet="imagen_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_marca_productos" Association="Self.FK_marca_productos">
+            <End Role="marcas" EntitySet="marcas" />
+            <End Role="productos" EntitySet="productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producto_medida_producto" Association="Self.FK_producto_medida_producto">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="medida_producto" EntitySet="medida_producto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pais_Provincia" Association="Self.FK_Pais_Provincia">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Provincia" EntitySet="Provincia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_Pais" Association="Self.FK_usuarios_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productos_promociones_productos" Association="Self.FK_productos_promociones_productos">
+            <End Role="productos" EntitySet="productos" />
+            <End Role="promociones_productos" EntitySet="promociones_productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_promociones_promociones_productos" Association="Self.FK_promociones_promociones_productos">
+            <End Role="promociones" EntitySet="promociones" />
+            <End Role="promociones_productos" EntitySet="promociones_productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_usuarios_promocion" Association="Self.FK_user_usuarios_promocion">
+            <End Role="promociones" EntitySet="promociones" />
+            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_Provincia" Association="Self.FK_usuarios_Provincia">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="usuarios" EntitySet="usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROL_ROLUSER" Association="Self.FK_ROL_ROLUSER">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="rol_user" EntitySet="rol_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rol_user_usuarios" Association="Self.FK_rol_user_usuarios">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="rol_user" EntitySet="rol_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_facturaciones_usuarios" Association="Self.FK_usuario_facturaciones_usuarios">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="usuario_facturaciones" EntitySet="usuario_facturaciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_promocion_usuarios" Association="Self.FK_usuarios_promocion_usuarios">
+            <End Role="usuarios" EntitySet="usuarios" />
+            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
+          </AssociationSet>
+          <FunctionImport Name="sp_actualizarFacturacion">
+            <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
+            <Parameter Name="pNombre" Mode="In" Type="String" />
+            <Parameter Name="pfecha" Mode="In" Type="DateTime" />
+            <Parameter Name="pDescripcion" Mode="In" Type="String" />
+            <Parameter Name="pImpuesto" Mode="In" Type="Int32" />
+            <Parameter Name="pTipo" Mode="In" Type="String" />
+            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_actualizarFacturacionesProducto">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
+            <Parameter Name="cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_actualizarRol">
             <Parameter Name="pId" Mode="In" Type="Int32" />
             <Parameter Name="pNombre" Mode="In" Type="String" />
@@ -1164,6 +2286,12 @@
             <Parameter Name="pTipo" Mode="In" Type="String" />
             <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_agregarFacturacionProducto">
+            <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
+            <Parameter Name="pProductoId" Mode="In" Type="Int32" />
+            <Parameter Name="pCantidad" Mode="In" Type="Int32" />
+            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_agregarRol">
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pDescripcion" Mode="In" Type="String" />
@@ -1174,7 +2302,7 @@
             <Parameter Name="pUserId" Mode="In" Type="Int32" />
             <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_agregarUsuario" ReturnType="Collection(Boolean)">
+          <FunctionImport Name="sp_agregarUsuario">
             <Parameter Name="pNombre" Mode="In" Type="String" />
             <Parameter Name="pApellidos" Mode="In" Type="String" />
             <Parameter Name="pContrasena" Mode="In" Type="String" />
@@ -1191,276 +2319,93 @@
             <Parameter Name="pUsuario_ID" Mode="In" Type="String" />
             <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
           <FunctionImport Name="sp_deleteRol">
-          <Parameter Name="pRolId" Mode="In" Type="Int32" />
+            <Parameter Name="pRolId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_eliminarUsuario">
-          <Parameter Name="pUserId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
-          <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)">
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)">
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
-          <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
-          <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
-          <Parameter Name="pId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
-          <Parameter Name="idUser" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
-          <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
-          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerImagenProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto_Result)">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
-            <Parameter Name="pImagen" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerImagenesProductoId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId_Result)">
-          <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_actualizarFacturacion">
-            <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
-            <Parameter Name="pNombre" Mode="In" Type="String" />
-            <Parameter Name="pfecha" Mode="In" Type="DateTime" />
-            <Parameter Name="pDescripcion" Mode="In" Type="String" />
-            <Parameter Name="pImpuesto" Mode="In" Type="Int32" />
-            <Parameter Name="pTipo" Mode="In" Type="String" />
-            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarFacturaciones">
-          <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_actualizarFacturacionesProducto">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
             <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
-            <Parameter Name="cantidad" Mode="In" Type="Int32" />
-            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_agregarFacturacionProducto">
-            <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
-            <Parameter Name="pProductoId" Mode="In" Type="Int32" />
-            <Parameter Name="pCantidad" Mode="In" Type="Int32" />
-            <Parameter Name="pEstadoId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerImagenesProductoId1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId1_Result)">
-          <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_obtenerImagenProducto1" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto1_Result)">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
-            <Parameter Name="pImagen" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarPromocionProducto">
             <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
             <Parameter Name="pProductoId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_eliminarUsuario">
+            <Parameter Name="pUserId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_eliminarUsuarioPromocion">
             <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
             <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(BDprogramacionVModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(BDprogramacionVModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerFacturaciones" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturaciones_Result)" />
+          <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)" />
+          <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)" />
+          <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionProductoByIdFacturacion" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result)">
-          <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
+            <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_eliminarPromocionProducto1">
-            <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
-            <Parameter Name="pProductoId" Mode="In" Type="Int32" />
+          <FunctionImport Name="sp_obtenerImagenesProductoId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_eliminarUsuarioPromocion1">
+          <FunctionImport Name="sp_obtenerImagenProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto_Result)">
+            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="pImagen" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
+          <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
+          <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
+            <Parameter Name="pId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
+            <Parameter Name="idUser" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
+          <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
             <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
-            <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="Canton" EntityType="BDprogramacionVModel.Canton" />
-          <EntitySet Name="categorias" EntityType="BDprogramacionVModel.categorias" />
-          <EntitySet Name="colecciones" EntityType="BDprogramacionVModel.colecciones" />
-          <EntitySet Name="distribuidor" EntityType="BDprogramacionVModel.distribuidor" />
-          <EntitySet Name="Distrito" EntityType="BDprogramacionVModel.Distrito" />
-          <EntitySet Name="facturacion_producto" EntityType="BDprogramacionVModel.facturacion_producto" />
-          <EntitySet Name="facturaciones" EntityType="BDprogramacionVModel.facturaciones" />
-          <EntitySet Name="formas_pago_facturacion" EntityType="BDprogramacionVModel.formas_pago_facturacion" />
-          <EntitySet Name="genero_producto" EntityType="BDprogramacionVModel.genero_producto" />
-          <EntitySet Name="imagen_producto" EntityType="BDprogramacionVModel.imagen_producto" />
-          <EntitySet Name="marcas" EntityType="BDprogramacionVModel.marcas" />
-          <EntitySet Name="medida_producto" EntityType="BDprogramacionVModel.medida_producto" />
-          <EntitySet Name="Pais" EntityType="BDprogramacionVModel.Pais" />
-          <EntitySet Name="productos" EntityType="BDprogramacionVModel.productos" />
-          <EntitySet Name="promociones" EntityType="BDprogramacionVModel.promociones" />
-          <EntitySet Name="promociones_productos" EntityType="BDprogramacionVModel.promociones_productos" />
-          <EntitySet Name="Provincia" EntityType="BDprogramacionVModel.Provincia" />
-          <EntitySet Name="rol" EntityType="BDprogramacionVModel.rol" />
-          <EntitySet Name="usuarios" EntityType="BDprogramacionVModel.usuarios" />
-          <EntitySet Name="usuarios_promocion" EntityType="BDprogramacionVModel.usuarios_promocion" />
-          <AssociationSet Name="FK_Canton_Provincia" Association="BDprogramacionVModel.FK_Canton_Provincia">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="Canton" EntitySet="Canton" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Distrito_Canton" Association="BDprogramacionVModel.FK_Distrito_Canton">
-            <End Role="Canton" EntitySet="Canton" />
-            <End Role="Distrito" EntitySet="Distrito" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_Canton" Association="BDprogramacionVModel.FK_usuarios_Canton">
-            <End Role="Canton" EntitySet="Canton" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_categorias_productos" Association="BDprogramacionVModel.FK_categorias_productos">
-            <End Role="categorias" EntitySet="categorias" />
-            <End Role="productos" EntitySet="productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_colecciones_productos" Association="BDprogramacionVModel.FK_colecciones_productos">
-            <End Role="colecciones" EntitySet="colecciones" />
-            <End Role="productos" EntitySet="productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_distribuidor_productos" Association="BDprogramacionVModel.FK_distribuidor_productos">
-            <End Role="distribuidor" EntitySet="distribuidor" />
-            <End Role="productos" EntitySet="productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Distrito_Provincia" Association="BDprogramacionVModel.FK_Distrito_Provincia">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="Distrito" EntitySet="Distrito" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_Distrito" Association="BDprogramacionVModel.FK_usuarios_Distrito">
-            <End Role="Distrito" EntitySet="Distrito" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_facturacion_facturacion_producto" Association="BDprogramacionVModel.FK_facturacion_facturacion_producto">
-            <End Role="facturaciones" EntitySet="facturaciones" />
-            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_facturacion_producto" Association="BDprogramacionVModel.FK_producto_facturacion_producto">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_facturacion_formas_pago_facturacion" Association="BDprogramacionVModel.FK_facturacion_formas_pago_facturacion">
-            <End Role="facturaciones" EntitySet="facturaciones" />
-            <End Role="formas_pago_facturacion" EntitySet="formas_pago_facturacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_genero_producto" Association="BDprogramacionVModel.FK_producto_genero_producto">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="genero_producto" EntitySet="genero_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_imagen_producto" Association="BDprogramacionVModel.FK_producto_imagen_producto">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="imagen_producto" EntitySet="imagen_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_marca_productos" Association="BDprogramacionVModel.FK_marca_productos">
-            <End Role="marcas" EntitySet="marcas" />
-            <End Role="productos" EntitySet="productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producto_medida_producto" Association="BDprogramacionVModel.FK_producto_medida_producto">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="medida_producto" EntitySet="medida_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pais_Provincia" Association="BDprogramacionVModel.FK_Pais_Provincia">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="Provincia" EntitySet="Provincia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_Pais" Association="BDprogramacionVModel.FK_usuarios_Pais">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productos_promociones_productos" Association="BDprogramacionVModel.FK_productos_promociones_productos">
-            <End Role="productos" EntitySet="productos" />
-            <End Role="promociones_productos" EntitySet="promociones_productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_promociones_promociones_productos" Association="BDprogramacionVModel.FK_promociones_promociones_productos">
-            <End Role="promociones" EntitySet="promociones" />
-            <End Role="promociones_productos" EntitySet="promociones_productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_usuarios_promocion" Association="BDprogramacionVModel.FK_user_usuarios_promocion">
-            <End Role="promociones" EntitySet="promociones" />
-            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_Provincia" Association="BDprogramacionVModel.FK_usuarios_Provincia">
-            <End Role="Provincia" EntitySet="Provincia" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_promocion_usuarios" Association="BDprogramacionVModel.FK_usuarios_promocion_usuarios">
-            <End Role="usuarios" EntitySet="usuarios" />
-            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
-          </AssociationSet>
-          <AssociationSet Name="rol_user" Association="BDprogramacionVModel.rol_user">
-            <End Role="rol" EntitySet="rol" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="usuario_facturaciones" Association="BDprogramacionVModel.usuario_facturaciones">
-            <End Role="facturaciones" EntitySet="facturaciones" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <EntitySet Name="estados" EntityType="BDprogramacionVModel.estados" />
-          <EntitySet Name="sysdiagrams" EntityType="BDprogramacionVModel.sysdiagrams" />
-          <AssociationSet Name="FK_Canton_estados" Association="BDprogramacionVModel.FK_Canton_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="Canton" EntitySet="Canton" />
-          </AssociationSet>
-          <AssociationSet Name="FK_categorias_estados" Association="BDprogramacionVModel.FK_categorias_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="categorias" EntitySet="categorias" />
-          </AssociationSet>
-          <AssociationSet Name="FK_colecciones_estados" Association="BDprogramacionVModel.FK_colecciones_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="colecciones" EntitySet="colecciones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_distribuidor_estados" Association="BDprogramacionVModel.FK_distribuidor_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="distribuidor" EntitySet="distribuidor" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Distrito_estados" Association="BDprogramacionVModel.FK_Distrito_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="Distrito" EntitySet="Distrito" />
-          </AssociationSet>
-          <AssociationSet Name="FK_facturacion_producto_estados" Association="BDprogramacionVModel.FK_facturacion_producto_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="facturacion_producto" EntitySet="facturacion_producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_facturaciones_estados" Association="BDprogramacionVModel.FK_facturaciones_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="facturaciones" EntitySet="facturaciones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_formas_pago_facturacion_estados" Association="BDprogramacionVModel.FK_formas_pago_facturacion_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="formas_pago_facturacion" EntitySet="formas_pago_facturacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_marcas_estados" Association="BDprogramacionVModel.FK_marcas_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="marcas" EntitySet="marcas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Pais_estados" Association="BDprogramacionVModel.FK_Pais_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="Pais" EntitySet="Pais" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productos_estados" Association="BDprogramacionVModel.FK_productos_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="productos" EntitySet="productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_promociones_estados" Association="BDprogramacionVModel.FK_promociones_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="promociones" EntitySet="promociones" />
-          </AssociationSet>
-          <AssociationSet Name="FK_promociones_productos_estados" Association="BDprogramacionVModel.FK_promociones_productos_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="promociones_productos" EntitySet="promociones_productos" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Provincia_estados" Association="BDprogramacionVModel.FK_Provincia_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="Provincia" EntitySet="Provincia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_rol_estados" Association="BDprogramacionVModel.FK_rol_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="rol" EntitySet="rol" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_estados" Association="BDprogramacionVModel.FK_usuarios_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="usuarios" EntitySet="usuarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_usuarios_promocion_estados" Association="BDprogramacionVModel.FK_usuarios_promocion_estados">
-            <End Role="estados" EntitySet="estados" />
-            <End Role="usuarios_promocion" EntitySet="usuarios_promocion" />
-          </AssociationSet>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
@@ -1470,6 +2415,7 @@
           <Property Type="Double" Name="subtotal" Nullable="true" />
           <Property Type="Double" Name="total" Nullable="true" />
           <Property Type="String" Name="tipo" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_obtenerFacturacionesProducto_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -1492,28 +2438,47 @@
           <Property Type="Double" Name="subtotal" Nullable="true" />
           <Property Type="Double" Name="total" Nullable="true" />
           <Property Type="String" Name="tipo" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerFacturacionProductoByIdFacturacion_Result">
+          <Property Type="Int32" Name="facturacionId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="nombre1" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="cantidad" Nullable="true" />
+          <Property Type="Double" Name="precio" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerImagenesProductoId_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerImagenProducto_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
         </ComplexType>
         <ComplexType Name="sp_obtenerRoles_Result">
           <Property Type="Int32" Name="ROLID" Nullable="false" />
           <Property Type="String" Name="NOMBRE" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_ObtenerRolesUser_Result">
-          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
           <Property Type="Int32" Name="rolId" Nullable="false" />
           <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
         </ComplexType>
         <ComplexType Name="sp_obtenerRolId_Result">
           <Property Type="Int32" Name="ROLID" Nullable="false" />
           <Property Type="String" Name="NOMBRE" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_obtenerRolUserId_Result">
-          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
           <Property Type="Int32" Name="rolId" Nullable="false" />
+          <Property Type="String" Name="Rol" Nullable="true" MaxLength="25" />
           <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="String" Name="Usuario" Nullable="true" MaxLength="25" />
         </ComplexType>
         <ComplexType Name="sp_obtenerUsuarios_Result">
           <Property Type="Int32" Name="userId" Nullable="false" />
@@ -1531,6 +2496,7 @@
           <Property Type="Int32" Name="provinciaId" Nullable="true" />
           <Property Type="Int32" Name="cantonId" Nullable="true" />
           <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_obtenerUsuariosId_Result">
           <Property Type="Int32" Name="userId" Nullable="false" />
@@ -1548,844 +2514,310 @@
           <Property Type="Int32" Name="provinciaId" Nullable="true" />
           <Property Type="Int32" Name="cantonId" Nullable="true" />
           <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_obtenerImagenProducto_Result">
-          <Property Type="Int32" Name="productoId" Nullable="false" />
-          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
-        </ComplexType>
-        <ComplexType Name="sp_obtenerImagenesProductoId_Result">
-          <Property Type="Int32" Name="productoId" Nullable="false" />
-          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
-        </ComplexType>
-        <ComplexType Name="sp_obtenerImagenesProductoId1_Result">
-          <Property Type="Int32" Name="productoId" Nullable="false" />
-          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
-        </ComplexType>
-        <ComplexType Name="sp_obtenerImagenProducto1_Result">
-          <Property Type="Int32" Name="productoId" Nullable="false" />
-          <Property Type="String" Name="IMAGEN" Nullable="false" MaxLength="150" />
-        </ComplexType>
-        <ComplexType Name="sp_obtenerFacturacionProductoByIdFacturacion_Result">
-          <Property Type="Int32" Name="facturacionId" Nullable="false" />
-          <Property Type="String" Name="nombre" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="productoId" Nullable="false" />
-          <Property Type="String" Name="nombre1" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="cantidad" Nullable="true" />
-          <Property Type="Double" Name="precio" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_obtenerUsuarioPorIDUsuario_Result">
-          <Property Type="Int32" Name="userId" Nullable="false" />
-          <Property Type="String" Name="nombre" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="125" />
-          <Property Type="String" Name="contrasena" Nullable="true" MaxLength="125" />
-          <Property Type="String" Name="correoElectronico" Nullable="true" MaxLength="125" />
-          <Property Type="DateTime" Name="fechaNacimiento" Nullable="true" />
-          <Property Type="String" Name="genero" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="fotoPerfil" Nullable="true" MaxLength="150" />
-          <Property Type="Int32" Name="telefono" Nullable="true" />
-          <Property Type="String" Name="direccion" Nullable="true" MaxLength="Max" />
-          <Property Type="Int32" Name="paisId" Nullable="true" />
-          <Property Type="Int32" Name="distritoId" Nullable="true" />
-          <Property Type="Int32" Name="provinciaId" Nullable="true" />
-          <Property Type="Int32" Name="cantonId" Nullable="true" />
-          <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
-        </ComplexType>
-        <EntityType Name="Canton">
-          <Key>
-            <PropertyRef Name="cantonId" />
-          </Key>
-          <Property Name="provinciaId" Type="Int32" Nullable="false" />
-          <Property Name="cantonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Provincia" Relationship="BDprogramacionVModel.FK_Canton_Provincia" FromRole="Canton" ToRole="Provincia" />
-          <NavigationProperty Name="Distrito" Relationship="BDprogramacionVModel.FK_Distrito_Canton" FromRole="Canton" ToRole="Distrito" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_Canton" FromRole="Canton" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_Canton_estados" FromRole="Canton" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="categorias">
-          <Key>
-            <PropertyRef Name="id_categoria" />
-          </Key>
-          <Property Name="id_categoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_categorias_productos" FromRole="categorias" ToRole="productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_categorias_estados" FromRole="categorias" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="colecciones">
-          <Key>
-            <PropertyRef Name="id_coleccion" />
-          </Key>
-          <Property Name="id_coleccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_colecciones_productos" FromRole="colecciones" ToRole="productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_colecciones_estados" FromRole="colecciones" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="distribuidor">
-          <Key>
-            <PropertyRef Name="id_distribuidor" />
-          </Key>
-          <Property Name="id_distribuidor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
-          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_distribuidor_productos" FromRole="distribuidor" ToRole="productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_distribuidor_estados" FromRole="distribuidor" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="Distrito">
-          <Key>
-            <PropertyRef Name="distritoId" />
-          </Key>
-          <Property Name="provinciaId" Type="Int32" Nullable="false" />
-          <Property Name="cantonId" Type="Int32" Nullable="false" />
-          <Property Name="distritoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Canton" Relationship="BDprogramacionVModel.FK_Distrito_Canton" FromRole="Distrito" ToRole="Canton" />
-          <NavigationProperty Name="Provincia" Relationship="BDprogramacionVModel.FK_Distrito_Provincia" FromRole="Distrito" ToRole="Provincia" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_Distrito" FromRole="Distrito" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_Distrito_estados" FromRole="Distrito" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="facturacion_producto">
-          <Key>
-            <PropertyRef Name="productoId" />
-            <PropertyRef Name="facturacionId" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" />
-          <Property Name="facturacionId" Type="Int32" Nullable="false" />
-          <Property Name="cantidad" Type="Int32" />
-          <NavigationProperty Name="facturaciones" Relationship="BDprogramacionVModel.FK_facturacion_facturacion_producto" FromRole="facturacion_producto" ToRole="facturaciones" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_producto_facturacion_producto" FromRole="facturacion_producto" ToRole="productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_facturacion_producto_estados" FromRole="facturacion_producto" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="facturaciones">
-          <Key>
-            <PropertyRef Name="facturacionId" />
-          </Key>
-          <Property Name="facturacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Precision="0" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="impuesto" Type="Int32" />
-          <Property Name="subtotal" Type="Double" />
-          <Property Name="total" Type="Double" />
-          <Property Name="tipo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="facturacion_producto" Relationship="BDprogramacionVModel.FK_facturacion_facturacion_producto" FromRole="facturaciones" ToRole="facturacion_producto" />
-          <NavigationProperty Name="formas_pago_facturacion" Relationship="BDprogramacionVModel.FK_facturacion_formas_pago_facturacion" FromRole="facturaciones" ToRole="formas_pago_facturacion" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.usuario_facturaciones" FromRole="facturaciones" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_facturaciones_estados" FromRole="facturaciones" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="formas_pago_facturacion">
-          <Key>
-            <PropertyRef Name="facturacionId" />
-          </Key>
-          <Property Name="facturacionId" Type="Int32" Nullable="false" />
-          <Property Name="forma_pago" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="facturaciones" Relationship="BDprogramacionVModel.FK_facturacion_formas_pago_facturacion" FromRole="formas_pago_facturacion" ToRole="facturaciones" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_formas_pago_facturacion_estados" FromRole="formas_pago_facturacion" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="genero_producto">
-          <Key>
-            <PropertyRef Name="productoId" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" />
-          <Property Name="genero" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_producto_genero_producto" FromRole="genero_producto" ToRole="productos" />
-        </EntityType>
-        <EntityType Name="imagen_producto">
-          <Key>
-            <PropertyRef Name="productoId" />
-            <PropertyRef Name="IMAGEN" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" />
-          <Property Name="IMAGEN" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_producto_imagen_producto" FromRole="imagen_producto" ToRole="productos" />
-        </EntityType>
-        <EntityType Name="marcas">
-          <Key>
-            <PropertyRef Name="id_marca" />
-          </Key>
-          <Property Name="id_marca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_marca_productos" FromRole="marcas" ToRole="productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_marcas_estados" FromRole="marcas" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="medida_producto">
-          <Key>
-            <PropertyRef Name="productoId" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" />
-          <Property Name="medida" Type="Double" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_producto_medida_producto" FromRole="medida_producto" ToRole="productos" />
-        </EntityType>
-        <EntityType Name="Pais">
-          <Key>
-            <PropertyRef Name="paisId" />
-          </Key>
-          <Property Name="paisId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Provincia" Relationship="BDprogramacionVModel.FK_Pais_Provincia" FromRole="Pais" ToRole="Provincia" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_Pais" FromRole="Pais" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_Pais_estados" FromRole="Pais" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="productos">
-          <Key>
-            <PropertyRef Name="productoId" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="precio" Type="Double" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="modelo" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="id_categoria" Type="Int32" />
-          <Property Name="id_marca" Type="Int32" />
-          <Property Name="id_coleccion" Type="Int32" />
-          <Property Name="id_bodega" Type="Int32" />
-          <Property Name="id_distribuidor" Type="Int32" />
-          <Property Name="cantidad" Type="Int32" />
-          <NavigationProperty Name="categorias" Relationship="BDprogramacionVModel.FK_categorias_productos" FromRole="productos" ToRole="categorias" />
-          <NavigationProperty Name="colecciones" Relationship="BDprogramacionVModel.FK_colecciones_productos" FromRole="productos" ToRole="colecciones" />
-          <NavigationProperty Name="distribuidor" Relationship="BDprogramacionVModel.FK_distribuidor_productos" FromRole="productos" ToRole="distribuidor" />
-          <NavigationProperty Name="facturacion_producto" Relationship="BDprogramacionVModel.FK_producto_facturacion_producto" FromRole="productos" ToRole="facturacion_producto" />
-          <NavigationProperty Name="genero_producto" Relationship="BDprogramacionVModel.FK_producto_genero_producto" FromRole="productos" ToRole="genero_producto" />
-          <NavigationProperty Name="imagen_producto" Relationship="BDprogramacionVModel.FK_producto_imagen_producto" FromRole="productos" ToRole="imagen_producto" />
-          <NavigationProperty Name="marcas" Relationship="BDprogramacionVModel.FK_marca_productos" FromRole="productos" ToRole="marcas" />
-          <NavigationProperty Name="medida_producto" Relationship="BDprogramacionVModel.FK_producto_medida_producto" FromRole="productos" ToRole="medida_producto" />
-          <NavigationProperty Name="promociones_productos" Relationship="BDprogramacionVModel.FK_productos_promociones_productos" FromRole="productos" ToRole="promociones_productos" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_productos_estados" FromRole="productos" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="promociones">
-          <Key>
-            <PropertyRef Name="promocionId" />
-          </Key>
-          <Property Name="promocionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="valor" Type="Int32" />
-          <NavigationProperty Name="promociones_productos" Relationship="BDprogramacionVModel.FK_promociones_promociones_productos" FromRole="promociones" ToRole="promociones_productos" />
-          <NavigationProperty Name="usuarios_promocion" Relationship="BDprogramacionVModel.FK_user_usuarios_promocion" FromRole="promociones" ToRole="usuarios_promocion" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_promociones_estados" FromRole="promociones" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="promociones_productos">
-          <Key>
-            <PropertyRef Name="productoId" />
-            <PropertyRef Name="promocionId" />
-          </Key>
-          <Property Name="productoId" Type="Int32" Nullable="false" />
-          <Property Name="promocionId" Type="Int32" Nullable="false" />
-          <Property Name="fecha_inicial_promocion" Type="DateTime" Precision="0" />
-          <Property Name="fecha_final_promocion" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_productos_promociones_productos" FromRole="promociones_productos" ToRole="productos" />
-          <NavigationProperty Name="promociones" Relationship="BDprogramacionVModel.FK_promociones_promociones_productos" FromRole="promociones_productos" ToRole="promociones" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_promociones_productos_estados" FromRole="promociones_productos" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="Provincia">
-          <Key>
-            <PropertyRef Name="provinciaId" />
-          </Key>
-          <Property Name="provinciaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="85" FixedLength="false" Unicode="false" />
-          <Property Name="paisId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Canton" Relationship="BDprogramacionVModel.FK_Canton_Provincia" FromRole="Provincia" ToRole="Canton" />
-          <NavigationProperty Name="Distrito" Relationship="BDprogramacionVModel.FK_Distrito_Provincia" FromRole="Provincia" ToRole="Distrito" />
-          <NavigationProperty Name="Pais" Relationship="BDprogramacionVModel.FK_Pais_Provincia" FromRole="Provincia" ToRole="Pais" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_Provincia" FromRole="Provincia" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_Provincia_estados" FromRole="Provincia" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="rol">
-          <Key>
-            <PropertyRef Name="ROLID" />
-          </Key>
-          <Property Name="ROLID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NOMBRE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.rol_user" FromRole="rol" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_rol_estados" FromRole="rol" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="usuarios">
-          <Key>
-            <PropertyRef Name="userId" />
-          </Key>
-          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="apellidos" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
-          <Property Name="contrasena" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
-          <Property Name="correoElectronico" Type="String" MaxLength="125" FixedLength="false" Unicode="false" />
-          <Property Name="fechaNacimiento" Type="DateTime" Precision="0" />
-          <Property Name="genero" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="fotoPerfil" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="telefono" Type="Int32" />
-          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="paisId" Type="Int32" />
-          <Property Name="distritoId" Type="Int32" />
-          <Property Name="provinciaId" Type="Int32" />
-          <Property Name="cantonId" Type="Int32" />
-          <Property Name="Usuario_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Canton" Relationship="BDprogramacionVModel.FK_usuarios_Canton" FromRole="usuarios" ToRole="Canton" />
-          <NavigationProperty Name="Distrito" Relationship="BDprogramacionVModel.FK_usuarios_Distrito" FromRole="usuarios" ToRole="Distrito" />
-          <NavigationProperty Name="Pais" Relationship="BDprogramacionVModel.FK_usuarios_Pais" FromRole="usuarios" ToRole="Pais" />
-          <NavigationProperty Name="Provincia" Relationship="BDprogramacionVModel.FK_usuarios_Provincia" FromRole="usuarios" ToRole="Provincia" />
-          <NavigationProperty Name="usuarios_promocion" Relationship="BDprogramacionVModel.FK_usuarios_promocion_usuarios" FromRole="usuarios" ToRole="usuarios_promocion" />
-          <NavigationProperty Name="rol" Relationship="BDprogramacionVModel.rol_user" FromRole="usuarios" ToRole="rol" />
-          <NavigationProperty Name="facturaciones" Relationship="BDprogramacionVModel.usuario_facturaciones" FromRole="usuarios" ToRole="facturaciones" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_usuarios_estados" FromRole="usuarios" ToRole="estados" />
-        </EntityType>
-        <EntityType Name="usuarios_promocion">
-          <Key>
-            <PropertyRef Name="usuarioId" />
-            <PropertyRef Name="promocionId" />
-          </Key>
-          <Property Name="usuarioId" Type="Int32" Nullable="false" />
-          <Property Name="promocionId" Type="Int32" Nullable="false" />
-          <Property Name="fecha_inicial_promocion" Type="DateTime" Precision="0" />
-          <Property Name="fecha_final_promocion" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="promociones" Relationship="BDprogramacionVModel.FK_user_usuarios_promocion" FromRole="usuarios_promocion" ToRole="promociones" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_promocion_usuarios" FromRole="usuarios_promocion" ToRole="usuarios" />
-          <Property Name="id_estado" Type="Int32" />
-          <NavigationProperty Name="estados" Relationship="BDprogramacionVModel.FK_usuarios_promocion_estados" FromRole="usuarios_promocion" ToRole="estados" />
-        </EntityType>
-        <Association Name="FK_Canton_Provincia">
-          <End Type="BDprogramacionVModel.Provincia" Role="Provincia" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.Canton" Role="Canton" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provincia">
-              <PropertyRef Name="provinciaId" />
-            </Principal>
-            <Dependent Role="Canton">
-              <PropertyRef Name="provinciaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Distrito_Canton">
-          <End Type="BDprogramacionVModel.Canton" Role="Canton" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.Distrito" Role="Distrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Canton">
-              <PropertyRef Name="cantonId" />
-            </Principal>
-            <Dependent Role="Distrito">
-              <PropertyRef Name="cantonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_Canton">
-          <End Type="BDprogramacionVModel.Canton" Role="Canton" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Canton">
-              <PropertyRef Name="cantonId" />
-            </Principal>
-            <Dependent Role="usuarios">
-              <PropertyRef Name="cantonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_categorias_productos">
-          <End Type="BDprogramacionVModel.categorias" Role="categorias" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="categorias">
-              <PropertyRef Name="id_categoria" />
-            </Principal>
-            <Dependent Role="productos">
-              <PropertyRef Name="id_categoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_colecciones_productos">
-          <End Type="BDprogramacionVModel.colecciones" Role="colecciones" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="colecciones">
-              <PropertyRef Name="id_coleccion" />
-            </Principal>
-            <Dependent Role="productos">
-              <PropertyRef Name="id_coleccion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_distribuidor_productos">
-          <End Type="BDprogramacionVModel.distribuidor" Role="distribuidor" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="distribuidor">
-              <PropertyRef Name="id_distribuidor" />
-            </Principal>
-            <Dependent Role="productos">
-              <PropertyRef Name="id_distribuidor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Distrito_Provincia">
-          <End Type="BDprogramacionVModel.Provincia" Role="Provincia" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.Distrito" Role="Distrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provincia">
-              <PropertyRef Name="provinciaId" />
-            </Principal>
-            <Dependent Role="Distrito">
-              <PropertyRef Name="provinciaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_Distrito">
-          <End Type="BDprogramacionVModel.Distrito" Role="Distrito" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Distrito">
-              <PropertyRef Name="distritoId" />
-            </Principal>
-            <Dependent Role="usuarios">
-              <PropertyRef Name="distritoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_facturacion_facturacion_producto">
-          <End Type="BDprogramacionVModel.facturaciones" Role="facturaciones" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.facturacion_producto" Role="facturacion_producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="facturaciones">
-              <PropertyRef Name="facturacionId" />
-            </Principal>
-            <Dependent Role="facturacion_producto">
-              <PropertyRef Name="facturacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producto_facturacion_producto">
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.facturacion_producto" Role="facturacion_producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="productoId" />
-            </Principal>
-            <Dependent Role="facturacion_producto">
-              <PropertyRef Name="productoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_facturacion_formas_pago_facturacion">
-          <End Type="BDprogramacionVModel.facturaciones" Role="facturaciones" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.formas_pago_facturacion" Role="formas_pago_facturacion" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="facturaciones">
-              <PropertyRef Name="facturacionId" />
-            </Principal>
-            <Dependent Role="formas_pago_facturacion">
-              <PropertyRef Name="facturacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producto_genero_producto">
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.genero_producto" Role="genero_producto" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="productoId" />
-            </Principal>
-            <Dependent Role="genero_producto">
-              <PropertyRef Name="productoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producto_imagen_producto">
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.imagen_producto" Role="imagen_producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="productoId" />
-            </Principal>
-            <Dependent Role="imagen_producto">
-              <PropertyRef Name="productoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_marca_productos">
-          <End Type="BDprogramacionVModel.marcas" Role="marcas" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="marcas">
-              <PropertyRef Name="id_marca" />
-            </Principal>
-            <Dependent Role="productos">
-              <PropertyRef Name="id_marca" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_producto_medida_producto">
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.medida_producto" Role="medida_producto" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="productoId" />
-            </Principal>
-            <Dependent Role="medida_producto">
-              <PropertyRef Name="productoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pais_Provincia">
-          <End Type="BDprogramacionVModel.Pais" Role="Pais" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.Provincia" Role="Provincia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="paisId" />
-            </Principal>
-            <Dependent Role="Provincia">
-              <PropertyRef Name="paisId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_Pais">
-          <End Type="BDprogramacionVModel.Pais" Role="Pais" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="paisId" />
-            </Principal>
-            <Dependent Role="usuarios">
-              <PropertyRef Name="paisId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_productos_promociones_productos">
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.promociones_productos" Role="promociones_productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="productos">
-              <PropertyRef Name="productoId" />
-            </Principal>
-            <Dependent Role="promociones_productos">
-              <PropertyRef Name="productoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_promociones_promociones_productos">
-          <End Type="BDprogramacionVModel.promociones" Role="promociones" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.promociones_productos" Role="promociones_productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="promociones">
-              <PropertyRef Name="promocionId" />
-            </Principal>
-            <Dependent Role="promociones_productos">
-              <PropertyRef Name="promocionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_user_usuarios_promocion">
-          <End Type="BDprogramacionVModel.promociones" Role="promociones" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.usuarios_promocion" Role="usuarios_promocion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="promociones">
-              <PropertyRef Name="promocionId" />
-            </Principal>
-            <Dependent Role="usuarios_promocion">
-              <PropertyRef Name="promocionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_Provincia">
-          <End Type="BDprogramacionVModel.Provincia" Role="Provincia" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provincia">
-              <PropertyRef Name="provinciaId" />
-            </Principal>
-            <Dependent Role="usuarios">
-              <PropertyRef Name="provinciaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_promocion_usuarios">
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="1" />
-          <End Type="BDprogramacionVModel.usuarios_promocion" Role="usuarios_promocion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="usuarios">
-              <PropertyRef Name="userId" />
-            </Principal>
-            <Dependent Role="usuarios_promocion">
-              <PropertyRef Name="usuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="rol_user">
-          <End Type="BDprogramacionVModel.rol" Role="rol" Multiplicity="*" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-        </Association>
-        <Association Name="usuario_facturaciones">
-          <End Type="BDprogramacionVModel.facturaciones" Role="facturaciones" Multiplicity="*" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-        </Association>
-        <EntityType Name="estados">
-          <Key>
-            <PropertyRef Name="id_estado" />
-          </Key>
-          <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="estado" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Canton" Relationship="BDprogramacionVModel.FK_Canton_estados" FromRole="estados" ToRole="Canton" />
-          <NavigationProperty Name="categorias" Relationship="BDprogramacionVModel.FK_categorias_estados" FromRole="estados" ToRole="categorias" />
-          <NavigationProperty Name="colecciones" Relationship="BDprogramacionVModel.FK_colecciones_estados" FromRole="estados" ToRole="colecciones" />
-          <NavigationProperty Name="distribuidor" Relationship="BDprogramacionVModel.FK_distribuidor_estados" FromRole="estados" ToRole="distribuidor" />
-          <NavigationProperty Name="Distrito" Relationship="BDprogramacionVModel.FK_Distrito_estados" FromRole="estados" ToRole="Distrito" />
-          <NavigationProperty Name="facturacion_producto" Relationship="BDprogramacionVModel.FK_facturacion_producto_estados" FromRole="estados" ToRole="facturacion_producto" />
-          <NavigationProperty Name="facturaciones" Relationship="BDprogramacionVModel.FK_facturaciones_estados" FromRole="estados" ToRole="facturaciones" />
-          <NavigationProperty Name="formas_pago_facturacion" Relationship="BDprogramacionVModel.FK_formas_pago_facturacion_estados" FromRole="estados" ToRole="formas_pago_facturacion" />
-          <NavigationProperty Name="marcas" Relationship="BDprogramacionVModel.FK_marcas_estados" FromRole="estados" ToRole="marcas" />
-          <NavigationProperty Name="Pais" Relationship="BDprogramacionVModel.FK_Pais_estados" FromRole="estados" ToRole="Pais" />
-          <NavigationProperty Name="productos" Relationship="BDprogramacionVModel.FK_productos_estados" FromRole="estados" ToRole="productos" />
-          <NavigationProperty Name="promociones" Relationship="BDprogramacionVModel.FK_promociones_estados" FromRole="estados" ToRole="promociones" />
-          <NavigationProperty Name="promociones_productos" Relationship="BDprogramacionVModel.FK_promociones_productos_estados" FromRole="estados" ToRole="promociones_productos" />
-          <NavigationProperty Name="Provincia" Relationship="BDprogramacionVModel.FK_Provincia_estados" FromRole="estados" ToRole="Provincia" />
-          <NavigationProperty Name="rol" Relationship="BDprogramacionVModel.FK_rol_estados" FromRole="estados" ToRole="rol" />
-          <NavigationProperty Name="usuarios" Relationship="BDprogramacionVModel.FK_usuarios_estados" FromRole="estados" ToRole="usuarios" />
-          <NavigationProperty Name="usuarios_promocion" Relationship="BDprogramacionVModel.FK_usuarios_promocion_estados" FromRole="estados" ToRole="usuarios_promocion" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <Association Name="FK_Canton_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.Canton" Role="Canton" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="Canton">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_categorias_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.categorias" Role="categorias" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="categorias">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_colecciones_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.colecciones" Role="colecciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="colecciones">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_distribuidor_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.distribuidor" Role="distribuidor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="distribuidor">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Distrito_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.Distrito" Role="Distrito" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="Distrito">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_facturacion_producto_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.facturacion_producto" Role="facturacion_producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="facturacion_producto">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_facturaciones_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.facturaciones" Role="facturaciones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="facturaciones">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_formas_pago_facturacion_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.formas_pago_facturacion" Role="formas_pago_facturacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="formas_pago_facturacion">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_marcas_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.marcas" Role="marcas" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="marcas">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Pais_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.Pais" Role="Pais" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="Pais">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_productos_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.productos" Role="productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="productos">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_promociones_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.promociones" Role="promociones" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="promociones">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_promociones_productos_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.promociones_productos" Role="promociones_productos" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="promociones_productos">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Provincia_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.Provincia" Role="Provincia" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="Provincia">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_rol_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.rol" Role="rol" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="rol">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios" Role="usuarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="usuarios">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_usuarios_promocion_estados">
-          <End Type="BDprogramacionVModel.estados" Role="estados" Multiplicity="0..1" />
-          <End Type="BDprogramacionVModel.usuarios_promocion" Role="usuarios_promocion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="estados">
-              <PropertyRef Name="id_estado" />
-            </Principal>
-            <Dependent Role="usuarios_promocion">
-              <PropertyRef Name="id_estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BDprogramacionVModelStoreContainer" CdmEntityContainer="BDContext">
+          <EntitySetMapping Name="Canton">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.Canton">
+              <MappingFragment StoreEntitySet="Canton">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categorias">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.categorias">
+              <MappingFragment StoreEntitySet="categorias">
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="colecciones">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.colecciones">
+              <MappingFragment StoreEntitySet="colecciones">
+                <ScalarProperty Name="id_coleccion" ColumnName="id_coleccion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="distribuidor">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.distribuidor">
+              <MappingFragment StoreEntitySet="distribuidor">
+                <ScalarProperty Name="id_distribuidor" ColumnName="id_distribuidor" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Distrito">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.Distrito">
+              <MappingFragment StoreEntitySet="Distrito">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estados">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.estados">
+              <MappingFragment StoreEntitySet="estados">
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="facturacion_producto">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.facturacion_producto">
+              <MappingFragment StoreEntitySet="facturacion_producto">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="facturaciones">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.facturaciones">
+              <MappingFragment StoreEntitySet="facturaciones">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
+                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="formas_pago_facturacion">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.formas_pago_facturacion">
+              <MappingFragment StoreEntitySet="formas_pago_facturacion">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="forma_pago" ColumnName="forma_pago" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="genero_producto">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.genero_producto">
+              <MappingFragment StoreEntitySet="genero_producto">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="imagen_producto">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.imagen_producto">
+              <MappingFragment StoreEntitySet="imagen_producto">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="marcas">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.marcas">
+              <MappingFragment StoreEntitySet="marcas">
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medida_producto">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.medida_producto">
+              <MappingFragment StoreEntitySet="medida_producto">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="medida" ColumnName="medida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.Pais">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="paisId" ColumnName="paisId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productos">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.productos">
+              <MappingFragment StoreEntitySet="productos">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="id_coleccion" ColumnName="id_coleccion" />
+                <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
+                <ScalarProperty Name="id_distribuidor" ColumnName="id_distribuidor" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="promociones">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.promociones">
+              <MappingFragment StoreEntitySet="promociones">
+                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="promociones_productos">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.promociones_productos">
+              <MappingFragment StoreEntitySet="promociones_productos">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
+                <ScalarProperty Name="fecha_inicial_promocion" ColumnName="fecha_inicial_promocion" />
+                <ScalarProperty Name="fecha_final_promocion" ColumnName="fecha_final_promocion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provincia">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.Provincia">
+              <MappingFragment StoreEntitySet="Provincia">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="paisId" ColumnName="paisId" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="ROLID" ColumnName="ROLID" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol_user">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.rol_user">
+              <MappingFragment StoreEntitySet="rol_user">
+                <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario_facturaciones">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.usuario_facturaciones">
+              <MappingFragment StoreEntitySet="usuario_facturaciones">
+                <ScalarProperty Name="usuarioId" ColumnName="usuarioId" />
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correoElectronico" ColumnName="correoElectronico" />
+                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="fotoPerfil" ColumnName="fotoPerfil" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="paisId" ColumnName="paisId" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios_promocion">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios_promocion">
+              <MappingFragment StoreEntitySet="usuarios_promocion">
+                <ScalarProperty Name="usuarioId" ColumnName="usuarioId" />
+                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
+                <ScalarProperty Name="fecha_inicial_promocion" ColumnName="fecha_inicial_promocion" />
+                <ScalarProperty Name="fecha_final_promocion" ColumnName="fecha_final_promocion" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_actualizarFacturacion" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacion" />
+          <FunctionImportMapping FunctionImportName="sp_actualizarFacturacionesProducto" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacionesProducto" />
           <FunctionImportMapping FunctionImportName="sp_actualizarRol" FunctionName="BDprogramacionVModel.Store.sp_actualizarRol" />
           <FunctionImportMapping FunctionImportName="sp_actualizarRolesUser" FunctionName="BDprogramacionVModel.Store.sp_actualizarRolesUser" />
           <FunctionImportMapping FunctionImportName="sp_actualizarUsuario" FunctionName="BDprogramacionVModel.Store.sp_actualizarUsuario" />
           <FunctionImportMapping FunctionImportName="sp_agregarFacturacion" FunctionName="BDprogramacionVModel.Store.sp_agregarFacturacion" />
+          <FunctionImportMapping FunctionImportName="sp_agregarFacturacionProducto" FunctionName="BDprogramacionVModel.Store.sp_agregarFacturacionProducto" />
           <FunctionImportMapping FunctionImportName="sp_agregarRol" FunctionName="BDprogramacionVModel.Store.sp_agregarRol" />
           <FunctionImportMapping FunctionImportName="sp_agregarRolUser" FunctionName="BDprogramacionVModel.Store.sp_agregarRolUser" />
           <FunctionImportMapping FunctionImportName="sp_agregarUsuario" FunctionName="BDprogramacionVModel.Store.sp_agregarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="BDprogramacionVModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="BDprogramacionVModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_deleteRol" FunctionName="BDprogramacionVModel.Store.sp_deleteRol" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="BDprogramacionVModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_eliminarFacturaciones" FunctionName="BDprogramacionVModel.Store.sp_eliminarFacturaciones" />
+          <FunctionImportMapping FunctionImportName="sp_eliminarPromocionProducto" FunctionName="BDprogramacionVModel.Store.sp_eliminarPromocionProducto" />
           <FunctionImportMapping FunctionImportName="sp_eliminarUsuario" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_eliminarUsuarioPromocion" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuarioPromocion" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="BDprogramacionVModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="BDprogramacionVModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtenerFacturaciones" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturaciones">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturaciones_Result">
@@ -2397,6 +2829,7 @@
                 <ScalarProperty Name="subtotal" ColumnName="subtotal" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2431,6 +2864,35 @@
                 <ScalarProperty Name="subtotal" ColumnName="subtotal" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionProductoByIdFacturacion" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionProductoByIdFacturacion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result">
+                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenesProductoId" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenesProductoId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenesProductoId_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerImagenProducto" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenProducto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenProducto_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2440,16 +2902,17 @@
                 <ScalarProperty Name="ROLID" ColumnName="ROLID" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_ObtenerRolesUser" FunctionName="BDprogramacionVModel.Store.sp_ObtenerRolesUser">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_ObtenerRolesUser_Result">
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
-                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="rolId" ColumnName="rolId" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2459,16 +2922,17 @@
                 <ScalarProperty Name="ROLID" ColumnName="ROLID" />
                 <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtenerRolUserId" FunctionName="BDprogramacionVModel.Store.sp_obtenerRolUserId">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRolUserId_Result">
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
-                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="rolId" ColumnName="rolId" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2490,6 +2954,7 @@
                 <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
                 <ScalarProperty Name="cantonId" ColumnName="cantonId" />
                 <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2511,301 +2976,13 @@
                 <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
                 <ScalarProperty Name="cantonId" ColumnName="cantonId" />
                 <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_actualizarFacturacion" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacion" />
-          <FunctionImportMapping FunctionImportName="sp_eliminarFacturaciones" FunctionName="BDprogramacionVModel.Store.sp_eliminarFacturaciones" />
-          <FunctionImportMapping FunctionImportName="sp_actualizarFacturacionesProducto" FunctionName="BDprogramacionVModel.Store.sp_actualizarFacturacionesProducto" />
-          <FunctionImportMapping FunctionImportName="sp_agregarFacturacionProducto" FunctionName="BDprogramacionVModel.Store.sp_agregarFacturacionProducto" />
-          <FunctionImportMapping FunctionImportName="sp_obtenerImagenesProductoId1" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenesProductoId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenesProductoId1_Result">
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtenerImagenProducto1" FunctionName="BDprogramacionVModel.Store.sp_obtenerImagenProducto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerImagenProducto1_Result">
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtenerFacturacionProductoByIdFacturacion" FunctionName="BDprogramacionVModel.Store.sp_obtenerFacturacionProductoByIdFacturacion">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result">
-                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-                <ScalarProperty Name="nombre1" ColumnName="nombre1" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_eliminarPromocionProducto1" FunctionName="BDprogramacionVModel.Store.sp_eliminarPromocionProducto" />
-          <FunctionImportMapping FunctionImportName="sp_eliminarUsuarioPromocion1" FunctionName="BDprogramacionVModel.Store.sp_eliminarUsuarioPromocion" />
-          <EntitySetMapping Name="Canton">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.Canton">
-              <MappingFragment StoreEntitySet="Canton">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
-                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="categorias">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.categorias">
-              <MappingFragment StoreEntitySet="categorias">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="colecciones">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.colecciones">
-              <MappingFragment StoreEntitySet="colecciones">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_coleccion" ColumnName="id_coleccion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="distribuidor">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.distribuidor">
-              <MappingFragment StoreEntitySet="distribuidor">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_distribuidor" ColumnName="id_distribuidor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Distrito">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.Distrito">
-              <MappingFragment StoreEntitySet="Distrito">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
-                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
-                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="facturacion_producto">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.facturacion_producto">
-              <MappingFragment StoreEntitySet="facturacion_producto">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="facturaciones">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.facturaciones">
-              <MappingFragment StoreEntitySet="facturaciones">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="total" ColumnName="total" />
-                <ScalarProperty Name="subtotal" ColumnName="subtotal" />
-                <ScalarProperty Name="impuesto" ColumnName="impuesto" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="formas_pago_facturacion">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.formas_pago_facturacion">
-              <MappingFragment StoreEntitySet="formas_pago_facturacion">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="forma_pago" ColumnName="forma_pago" />
-                <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="genero_producto">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.genero_producto">
-              <MappingFragment StoreEntitySet="genero_producto">
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="imagen_producto">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.imagen_producto">
-              <MappingFragment StoreEntitySet="imagen_producto">
-                <ScalarProperty Name="IMAGEN" ColumnName="IMAGEN" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="marcas">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.marcas">
-              <MappingFragment StoreEntitySet="marcas">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="medida_producto">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.medida_producto">
-              <MappingFragment StoreEntitySet="medida_producto">
-                <ScalarProperty Name="medida" ColumnName="medida" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Pais">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.Pais">
-              <MappingFragment StoreEntitySet="Pais">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="paisId" ColumnName="paisId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productos">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.productos">
-              <MappingFragment StoreEntitySet="productos">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="id_distribuidor" ColumnName="id_distribuidor" />
-                <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
-                <ScalarProperty Name="id_coleccion" ColumnName="id_coleccion" />
-                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
-                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
-                <ScalarProperty Name="modelo" ColumnName="modelo" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="promociones">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.promociones">
-              <MappingFragment StoreEntitySet="promociones">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="valor" ColumnName="valor" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="promociones_productos">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.promociones_productos">
-              <MappingFragment StoreEntitySet="promociones_productos">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="fecha_final_promocion" ColumnName="fecha_final_promocion" />
-                <ScalarProperty Name="fecha_inicial_promocion" ColumnName="fecha_inicial_promocion" />
-                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Provincia">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.Provincia">
-              <MappingFragment StoreEntitySet="Provincia">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="paisId" ColumnName="paisId" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="rol">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.rol">
-              <MappingFragment StoreEntitySet="rol">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
-                <ScalarProperty Name="ROLID" ColumnName="ROLID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usuarios">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios">
-              <MappingFragment StoreEntitySet="usuarios">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
-                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
-                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
-                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
-                <ScalarProperty Name="paisId" ColumnName="paisId" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="fotoPerfil" ColumnName="fotoPerfil" />
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="fechaNacimiento" ColumnName="fechaNacimiento" />
-                <ScalarProperty Name="correoElectronico" ColumnName="correoElectronico" />
-                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="usuarios_promocion">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.usuarios_promocion">
-              <MappingFragment StoreEntitySet="usuarios_promocion">
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-                <ScalarProperty Name="fecha_final_promocion" ColumnName="fecha_final_promocion" />
-                <ScalarProperty Name="fecha_inicial_promocion" ColumnName="fecha_inicial_promocion" />
-                <ScalarProperty Name="promocionId" ColumnName="promocionId" />
-                <ScalarProperty Name="usuarioId" ColumnName="usuarioId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="rol_user" TypeName="BDprogramacionVModel.rol_user" StoreEntitySet="rol_user">
-            <EndProperty Name="usuarios">
-              <ScalarProperty Name="userId" ColumnName="userId" />
-            </EndProperty>
-            <EndProperty Name="rol">
-              <ScalarProperty Name="ROLID" ColumnName="rolId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="usuario_facturaciones" TypeName="BDprogramacionVModel.usuario_facturaciones" StoreEntitySet="usuario_facturaciones">
-            <EndProperty Name="usuarios">
-              <ScalarProperty Name="userId" ColumnName="usuarioId" />
-            </EndProperty>
-            <EndProperty Name="facturaciones">
-              <ScalarProperty Name="facturacionId" ColumnName="facturacionId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="estados">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.estados">
-              <MappingFragment StoreEntitySet="estados">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="BDprogramacionVModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BDprogramacionVModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BDprogramacionVModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -2822,7 +2999,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

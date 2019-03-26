@@ -17,7 +17,7 @@ namespace BackEnd.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public rol()
         {
-            this.usuarios = new HashSet<usuarios>();
+            this.rol_user = new HashSet<rol_user>();
         }
     
         public int ROLID { get; set; }
@@ -25,8 +25,8 @@ namespace BackEnd.Entities
         public string DESCRIPCION { get; set; }
         public Nullable<int> id_estado { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<usuarios> usuarios { get; set; }
         public virtual estados estados { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<rol_user> rol_user { get; set; }
     }
 }

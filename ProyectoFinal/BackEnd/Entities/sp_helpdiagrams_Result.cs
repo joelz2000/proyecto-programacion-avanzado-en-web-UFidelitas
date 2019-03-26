@@ -11,11 +11,12 @@ namespace BackEnd.Entities
 {
     using System;
     
-    public partial class sp_obtenerRolId_Result
+    public partial class sp_helpdiagrams_Result
     {
-        public int ROLID { get; set; }
-        public string NOMBRE { get; set; }
-        public string DESCRIPCION { get; set; }
-        public Nullable<int> id_estado { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
