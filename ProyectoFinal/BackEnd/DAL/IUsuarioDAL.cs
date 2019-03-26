@@ -21,7 +21,7 @@ namespace BackEnd.DAL
 
         bool agregarRolUsuario(sp_ObtenerRolesUser_Result usuario);
 
-        bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva);
+        bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva, int idEstado);
 
         List<sp_ObtenerRolesUser_Result>obtenerRolesUsuario();
 

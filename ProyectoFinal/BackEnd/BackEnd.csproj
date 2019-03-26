@@ -101,6 +101,9 @@
     <Compile Include="Entities\Distrito.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\estados.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\facturaciones.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
@@ -140,6 +143,15 @@
     <Compile Include="Entities\rol.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\rol_user.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_helpdiagrams_Result.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionesProducto_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
@@ -155,13 +167,7 @@
     <Compile Include="Entities\sp_obtenerFacturacionProductoByIdFacturacion_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_obtenerImagenesProductoId1_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\sp_obtenerImagenesProductoId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\sp_obtenerImagenProducto1_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerImagenProducto_Result.cs">
@@ -179,19 +185,22 @@
     <Compile Include="Entities\sp_obtenerRolUserId_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\sp_obtenerUsuarioPorIDUsuario_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\sp_obtenerUsuariosId_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerUsuarios_Result.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sysdiagrams.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\usuarios.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\usuarios_promocion.cs">
+      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\usuario_facturaciones.cs">
       <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,7 +219,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Entities\BDprogramacionVModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

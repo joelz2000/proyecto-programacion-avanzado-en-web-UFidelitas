@@ -20,7 +20,7 @@ namespace BackEnd.DAL
                 using (context = new BDContext())
                 {
 
-                    context.sp_actualizarRol(sp_ObtenerRoles_Result.ROLID, sp_ObtenerRoles_Result.NOMBRE, sp_ObtenerRoles_Result.DESCRIPCION);
+                    context.sp_actualizarRol(sp_ObtenerRoles_Result.ROLID, sp_ObtenerRoles_Result.NOMBRE, sp_ObtenerRoles_Result.DESCRIPCION, sp_ObtenerRoles_Result.id_estado);
                     context.SaveChanges();
                 }
 
@@ -44,7 +44,8 @@ namespace BackEnd.DAL
                     context.sp_agregarRol
                     (
                         sp_ObtenerRoles_Result.NOMBRE,
-                        sp_ObtenerRoles_Result.DESCRIPCION
+                        sp_ObtenerRoles_Result.DESCRIPCION,
+                        sp_ObtenerRoles_Result.id_estado
                     );
                     context.SaveChanges();
                    

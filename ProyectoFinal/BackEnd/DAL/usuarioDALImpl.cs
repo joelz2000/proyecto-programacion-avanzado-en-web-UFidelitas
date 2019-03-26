@@ -11,13 +11,13 @@ namespace BackEnd.DAL
     {
         private BDContext context;
 
-        public bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva)
+        public bool actualizarRolUsuario(int rolIdActual, int userId, int rolIdNueva, int idEstado)
         {
             try
             {
                 using (context = new BDContext())
                 {
-                    context.sp_actualizarRolesUser(rolIdActual, userId, rolIdNueva);
+                    context.sp_actualizarRolesUser(rolIdActual, userId, rolIdNueva, idEstado);
                     context.SaveChanges();
                 }
                 return true;
@@ -51,7 +51,8 @@ namespace BackEnd.DAL
                         usuario.distritoId,
                         usuario.provinciaId,
                         usuario.cantonId,
-                        null);
+                        null,
+                        usuario.id_estado);
 
                     context.SaveChanges();
                 }
@@ -73,7 +74,9 @@ namespace BackEnd.DAL
                 {
                     context.sp_agregarRolUser(
                         rolUser.rolId,
-                        rolUser.userId
+                        rolUser.userId,
+                        rolUser.id_estado
+                      
                     );
 
                     context.SaveChanges();
@@ -108,7 +111,8 @@ namespace BackEnd.DAL
                         sp_ObtenerUsuarios_Result.distritoId,
                         sp_ObtenerUsuarios_Result.provinciaId,
                         sp_ObtenerUsuarios_Result.cantonId,
-                        null
+                        null,
+                        sp_ObtenerUsuarios_Result.id_estado
                     );
 
                     context.SaveChanges();

@@ -23,7 +23,8 @@ namespace BackEnd.DAL
                         factura.fecha,
                         factura.descripcion,
                         factura.impuesto,
-                        factura.tipo
+                        factura.tipo,
+                        factura.id_estado
                       );
 
                     context.SaveChanges();
@@ -47,7 +48,8 @@ namespace BackEnd.DAL
                         factura.fecha,
                         factura.descripcion,
                         factura.impuesto,
-                        factura.tipo
+                        factura.tipo,
+                        factura.id_estado
                       );
 
                     context.SaveChanges();
