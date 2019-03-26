@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="199c6ee31303461ea733d523036f3a67" Name="Diagram1" ZoomLevel="71">
+      <Diagram DiagramId="199c6ee31303461ea733d523036f3a67" Name="Diagram1" ZoomLevel="71" SnapToGrid="true">
         <EntityTypeShape EntityType="BDprogramacionVModel.Canton" Width="1.5" PointX="6" PointY="23.5" />
         <EntityTypeShape EntityType="BDprogramacionVModel.categorias" Width="1.5" PointX="0.75" PointY="6.875" />
         <EntityTypeShape EntityType="BDprogramacionVModel.colecciones" Width="1.5" PointX="0.75" PointY="15.125" />
@@ -49,6 +49,25 @@
         <AssociationConnector Association="BDprogramacionVModel.FK_usuarios_promocion_usuarios" />
         <AssociationConnector Association="BDprogramacionVModel.rol_user" />
         <AssociationConnector Association="BDprogramacionVModel.usuario_facturaciones" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.estados" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.sysdiagrams" Width="1.5" PointX="2.625" PointY="0.75" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_Canton_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_categorias_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_colecciones_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_distribuidor_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_Distrito_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_facturacion_producto_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_facturaciones_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_formas_pago_facturacion_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_marcas_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_Pais_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_productos_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_promociones_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_promociones_productos_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_Provincia_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_rol_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_usuarios_estados" />
+        <AssociationConnector Association="BDprogramacionVModel.FK_usuarios_promocion_estados" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
