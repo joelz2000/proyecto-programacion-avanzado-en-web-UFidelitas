@@ -229,13 +229,14 @@ CREATE or alter PROCEDURE sp_actualizarUsuario
 	@pDistritoId int,
 	@pProvinciaId int,
 	@pCantonId int,
-	@pUsuario_ID nvarchar(128)
+	@pUsuario_ID nvarchar(128),
+	@pIdEstado int
 AS
 BEGIN
 
 
 	UPDATE dbo.usuarios 
-	set nombre = @pNombre, apellidos = @pApellidos, contrasena = @pContrasena, correoElectronico = @pCorreoElectronico, fechaNacimiento = @pFechaNacimiento, genero = @pGenero, fotoPerfil = @pFotoPerfil, telefono = @pTelefono, direccion = @pDireccion, paisId = @pPaisId, distritoId = @pDistritoId, provinciaId = @pProvinciaId, cantonId = @pCantonId, Usuario_ID = @pUsuario_ID
+	set nombre = @pNombre, apellidos = @pApellidos, contrasena = @pContrasena, correoElectronico = @pCorreoElectronico, fechaNacimiento = @pFechaNacimiento, genero = @pGenero, fotoPerfil = @pFotoPerfil, telefono = @pTelefono, direccion = @pDireccion, paisId = @pPaisId, distritoId = @pDistritoId, provinciaId = @pProvinciaId, cantonId = @pCantonId, Usuario_ID = @pUsuario_ID, id_estado = @pIdEstado
 	WHERE userId = @pUsuarioId;
 
 END
