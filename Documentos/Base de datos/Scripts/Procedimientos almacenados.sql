@@ -312,12 +312,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_ObtenerRolesUser
+CREATE or alter PROCEDURE sp_ObtenerRolesUser
 	
 AS
 BEGIN
 	
-	SELECT ru.rolId, ru.userId, r.NOMBRE as Rol, u.nombre AS Usuario from dbo.rol_user ru 
+	SELECT ru.rolId, ru.userId, r.NOMBRE as Rol, u.nombre, ru.id_estado AS Usuario from dbo.rol_user ru 
 	inner join dbo.rol r on r.ROLID = ru.rolId
 	inner join dbo.usuarios u on ru.userId = u.userId ;
 
@@ -336,12 +336,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE sp_obtenerRolUserId
+CREATE or alter PROCEDURE sp_obtenerRolUserId
 
 	@idUser int
 AS
 BEGIN
-	SELECT ru.rolId, r.NOMBRE as Rol,ru.userId, u.nombre AS Usuario from dbo.rol_user ru 
+	SELECT ru.rolId, r.NOMBRE as Rol,ru.userId, u.nombre, ru.id_estado AS Usuario from dbo.rol_user ru 
 	inner join dbo.rol r on r.ROLID = ru.rolId
 	inner join dbo.usuarios u on ru.userId = u.userId 
 	where ru.userId = @idUser;

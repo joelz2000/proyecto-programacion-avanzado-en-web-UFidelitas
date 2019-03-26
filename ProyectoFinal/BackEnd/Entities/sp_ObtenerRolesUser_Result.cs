@@ -17,5 +17,6 @@ namespace BackEnd.Entities
         public int userId { get; set; }
         public string Rol { get; set; }
         public string Usuario { get; set; }
+        public int id_estado { get; set; }
     }
 }
