@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BDprogramacionVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Canton">
           <Key>
             <PropertyRef Name="cantonId" />
@@ -830,6 +830,7 @@
           <Parameter Name="pProvinciaId" Type="int" Mode="In" />
           <Parameter Name="pCantonId" Type="int" Mode="In" />
           <Parameter Name="pUsuario_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="pIdEstado" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_agregarFacturacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pNombre" Type="varchar" Mode="In" />
@@ -1153,8 +1154,7 @@
             <End Role="usuarios" EntitySet="usuarios" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BDprogramacionVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2277,6 +2277,7 @@
             <Parameter Name="pProvinciaId" Mode="In" Type="Int32" />
             <Parameter Name="pCantonId" Mode="In" Type="Int32" />
             <Parameter Name="pUsuario_ID" Mode="In" Type="String" />
+            <Parameter Name="pIdEstado" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_agregarFacturacion">
             <Parameter Name="pNombre" Mode="In" Type="String" />
@@ -2332,21 +2333,21 @@
             <Parameter Name="definition" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="sp_deleteRol">
-            <Parameter Name="pRolId" Mode="In" Type="Int32" />
+          <Parameter Name="pRolId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_dropdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarFacturaciones">
-            <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
+          <Parameter Name="pIdFacturacion" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarPromocionProducto">
             <Parameter Name="pPromocionId" Mode="In" Type="Int32" />
             <Parameter Name="pProductoId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarUsuario">
-            <Parameter Name="pUserId" Mode="In" Type="Int32" />
+          <Parameter Name="pUserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_eliminarUsuarioPromocion">
             <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
@@ -2364,13 +2365,13 @@
           <FunctionImport Name="sp_obtenerFacturacionesProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesProducto_Result)" />
           <FunctionImport Name="sp_obtenerFacturacionesUsuario" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionesUsuario_Result)" />
           <FunctionImport Name="sp_obtenerFacturacionId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionId_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerFacturacionProductoByIdFacturacion" ReturnType="Collection(BDprogramacionVModel.sp_obtenerFacturacionProductoByIdFacturacion_Result)">
-            <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
+          <Parameter Name="pFacturacionId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerImagenesProductoId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenesProductoId_Result)">
-            <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
+          <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerImagenProducto" ReturnType="Collection(BDprogramacionVModel.sp_obtenerImagenProducto_Result)">
             <Parameter Name="pIdProducto" Mode="In" Type="Int32" />
@@ -2379,14 +2380,14 @@
           <FunctionImport Name="sp_obtenerRoles" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRoles_Result)" />
           <FunctionImport Name="sp_ObtenerRolesUser" ReturnType="Collection(BDprogramacionVModel.sp_ObtenerRolesUser_Result)" />
           <FunctionImport Name="sp_obtenerRolId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolId_Result)">
-            <Parameter Name="pId" Mode="In" Type="Int32" />
+          <Parameter Name="pId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerRolUserId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerRolUserId_Result)">
-            <Parameter Name="idUser" Mode="In" Type="Int32" />
+          <Parameter Name="idUser" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_obtenerUsuarios" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuarios_Result)" />
           <FunctionImport Name="sp_obtenerUsuariosId" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUsuariosId_Result)">
-            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+          <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_renamediagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
