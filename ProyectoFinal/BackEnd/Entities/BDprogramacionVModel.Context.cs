@@ -148,7 +148,7 @@ namespace BackEnd.Entities
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarRolesUser", idRolOriginalParameter, idUserParameter, idRolNuevaParameter, pEstadoIdParameter);
         }
     
-        public virtual int sp_actualizarUsuario(Nullable<int> pUsuarioId, string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId, string pUsuario_ID)
+        public virtual int sp_actualizarUsuario(Nullable<int> pUsuarioId, string pNombre, string pApellidos, string pContrasena, string pCorreoElectronico, Nullable<System.DateTime> pFechaNacimiento, string pGenero, string pFotoPerfil, Nullable<int> pTelefono, string pDireccion, Nullable<int> pPaisId, Nullable<int> pDistritoId, Nullable<int> pProvinciaId, Nullable<int> pCantonId, string pUsuario_ID, Nullable<int> pIdEstado)
         {
             var pUsuarioIdParameter = pUsuarioId.HasValue ?
                 new ObjectParameter("pUsuarioId", pUsuarioId) :
@@ -210,7 +210,11 @@ namespace BackEnd.Entities
                 new ObjectParameter("pUsuario_ID", pUsuario_ID) :
                 new ObjectParameter("pUsuario_ID", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarUsuario", pUsuarioIdParameter, pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter, pUsuario_IDParameter);
+            var pIdEstadoParameter = pIdEstado.HasValue ?
+                new ObjectParameter("pIdEstado", pIdEstado) :
+                new ObjectParameter("pIdEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_actualizarUsuario", pUsuarioIdParameter, pNombreParameter, pApellidosParameter, pContrasenaParameter, pCorreoElectronicoParameter, pFechaNacimientoParameter, pGeneroParameter, pFotoPerfilParameter, pTelefonoParameter, pDireccionParameter, pPaisIdParameter, pDistritoIdParameter, pProvinciaIdParameter, pCantonIdParameter, pUsuario_IDParameter, pIdEstadoParameter);
         }
     
         public virtual int sp_agregarFacturacion(string pNombre, Nullable<System.DateTime> pfecha, string pDescripcion, Nullable<int> pImpuesto, string pTipo, Nullable<int> pEstadoId)
