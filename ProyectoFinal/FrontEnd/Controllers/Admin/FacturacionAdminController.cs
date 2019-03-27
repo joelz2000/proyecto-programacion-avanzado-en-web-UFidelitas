@@ -82,7 +82,25 @@ namespace FrontEnd.Controllers.Admin
         // GET: Facturacion/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            FacturacionesViewModels facturacionesVM;
+            sp_obtenerFacturacionId_Result facturaciones;
+            IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
+
+            facturaciones = facturacionDAL.obtenerFacturacionById(id);
+
+            facturacionesVM = new FacturacionesViewModels
+            {
+                facturacionId = facturaciones.facturacionId,
+                nombre = facturaciones.nombre,
+                fecha = facturaciones.fecha,
+                descripcion = facturaciones.descripcion,
+                impuesto = facturaciones.impuesto,
+                subtotal = facturaciones.subtotal,
+                total = facturaciones.total,
+                tipo = facturaciones.tipo
+            };
+
+            return View("~/Views/Admin/FacturacionAdmin/Edit.cshtml", facturacionesVM);
         }
 
         // POST: Facturacion/Edit/5
