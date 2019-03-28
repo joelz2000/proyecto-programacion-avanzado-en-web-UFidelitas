@@ -5,3 +5,17 @@
     ViewBag.Title = "Index";
 }
 <h1>Admin</h1>
+
+<button id="click_me" class="btn btn-primary">Click</button>
+
+<script>
+    var btn = $('#click_me');
+    btn.on('click', function (event) { fireAction(); });
+    function fireAction() {
+        Swal.fire(
+            'Good job!',
+            'You clicked the button!',
+            'success'
+        )
+    }
+</script>
