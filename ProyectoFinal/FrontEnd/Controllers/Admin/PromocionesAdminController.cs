@@ -55,7 +55,7 @@ namespace FrontEnd.Controllers.Admin
                     promocionId = item.promocionId,
                     nombre = item.nombre,
                     descripcion = item.descripcion,
-                    valor =(int)item.valor,
+                    valor = (int)item.valor,
                     estado = estados.estado
                 };
                 promocionesVM.Add(promocionVM);
