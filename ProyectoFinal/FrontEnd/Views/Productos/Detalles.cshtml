@@ -1,0 +1,33 @@
+﻿@model FrontEnd.Models.DetallesProductoViewModels
+
+@{
+    /**/
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalles</h2>
+<h4>Mostrando detalles de @Model.Nombre</h4>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        </div>
+        <div class="col-sm-5">
+            <div class="row">
+                <h5>Informacion del producto:</h5>
+            </div>
+        </div>
+        <div class="col-sm-5">  
+            <div class="row">
+                @Html.ActionLink("Agregar al carrito", "Detalles", "Productos", new { id = Model.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+            </div>
+            <br/>
+            <div class="row">
+                @Html.ActionLink("Comprar", "Detalles", "Productos", new { id = Model.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+            </div>
+        </div>
+    </div>
+</div>
+
+

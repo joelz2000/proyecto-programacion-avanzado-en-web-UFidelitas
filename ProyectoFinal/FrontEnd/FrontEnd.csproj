@@ -203,6 +203,7 @@
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\User\ProductosController.cs" />
     <Compile Include="CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -7178,6 +7179,7 @@
     <Content Include="Views\Admin\PromocionesAdmin\Create.cshtml" />
     <Content Include="Views\Admin\PromocionesAdmin\Delete.cshtml" />
     <Content Include="Views\Admin\PromocionesAdmin\Edit.cshtml" />
+    <Content Include="Views\Productos\Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
