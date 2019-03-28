@@ -11,16 +11,19 @@ namespace BackEnd.Entities
 {
     using System;
     
-    public partial class sp_obtenerFacturacionId_Result
+    public partial class sp_obtenerProductosDisponibles_Result
     {
-        public int facturacionId { get; set; }
+        public int productoId { get; set; }
         public string nombre { get; set; }
-        public Nullable<System.DateTime> fecha { get; set; }
+        public Nullable<double> precio { get; set; }
         public string descripcion { get; set; }
-        public Nullable<int> impuesto { get; set; }
-        public Nullable<double> subtotal { get; set; }
-        public Nullable<double> total { get; set; }
-        public string tipo { get; set; }
+        public string modelo { get; set; }
+        public Nullable<int> id_categoria { get; set; }
+        public Nullable<int> id_marca { get; set; }
+        public Nullable<int> id_coleccion { get; set; }
+        public Nullable<int> id_bodega { get; set; }
+        public Nullable<int> id_distribuidor { get; set; }
+        public Nullable<int> cantidad { get; set; }
         public Nullable<int> id_estado { get; set; }
     }
 }

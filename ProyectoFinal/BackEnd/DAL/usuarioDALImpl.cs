@@ -75,8 +75,7 @@ namespace BackEnd.DAL
                     context.sp_agregarRolUser(
                         rolUser.rolId,
                         rolUser.userId,
-                        rolUser.id_estado
-                      
+                        rolUser.Usuario
                     );
 
                     context.SaveChanges();

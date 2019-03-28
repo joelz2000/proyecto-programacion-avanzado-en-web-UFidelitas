@@ -192,9 +192,8 @@ namespace FrontEnd.Controllers
                        var roleManager = new RoleManager<IdentityRole>(roleStore);
                        await roleManager.CreateAsync(new IdentityRole("Admin"));
                        await UserManager.AddToRoleAsync(user.Id, "Admin");
-                       context.sp_agregarRolUser(1, usuario_BD.userId);
+                       context.sp_agregarRolUser(1, usuario_BD.userId, usuario_BD.id_estado);
                     */
-
 
                     var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     var roleManager = new RoleManager<IdentityRole>(roleStore);

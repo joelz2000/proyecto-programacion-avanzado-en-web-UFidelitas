@@ -76,10 +76,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BDprogramacionVModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\BDprogramacionVModel.cs">
-      <AutoGen>True</AutoGen>
+    <Compile Include="Entities\BDProgramacionVModel.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Entities\BDprogramacionVModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -87,121 +87,118 @@
       <DependentUpon>BDprogramacionVModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\Canton.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\categorias.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\colecciones.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\distribuidor.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Distrito.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\estados.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\facturaciones.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\facturacion_producto.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\formas_pago_facturacion.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\genero_producto.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\imagen_producto.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\marcas.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\medida_producto.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Pais.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\productos.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\promociones.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\promociones_productos.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Provincia.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\rol.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\rol_user.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\sp_helpdiagrams_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionesProducto_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionesUsuario_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturaciones_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionProductoByIdFacturacion_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerImagenesProductoId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerImagenProducto_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerProductosDisponibles_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_ObtenerRolesUser_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerRoles_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerRolId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerRolUserId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerUsuariosId_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerUsuarios_Result.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sysdiagrams.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\usuarios.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\usuarios_promocion.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\usuario_facturaciones.cs">
-      <DependentUpon>BDprogramacionVModel.tt</DependentUpon>
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -225,10 +222,10 @@
       <DependentUpon>BDprogramacionVModel.edmx</DependentUpon>
       <LastGenOutput>BDprogramacionVModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Entities\BDprogramacionVModel.tt">
+    <Content Include="Entities\BDProgramacionVModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BDProgramacionVModel.cs</LastGenOutput>
       <DependentUpon>BDprogramacionVModel.edmx</DependentUpon>
-      <LastGenOutput>BDprogramacionVModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

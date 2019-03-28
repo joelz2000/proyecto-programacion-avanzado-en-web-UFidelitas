@@ -33,22 +33,29 @@ namespace FrontEnd.Controllers.Admin
             // asignar valores correspondientes
             foreach (var producto in lista_productos)
             {
-                foreach (var marca in lista_marcas)
+                // no tomar en cuenta los productos con estado bloqueado
+                if(producto.id_estado == 1)
                 {
-                    if (marca.id_marca == producto.id_marca)
+                    continue;
+                }
+                else { 
+                    foreach (var marca in lista_marcas)
                     {
-                        producto_VM = new IndexProductoViewModels()
+                        if (marca.id_marca == producto.id_marca)
                         {
-                            Id_Producto = producto.productoId,
-                            Nombre = producto.nombre,
-                            Precio = producto.precio,
-                            Descripcion = producto.descripcion,
-                            Modelo = producto.modelo,
-                            cantidad = producto.cantidad,
-                            marca = marca.nombre
-                        };
-                        lista_productos_VM.Add(producto_VM);
-                        break;
+                            producto_VM = new IndexProductoViewModels()
+                            {
+                                Id_Producto = producto.productoId,
+                                Nombre = producto.nombre,
+                                Precio = producto.precio,
+                                Descripcion = producto.descripcion,
+                                Modelo = producto.modelo,
+                                cantidad = producto.cantidad,
+                                marca = marca.nombre
+                            };
+                            lista_productos_VM.Add(producto_VM);
+                            break;
+                        }
                     }
                 }
             }
@@ -72,6 +79,12 @@ namespace FrontEnd.Controllers.Admin
             categorias categoria = unidad_categorias.genericDAL.Get((int)producto.id_categoria);
             distribuidor distribuidor = unidad_distribuidor.genericDAL.Get((int)producto.id_distribuidor);
 
+            // ver si el producto tiene estado bloqueado. Si si, devolver 404
+            if(producto.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             // asignar datos al view model correspondiente
             DetallesProductoViewModels producto_VM = new DetallesProductoViewModels
             {
@@ -86,7 +99,6 @@ namespace FrontEnd.Controllers.Admin
                 categoria = categoria.nombre,
                 distribuidor = distribuidor.nombre
             };
-
 
             return View("~/Views/Admin/ProductosAdmin/Detalles.cshtml", producto_VM);
         }
@@ -164,24 +176,12 @@ namespace FrontEnd.Controllers.Admin
 
                 unidad_productos.genericDAL.Add(producto);
                 unidad_productos.Complete();
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       ¡El producto fue agregado!" +
-                        "</div> ";
 
                 return RedirectToAction("Index");
             }
             catch
             {
-                Session["mensaje"] =
-                        "<div class='alert alert-danger alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "      Hubo un error, por favor intentelo de nuevo" +
-                        "</div> ";
-                return View("~/Views/Admin/ProductosAdmin/Index.cshtml");
+                return RedirectToAction("Index");
             }
         }
 
@@ -200,6 +200,12 @@ namespace FrontEnd.Controllers.Admin
             List<colecciones> lista_colecciones = unidad_colecciones.genericDAL.GetAll().ToList();
             List<categorias> lista_categorias = unidad_categorias.genericDAL.GetAll().ToList();
             List<distribuidor> lista_distribuidor = unidad_distribuidor.genericDAL.GetAll().ToList();
+
+            // ver si el producto tiene estado bloqueado. Si si, devolver 404
+            if (producto.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             // asignar los valores necesarios al objecto de producto 
             EditarProductoViewModels producto_VM = new EditarProductoViewModels
