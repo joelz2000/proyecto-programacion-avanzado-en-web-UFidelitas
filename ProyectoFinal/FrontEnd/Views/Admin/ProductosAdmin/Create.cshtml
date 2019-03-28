@@ -6,9 +6,9 @@
 <h2>Agregar nuevo producto</h2>
 <div class="container">
     <hr />
-    @Html.AntiForgeryToken();
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
         <div class="form-group">
             @Html.LabelFor(producto => producto.Nombre)
             @Html.TextBoxFor(producto => producto.Nombre, new { @class = "form-control" })
@@ -56,7 +56,79 @@
         </div>
         <div class="form-group">
             @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-            <button type="submit" class="btn btn-primary" id="Guardar">Guardar</button>
+            <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Guardar</button>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Create", "ProductosAdmin")';
+            var newUrl = '@Url.Action("Index", "ProductosAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    Nombre: $("#Nombre").val(),
+                    Precio: $("#Precio").val(),
+                    Descripcion: $("#Descripcion").val(),
+                    Modelo: $("#Modelo").val(),
+                    cantidad: $("#cantidad").val(),
+                    id_distribuidor: $("#id_distribuidor").val(),
+                    id_marca: $("#id_marca").val(),
+                    id_categoria: $("#id_categoria").val(),
+                    id_coleccion: $("#id_coleccion").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Producto agregado!',
+                            'El producto ha sido agregado exitosamente!',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.href = newUrl;
+                        }, 3000);
+                        
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    }
+                }
+
+            });
+        }
+    </script>
+}
+

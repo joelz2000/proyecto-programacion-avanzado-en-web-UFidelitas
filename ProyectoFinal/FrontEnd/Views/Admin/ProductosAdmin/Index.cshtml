@@ -64,18 +64,18 @@
                                     <td>
                                         @Html.ActionLink("Detalles", "Detalles", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
                                         @Html.ActionLink("Editar", "Editar", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
-                                        @Html.ActionLink("Eliminar", "Eliminar", "ProductosAdmin", new { id = producto.Id_Producto }, null)
+                                        <button type="button" class="btn-link" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
                                     </td>
                                 </tr>
                             }
                         }
                     </tbody>
-
                 </table>
             </div>
         </div>
     </div>
 </div>
+
 
 @section Scripts
 {
@@ -89,6 +89,73 @@
                 }
             });
         });
+
+        function eliminar(id_producto) {
+            Swal.fire({
+                title: 'Seguro que desea eliminar este producto?',
+                text: "Esta accion no se puede revertir!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: `ProductosAdmin/Delete/${id_producto}`,
+                        data: {
+                            id_producto: id_producto
+                        },
+                        statusCode: {
+                            200: function () {
+                                Swal.fire(
+                                    'Exito!',
+                                    'Producto eliminado',
+                                    'success'
+                                )
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+
+                            },
+                            400: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Bad request',
+                                    'error'
+                                )
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+
+                            },
+                            404: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Pagina no encontrada',
+                                    'error'
+                                )
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            },
+                            500: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                                    'error'
+                                )
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 3000);
+                            }
+                        }
+
+                    });
+                }
+            })
+        }
 
     </script>
 }

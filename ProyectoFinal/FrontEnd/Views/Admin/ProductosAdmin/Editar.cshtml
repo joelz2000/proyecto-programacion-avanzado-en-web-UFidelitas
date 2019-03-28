@@ -7,63 +7,130 @@
 <h2>Editando @Model.Nombre</h2>
 <div class="container">
     <hr />
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken();
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(producto => producto.Id_Producto, new { id = "Id_Producto" })
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.Nombre)
-                @Html.TextBoxFor(producto => producto.Nombre, new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.Nombre, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.Precio)
-                @Html.TextBoxFor(producto => producto.Precio, new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.Precio, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.Descripcion)
-                @Html.TextAreaFor(producto => producto.Descripcion, new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.Descripcion, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.Modelo)
-                @Html.TextBoxFor(producto => producto.Modelo, new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.Modelo, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.cantidad)
-                @Html.TextBoxFor(producto => producto.cantidad, new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.cantidad, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.id_distribuidor_seleccionado)
-                @Html.DropDownListFor(producto => producto.id_distribuidor_seleccionado, new SelectList(Model.lista_distribuidores, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_distribuidor_seleccionado, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.id_marca_seleccionada)
-                @Html.DropDownListFor(producto => producto.id_marca_seleccionada, new SelectList(Model.lista_marcas, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_marca_seleccionada, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.id_categoria_seleccionada)
-                @Html.DropDownListFor(producto => producto.id_categoria_seleccionada, new SelectList(Model.lista_categorias, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_categoria_seleccionada, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(producto => producto.id_coleccion_seleccionada)
-                @Html.DropDownListFor(producto => producto.id_coleccion_seleccionada, new SelectList(Model.lista_colecciones, "Value", "Text"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(producto => producto.id_coleccion_seleccionada, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-                <input type="submit" class="pull-right btn btn-primary" value="Editar" />
-            </div>
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+        @Html.HiddenFor(producto => producto.Id_Producto, new { id = "Id_Producto" })
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.Nombre)
+            @Html.TextBoxFor(producto => producto.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.Nombre, "", new { @class = "text-danger" })
         </div>
-    }
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.Precio)
+            @Html.TextBoxFor(producto => producto.Precio, new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.Precio, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.Descripcion)
+            @Html.TextAreaFor(producto => producto.Descripcion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.Descripcion, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.Modelo)
+            @Html.TextBoxFor(producto => producto.Modelo, new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.Modelo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.cantidad)
+            @Html.TextBoxFor(producto => producto.cantidad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.cantidad, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.id_distribuidor_seleccionado)
+            @Html.DropDownListFor(producto => producto.id_distribuidor_seleccionado, new SelectList(Model.lista_distribuidores, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.id_distribuidor_seleccionado, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.id_marca_seleccionada)
+            @Html.DropDownListFor(producto => producto.id_marca_seleccionada, new SelectList(Model.lista_marcas, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.id_marca_seleccionada, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.id_categoria_seleccionada)
+            @Html.DropDownListFor(producto => producto.id_categoria_seleccionada, new SelectList(Model.lista_categorias, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.id_categoria_seleccionada, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(producto => producto.id_coleccion_seleccionada)
+            @Html.DropDownListFor(producto => producto.id_coleccion_seleccionada, new SelectList(Model.lista_colecciones, "Value", "Text"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(producto => producto.id_coleccion_seleccionada, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Guardar</button>
+        </div>
+    </div>
 </div>
 
-<br /> <br />
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Editar", "ProductosAdmin")';
+            var newUrl = '@Url.Action("Index", "ProductosAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    Id_Producto: $("#Id_Producto").val(),
+                    Nombre: $("#Nombre").val(),
+                    Precio: $("#Precio").val(),
+                    Descripcion: $("#Descripcion").val(),
+                    Modelo: $("#Modelo").val(),
+                    cantidad: $("#cantidad").val(),
+                    id_distribuidor_seleccionado: $("#id_distribuidor_seleccionado").val(),
+                    id_marca_seleccionada: $("#id_marca_seleccionada").val(),
+                    id_categoria_seleccionada: $("#id_categoria_seleccionada").val(),
+                    id_coleccion_seleccionada: $("#id_coleccion_seleccionada").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Producto editado!',
+                            'El producto ha sido editado exitosamente!',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.href = newUrl;
+                        }, 3000);
+
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    }
+                }
+
+            });
+        }
+    </script>
+}

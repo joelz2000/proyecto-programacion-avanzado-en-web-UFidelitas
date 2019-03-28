@@ -160,7 +160,6 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-                // TODO: Add insert logic here
                 productos producto = new productos
                 {
                     nombre = productoVM.Nombre,
@@ -171,17 +170,18 @@ namespace FrontEnd.Controllers.Admin
                     id_marca = productoVM.id_marca,
                     id_distribuidor = productoVM.id_distribuidor,
                     id_categoria = productoVM.id_categoria,
-                    id_coleccion = productoVM.id_coleccion
+                    id_coleccion = productoVM.id_coleccion,
+                    id_estado = 2
                 };
 
                 unidad_productos.genericDAL.Add(producto);
                 unidad_productos.Complete();
 
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -345,29 +345,39 @@ namespace FrontEnd.Controllers.Admin
                     };
                     unidad_productos.genericDAL.Update(producto);
                     unidad_productos.Complete();
-                    return RedirectToAction("Index");
+                    // devolver que todo bien
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
+
+                // modelo no valido, devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
             catch (DataException /* dex */ )
             {
-                //Log the error (uncomment dex variable name and add a line here to write a log.
-                ModelState.AddModelError("", "Ocurrio un error, por favor intentelo de nuevo");
+                // devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            return View("~/Views/Admin/ProductosAdmin/Editar.cshtml");
 
         }
-
-        // GET: HomeAdmin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
+       
         // POST: HomeAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            return View();
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            // buscar el producto y los demas datos
+            productos producto = unidad_productos.genericDAL.Get(id);
+            producto.id_estado = 1;
+            unidad_productos.genericDAL.Update(producto);
+            unidad_productos.Complete();
+
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
