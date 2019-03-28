@@ -1,0 +1,119 @@
+﻿@model IEnumerable<FrontEnd.Models.PromocionesViewModel>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+@Html.Raw(Session["mensaje"])
+<div class="btn-group">
+    @Html.ActionLink("Agregar Nueva Promocion", "Create", null, new { @class = "btn btn-block btn-success" })
+    <br><br><br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <div class="box-header">
+                <h2 class="box-title">Promociones</h2>
+            </div>
+
+            <div class="box-body table-responsive">
+                <table id="tablaPromociones" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.valor)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.estado)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.valor)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estado)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.promocionId }, new { @class = "btn btn-default btn-warning" })
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-eliminar-@item.promocionId">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+        @foreach (var item in Model)
+        {
+            <div class="modal fade" id="modal-eliminar-@item.promocionId">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header fondoRojoModalEliminar">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title">Eliminar Promocion</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que quieres Eliminar <b>@item.nombre</b>?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Regresar</button>
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.promocionId }, new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            cargarTabla();
+        });
+
+        // funcion para cargar DataTable con información de historial
+        var cargarTabla = function () {
+            var tabla = $("#tablaPromociones").DataTable({
+                responsive: true,
+                "destroy": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        }
+    </script>
+}
