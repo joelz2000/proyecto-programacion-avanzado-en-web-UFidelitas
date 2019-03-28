@@ -1,4 +1,4 @@
-﻿@model FrontEnd.Models.CategoriasViewModel
+﻿@model FrontEnd.Models.PromocionesViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -6,7 +6,7 @@
 
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Agregar Categoria</h3>
+        <h3 class="box-title">Agregar Promocion</h3>
     </div>
     <div class="box-body">
         @using (Html.BeginForm())
@@ -24,10 +24,15 @@
                 @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
+                @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.valor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.valor, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
                 @Html.LabelFor(model => model.estados, htmlAttributes: new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.id_estado, new SelectList(Model.estados, "id_estado", "estado"), "--Seleccionar Estado--", htmlAttributes: new { @class= "form-control"})
+                @Html.DropDownListFor(model => model.id_estado, new SelectList(Model.estados, "id_estado", "estado"), "--Seleccionar Estado--", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.id_estado, "", new { @class = "text-danger" })
-               
+
             </div>
             <div class="form-group">
                 @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })

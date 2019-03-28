@@ -4,17 +4,14 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
-    [CustomAuthorize(Roles = "Admin")]
-    public class CategoriasAdminController : Controller
+    public class PromocionesAdminController : Controller
     {
-
-        // GET: CategoriasAdmin
+        // GET: PromocionesAdmin
         public ActionResult Index()
         {
             string mensaje = "";
@@ -23,10 +20,10 @@ namespace FrontEnd.Controllers.Admin
                 mensaje = Session["mensaje"].ToString();
             }
 
-            List<categorias> categorias;
-            using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+            List<promociones> promociones;
+            using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
             {
-                categorias = unidad.genericDAL.GetAll().ToList();
+                promociones = unidad.genericDAL.GetAll().ToList();
             }
             List<estados> estadoBD;
             using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
@@ -34,17 +31,17 @@ namespace FrontEnd.Controllers.Admin
                 estadoBD = unidad.genericDAL.GetAll().ToList();
             }
 
-            List<CategoriasViewModel> categoriasVM = new List<CategoriasViewModel>();
-            CategoriasViewModel categoriaVM;
+            List<PromocionesViewModel> promocionesVM = new List<PromocionesViewModel>();
+            PromocionesViewModel promocionVM;
             estados estados = new estados();
 
-            
-            foreach (var item in categorias)
+
+            foreach (var item in promociones)
             {
-                
+
                 foreach (var itemEstado in estadoBD)
                 {
-                    if(item.id_estado == itemEstado.id_estado)
+                    if (item.id_estado == itemEstado.id_estado)
                     {
                         estados = new estados
                         {
@@ -53,61 +50,59 @@ namespace FrontEnd.Controllers.Admin
                     }
                 }
 
-                categoriaVM = new CategoriasViewModel
+                promocionVM = new PromocionesViewModel
                 {
-                    id_categoria = item.id_categoria,
+                    promocionId = item.promocionId,
                     nombre = item.nombre,
                     descripcion = item.descripcion,
+                    valor = (int)item.valor,
                     estado = estados.estado
                 };
-                categoriasVM.Add(categoriaVM);
+                promocionesVM.Add(promocionVM);
             }
-            return View("~/Views/Admin/CategoriasAdmin/Index.cshtml", categoriasVM);
+            return View("~/Views/Admin/PromocionesAdmin/Index.cshtml", promocionesVM);
         }
 
-        // GET: CategoriasAdmin/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CategoriasAdmin/Create
+        [HttpPost]
         public ActionResult Create()
         {
-            CategoriasViewModel categoriaVM = new CategoriasViewModel();
+            PromocionesViewModel promocionVM = new PromocionesViewModel();
             using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
             {
-                categoriaVM.estados = unidad.genericDAL.GetAll().ToList();
+                promocionVM.estados = unidad.genericDAL.GetAll().ToList();
             }
-            
-            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml", categoriaVM);
+
+            return View("~/Views/Admin/PromocionesAdmin/Create.cshtml", promocionVM);
         }
 
-        // POST: CategoriasAdmin/Create
-        [HttpPost]
-        public ActionResult Create(CategoriasViewModel categoriaVM)
+        public ActionResult Create(PromocionesViewModel promocionVM)
         {
             try
             {
                 // TODO: Add insert logic here
-                categorias categoria = new categorias
+                promociones promocion = new promociones
                 {
-                    nombre = categoriaVM.nombre,
-                    descripcion = categoriaVM.descripcion
+                    nombre = promocionVM.nombre,
+                    descripcion = promocionVM.descripcion
                 };
 
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
-                    unidad.genericDAL.Add(categoria);
+                    unidad.genericDAL.Add(promocion);
                     unidad.Complete();
                 }
                 Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>"+
+                        "<div class='alert alert-success alert-dismissible'>" +
                         "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
                         "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Categoria Agregada"+
+                        "       Promocion Agregada" +
                         "</div> ";
-                     
+
                 return RedirectToAction("Index");
             }
             catch
@@ -116,43 +111,40 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        // GET: CategoriasAdmin/Edit/5
         public ActionResult Edit(int id)
         {
-            CategoriasViewModel categoriasViewModel;
-            categorias categoria;
-            using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+            PromocionesViewModel promocionesViewModel;
+            promociones promocion;
+            using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
             {
-                categoria = unidad.genericDAL.Get(id);
+                promocion = unidad.genericDAL.Get(id);
             }
 
-            categoriasViewModel = new CategoriasViewModel {
-                id_categoria = categoria.id_categoria,
-                nombre = categoria.nombre,
-                descripcion = categoria.descripcion
+            promocionesViewModel = new PromocionesViewModel
+            {
+                promocionId = promocion.promocionId,
+                nombre = promocion.nombre,
+                descripcion = promocion.descripcion
             };
 
-            
-            return View("~/Views/Admin/CategoriasAdmin/Edit.cshtml", categoriasViewModel);
+            return View("~/Views/Admin/PromocionesAdmin/Edit.cshtml", promocionesViewModel);
         }
 
-        // POST: CategoriasAdmin/Edit/5
         [HttpPost]
-        public ActionResult Edit(CategoriasViewModel categoriasViewModel)
+        public ActionResult Edit(PromocionesViewModel promocionesViewModel)
         {
             try
             {
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
-                    categorias categoria = new categorias
+                    promociones promocion = new promociones
                     {
-                        id_categoria = categoriasViewModel.id_categoria,
-                        nombre = categoriasViewModel.nombre,
-                        descripcion = categoriasViewModel.descripcion
-
+                        promocionId = promocionesViewModel.promocionId,
+                        nombre = promocionesViewModel.nombre,
+                        descripcion = promocionesViewModel.descripcion
                     };
 
-                    unidad.genericDAL.Update(categoria);
+                    unidad.genericDAL.Update(promocion);
                     unidad.Complete();
                 }
                 // TODO: Add update logic here
@@ -160,7 +152,7 @@ namespace FrontEnd.Controllers.Admin
                         "<div class='alert alert-success alert-dismissible'>" +
                         "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
                         "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Categoria actualizada correctamente" +
+                        "       Promocion actualizada correctamente" +
                         "</div> ";
                 return RedirectToAction("Index");
             }
@@ -170,28 +162,27 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        // GET: CategoriasAdmin/Delete/5
         public ActionResult Delete(int id)
         {
             try
             {
-                categorias categoria;
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                promociones promocion;
+                using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
 
-                    categoria= unidad.genericDAL.Get(id);
+                    promocion = unidad.genericDAL.Get(id);
                 }
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
-                 
-                    unidad.genericDAL.Remove(categoria);
+
+                    unidad.genericDAL.Remove(promocion);
                     unidad.Complete();
                 }
                 Session["mensaje"] =
                        "<div class='alert alert-success alert-dismissible'>" +
                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                       "      Categoria Eliminada Correctamente" +
+                       "      Promocion Eliminada Correctamente" +
                        "</div> ";
                 return RedirectToAction("Index");
             }
@@ -201,13 +192,11 @@ namespace FrontEnd.Controllers.Admin
                       "<div class='alertalert-danger alert-dismissible'>" +
                       "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
                       "   <h4><i class='icon fa fa-ban'></i> Alerta!</h4>" +
-                      "      Categoria Eliminada Correctamente" +
+                      "      Promocion Eliminada Correctamente" +
                       "</div> ";
-                return View("~/Views/Admin/CategoriasAdmin/Index.cshtml");
+                return View("~/Views/Admin/PromocionesAdmin/Index.cshtml");
             }
         }
-
-        // POST: CategoriasAdmin/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

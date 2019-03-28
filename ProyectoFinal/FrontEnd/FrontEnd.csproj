@@ -198,6 +198,7 @@
     <Compile Include="Controllers\Admin\FacturacionAdminController.cs" />
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
     <Compile Include="Controllers\Admin\ProductosAdminController.cs" />
+    <Compile Include="Controllers\Admin\PromocionesAdminController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MarcasViewModel.cs" />
     <Compile Include="Models\ProductosViewModels.cs" />
+    <Compile Include="Models\PromocionesViewModel.cs" />
     <Compile Include="Models\UsuariosViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -7172,6 +7174,10 @@
     <Content Include="Views\Admin\ProductosAdmin\Create.cshtml" />
     <Content Include="Views\Admin\ProductosAdmin\Editar.cshtml" />
     <Content Include="Views\Admin\FacturacionAdmin\Edit.cshtml" />
+    <Content Include="Views\Admin\PromocionesAdmin\Index.cshtml" />
+    <Content Include="Views\Admin\PromocionesAdmin\Create.cshtml" />
+    <Content Include="Views\Admin\PromocionesAdmin\Delete.cshtml" />
+    <Content Include="Views\Admin\PromocionesAdmin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
