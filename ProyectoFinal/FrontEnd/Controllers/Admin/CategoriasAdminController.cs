@@ -22,23 +22,44 @@ namespace FrontEnd.Controllers.Admin
             {
                 mensaje = Session["mensaje"].ToString();
             }
+
             List<categorias> categorias;
             using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
             {
                 categorias = unidad.genericDAL.GetAll().ToList();
             }
+            List<estados> estadoBD;
+            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
+            {
+                estadoBD = unidad.genericDAL.GetAll().ToList();
+            }
 
             List<CategoriasViewModel> categoriasVM = new List<CategoriasViewModel>();
             CategoriasViewModel categoriaVM;
+            estados estados = new estados();
 
+            
             foreach (var item in categorias)
             {
-                categoriaVM = new CategoriasViewModel {
+                
+                foreach (var itemEstado in estadoBD)
+                {
+                    if(item.id_estado == itemEstado.id_estado)
+                    {
+                        estados = new estados
+                        {
+                            estado = itemEstado.estado
+                        };
+                    }
+                }
+
+                categoriaVM = new CategoriasViewModel
+                {
                     id_categoria = item.id_categoria,
                     nombre = item.nombre,
-                    descripcion = item.descripcion
+                    descripcion = item.descripcion,
+                    estado = estados.estado
                 };
-
                 categoriasVM.Add(categoriaVM);
             }
             return View("~/Views/Admin/CategoriasAdmin/Index.cshtml", categoriasVM);
@@ -53,7 +74,13 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Create
         public ActionResult Create()
         {
-            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml");
+            CategoriasViewModel categoriaVM = new CategoriasViewModel();
+            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
+            {
+                categoriaVM.estados = unidad.genericDAL.GetAll().ToList();
+            }
+            
+            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml", categoriaVM);
         }
 
         // POST: CategoriasAdmin/Create

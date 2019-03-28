@@ -29,6 +29,9 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.descripcion)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.estado)
+                            </th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -36,20 +39,23 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nombre)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.descripcion)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning" })
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-eliminar-@item.id_categoria">
-                                        Eliminar
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.estado)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning" })
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-eliminar-@item.id_categoria">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
                         }
                     </tbody>
 
