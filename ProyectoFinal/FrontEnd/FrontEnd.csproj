@@ -203,6 +203,7 @@
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\User\CarritoController.cs" />
     <Compile Include="Controllers\User\ProductosController.cs" />
     <Compile Include="CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -6377,6 +6378,9 @@
     <Content Include="Content\bower_components\select2\tests\vendor\qunit-1.23.1.css" />
     <Content Include="Content\bower_components\select2\tests\vendor\qunit-1.23.1.js" />
     <Content Include="Content\bower_components\select2\vendor\jquery-2.1.0.js" />
+    <Content Include="Content\Datatables\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\Datatables\datatables.min.css" />
+    <Content Include="Content\Datatables\responsive.bootstrap4.min.css" />
     <Content Include="Content\dist\css\AdminLTE.css" />
     <Content Include="Content\dist\css\AdminLTE.min.css" />
     <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.css" />
@@ -6599,6 +6603,10 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\CustomJS.js" />
+    <Content Include="Scripts\Datatables\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\Datatables\datatables.min.js" />
+    <Content Include="Scripts\Datatables\jquery.dataTables.min.js" />
+    <Content Include="Scripts\Datatables\responsive.bootstrap4.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -7180,6 +7188,7 @@
     <Content Include="Views\Admin\PromocionesAdmin\Delete.cshtml" />
     <Content Include="Views\Admin\PromocionesAdmin\Edit.cshtml" />
     <Content Include="Views\Productos\Detalles.cshtml" />
+    <Content Include="Views\User\Carrito\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
@@ -7192,7 +7201,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Layout\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

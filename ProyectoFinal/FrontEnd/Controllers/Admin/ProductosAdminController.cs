@@ -114,39 +114,50 @@ namespace FrontEnd.Controllers.Admin
 
             foreach (var distribuidor in distribuidores)
             {
-               productoVM.lista_distribuidores.Add(new SelectListItem()
-               {
-                   Text = distribuidor.nombre,
-                   Value = distribuidor.id_distribuidor.ToString()
-               });
+                if(distribuidor.id_estado != 1)
+                {
+                    productoVM.lista_distribuidores.Add(new SelectListItem()
+                    {
+                        Text = distribuidor.nombre,
+                        Value = distribuidor.id_distribuidor.ToString()
+                    });
+                }
             }
 
             foreach (var categoria in categorias)
             {
-                
-                productoVM.lista_categorias.Add(new SelectListItem()
+                if(categoria.id_estado != 1)
                 {
-                    Text = categoria.nombre,
-                    Value = categoria.id_categoria.ToString()
-                });
+                    productoVM.lista_categorias.Add(new SelectListItem()
+                    {
+                        Text = categoria.nombre,
+                        Value = categoria.id_categoria.ToString()
+                    });
+                }
             }
 
             foreach (var marca in marcas)
             {
-                productoVM.lista_marcas.Add(new SelectListItem()
+                if(marca.id_estado != 1)
                 {
-                    Text = marca.nombre,
-                    Value = marca.id_marca.ToString()
-                });
+                    productoVM.lista_marcas.Add(new SelectListItem()
+                    {
+                        Text = marca.nombre,
+                        Value = marca.id_marca.ToString()
+                    });
+                }
             }
 
             foreach(var coleccion in colecciones)
             {
-                productoVM.lista_colecciones.Add(new SelectListItem()
+                if(coleccion.id_estado != 1)
                 {
-                    Text = coleccion.nombre,
-                    Value = coleccion.id_coleccion.ToString()
-                });
+                    productoVM.lista_colecciones.Add(new SelectListItem()
+                    {
+                        Text = coleccion.nombre,
+                        Value = coleccion.id_coleccion.ToString()
+                    });
+                }
             }
 
             return View("~/Views/Admin/ProductosAdmin/Create.cshtml", productoVM);
@@ -260,7 +271,7 @@ namespace FrontEnd.Controllers.Admin
             // agregar a una lista todas las marcas
             foreach (var marca in lista_marcas)
             {
-                if (marca.id_marca != producto.id_marca)
+                if (marca.id_marca != producto.id_marca && marca.id_estado != 1)
                 {
                     producto_VM.lista_marcas.Add(new SelectListItem()
                     {
@@ -273,7 +284,7 @@ namespace FrontEnd.Controllers.Admin
             // agregar a una lista todas las colecciones
             foreach (var coleccion in lista_colecciones)
             {
-                if (coleccion.id_coleccion != producto.id_coleccion)
+                if (coleccion.id_coleccion != producto.id_coleccion && coleccion.id_estado != 1)
                 {
                     producto_VM.lista_categorias.Add(new SelectListItem()
                     {
@@ -286,7 +297,7 @@ namespace FrontEnd.Controllers.Admin
             // agregar a una lista todas las categorias
             foreach (var categoria in lista_categorias)
             {
-                if(categoria.id_categoria != producto.id_categoria)
+                if(categoria.id_categoria != producto.id_categoria && categoria.id_estado != 1)
                 {
                     producto_VM.lista_categorias.Add(new SelectListItem()
                     {
@@ -299,7 +310,7 @@ namespace FrontEnd.Controllers.Admin
             // agregar a una lista todos los distribuidores
             foreach (var distribuidor in lista_distribuidor)
             {
-                if(distribuidor.id_distribuidor == producto.id_distribuidor)
+                if(distribuidor.id_distribuidor == producto.id_distribuidor && distribuidor.id_estado != 1)
                 {
                     producto_VM.lista_distribuidores.Add(new SelectListItem()
                     {

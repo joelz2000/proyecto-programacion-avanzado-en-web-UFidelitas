@@ -1,0 +1,60 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table id="carritoTabla" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Codigo
+            </th>
+            <th>
+                Producto
+            <th>
+                Precio
+            </th>
+            <th>
+                Modelo
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>Algo</td>
+            <td>Algo</td>
+            <td>Algo</td>
+            <td>Algo</td>
+            <td>Algo</td>
+            <td>Algo</td>
+            <td>
+                Detalles |
+                Editar |
+                <button type="button" class="btn btn-link" onclick="eliminar()">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function() {
+            $('#carritoTabla').DataTable();
+        } );
+    </script>
+}

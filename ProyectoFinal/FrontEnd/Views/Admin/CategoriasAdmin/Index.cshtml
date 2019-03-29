@@ -115,42 +115,36 @@
                                     'Exito!',
                                     'Categoria eliminada',
                                     'success'
-                                )
-                                setTimeout(function () {
+                                ).then(function () {
                                     location.reload();
-                                }, 3000);
-
+                                });
                             },
                             400: function () {
                                 Swal.fire(
                                     'Error!',
                                     'Bad request',
                                     'error'
-                                )
-                                setTimeout(function () {
+                                ).then(function () {
                                     location.reload();
-                                }, 3000);
-
+                                });
                             },
                             404: function () {
                                 Swal.fire(
                                     'Error!',
                                     'Pagina no encontrada',
                                     'error'
-                                )
-                                setTimeout(function () {
+                                ).then(function () {
                                     location.reload();
-                                }, 3000);
+                                });
                             },
                             500: function () {
                                 Swal.fire(
                                     'Error!',
                                     'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
                                     'error'
-                                )
-                                setTimeout(function () {
+                                ).then(function () {
                                     location.reload();
-                                }, 3000);
+                                });
                             }
                         }
 

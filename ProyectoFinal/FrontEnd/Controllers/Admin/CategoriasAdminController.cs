@@ -14,6 +14,8 @@ namespace FrontEnd.Controllers.Admin
     public class CategoriasAdminController : Controller
     {
 
+        private UnidadDeTrabajo<categorias> unidad_categorias = new UnidadDeTrabajo<categorias>(new BDContext());
+
         // GET: CategoriasAdmin
         public ActionResult Index()
         {
@@ -183,47 +185,25 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        private UnidadDeTrabajo<categorias> unidad_categorias = new UnidadDeTrabajo<categorias>(new BDContext());
-        // GET: CategoriasAdmin/Delete/5
-        public ActionResult Delete(int id)
-        {
-           
-            try
-            {
-               
-                if (id == 0)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                categorias categoria = unidad_categorias.genericDAL.Get(id);
-                categoria.id_estado = 1;
-                unidad_categorias.genericDAL.Update(categoria);
-                unidad_categorias.Complete();
-                
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
-            }
-            catch
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-              
-            }
-        }
-
         // POST: CategoriasAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int? id)
         {
-            try
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0 || id == null)
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // buscar la categoria y los demas datos
+            categorias categoria = unidad_categorias.genericDAL.Get((int)id);
+            categoria.id_estado = 1;
+            unidad_categorias.genericDAL.Update(categoria);
+            unidad_categorias.Complete();
+
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
     }
 }

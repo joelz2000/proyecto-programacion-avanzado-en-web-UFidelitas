@@ -3,10 +3,18 @@
 @using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <div class="navbar-nav">
+        @{
+            @Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-item nav-link active" })
+            @Html.ActionLink("Nosotros", "About", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+            @Html.ActionLink("Contactenos", "Contact", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+            @Html.ActionLink("Carrito", "Index", "Carrito", new { area = "" }, new { @class = "nav-item nav-link" })
+        }
+    </div>
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
         @Html.AntiForgeryToken()
-
         <div class="navbar nav ml-auto">
             @Html.ActionLink("Hola, " + Model.nombre + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-item nav-link" })
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesion</a></li>
@@ -26,6 +34,13 @@
 }
 else
 {
+    <div class="navbar-nav">
+        @{
+            @Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-item nav-link active" })
+            @Html.ActionLink("Nosotros", "About", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+            @Html.ActionLink("Contactenos", "Contact", "Home", new { area = "" }, new { @class = "nav-item nav-link" })
+        }
+    </div>
     <div class="navbar nav ml-auto">
         @Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-item nav-link" })
         @Html.ActionLink("Iniciar sesion", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-item nav-link" })

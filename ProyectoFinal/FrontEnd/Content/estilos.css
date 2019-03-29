@@ -2,3 +2,7 @@
     background-color: #d33724;
     color: white;
 }
+
+table, th, tr,td {
+    color: white;
+}
