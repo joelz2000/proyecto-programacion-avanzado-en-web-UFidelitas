@@ -17,12 +17,6 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin
         public ActionResult Index()
         {
-            string mensaje = "";
-            if (Session["mensaje"] != null)
-            {
-                mensaje = Session["mensaje"].ToString();
-            }
-
             List<categorias> categorias;
             using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
             {
@@ -101,18 +95,12 @@ namespace FrontEnd.Controllers.Admin
                     unidad.genericDAL.Add(categoria);
                     unidad.Complete();
                 }
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>"+
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Categoria Agregada"+
-                        "</div> ";
-                     
-                return RedirectToAction("Index");
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
