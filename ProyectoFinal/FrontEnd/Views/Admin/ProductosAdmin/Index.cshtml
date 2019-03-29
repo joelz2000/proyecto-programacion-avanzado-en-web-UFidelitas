@@ -5,17 +5,13 @@
     ViewBag.Title = "Index";
 }
 
-<div class="btn-group">
-    @Html.ActionLink("Agregar nuevo producto", "Create", null, new { @class = "btn btn-block btn-success" })
-    <br><br><br>
-</div>
-
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
 
             <div class="box-header">
                 <h2 class="box-title">Productos</h2>
+                @Html.ActionLink("Agregar nuevo producto", "Create", null, new { @class = "btn btn-success pull-right" })
             </div>
 
             <div class="box-body table-responsive">

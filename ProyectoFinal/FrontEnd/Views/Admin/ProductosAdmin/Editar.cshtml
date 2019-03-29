@@ -4,11 +4,11 @@
     ViewBag.Title = "Editar";
 }
 
-
-<h2>Editando @Model.Nombre</h2>
-<div class="container">
-    <hr />
-    <div class="form-horizontal">
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Editando @Model.Nombre</h3>
+    </div>
+    <div class="box-body">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
         @Html.HiddenFor(producto => producto.Id_Producto, new { id = "Id_Producto" })
