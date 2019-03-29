@@ -36,12 +36,12 @@ footer {
     background-clip:border-box;
     border:1px solid rgba(0,0,0,.6);
     border-radius:.25rem;
-    color: #000000;
+    color: #fff;
 }
 .card>hr{
     margin-right:0;
     margin-left:0;
-    color: #000000;
+    color: #fff;
 }
 .card>.list-group:first-child .list-group-item:first-child{
     border-top-left-radius:.25rem;
@@ -53,10 +53,12 @@ footer {
 }
 .card-body{
     flex:1 1 auto;
-    padding:1.25rem
+    padding:1.25rem;
+    color: #fff;
 
 }.card-title{
      margin-bottom:.75rem;
+     #fff;
  }
  .card-subtitle{
      margin-top:-.375rem;
@@ -64,7 +66,8 @@ footer {
 
  }
  .card-text:last-child{
-     margin-bottom:0
+     margin-bottom:0;
+     color: #fff;
 
  }
  .card-link:hover{
@@ -79,7 +82,8 @@ footer {
      padding:.75rem 1.25rem;
      margin-bottom:0;
      background-color:#6f6f6f;
-     border-bottom:1px solid rgba(0,0,0,.6)
+     border-bottom:1px solid rgba(0,0,0,.6);
+     color: #fff;
 
  }
  .card-header:first-child{
@@ -93,7 +97,8 @@ footer {
  .card-footer{
      padding:.75rem 1.25rem;
      background-color:#6f6f6f;
-     border-top:1px solid rgba(0,0,0,.6)
+     border-top:1px solid rgba(0,0,0,.6);
+     color: #fff;
 
  }
  .card-footer:last-child{

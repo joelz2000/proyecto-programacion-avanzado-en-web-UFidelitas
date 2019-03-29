@@ -57,7 +57,6 @@ namespace FrontEnd.Controllers
                                     Id_Producto = producto.productoId,
                                     Nombre = producto.nombre,
                                     Precio = producto.precio,
-                                    Descripcion = producto.descripcion,
                                     Modelo = producto.modelo,
                                     cantidad = producto.cantidad,
                                     marca = marca.nombre

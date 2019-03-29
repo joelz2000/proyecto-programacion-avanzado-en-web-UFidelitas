@@ -25,10 +25,6 @@ namespace FrontEnd.Models
         public double? Precio { get; set; }
 
         [Required]
-        [Display(Name = "Descripcion")]
-        public string Descripcion { get; set; }
-
-        [Required]
         [Display(Name ="Modelo")]
         public string Modelo { get; set; }
 

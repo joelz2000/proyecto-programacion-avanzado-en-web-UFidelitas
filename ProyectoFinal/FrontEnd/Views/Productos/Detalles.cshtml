@@ -6,24 +6,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Detalles</h2>
-<h4>Mostrando detalles de @Model.Nombre</h4>
 <div class="container">
     <div class="row">
-        <div class="col-sm-2">
-            <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-        </div>
-        <div class="col-sm-5">
-        </div>
-        <div class="col-sm-5">  
-            <div class="row">
-                @Html.ActionLink("Agregar al carrito", "Detalles", "Productos", new { id = Model.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+        <div class="col-lg-9">
+
+            <div class="card mt-4">
+                <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Nombre</h3>
+                    <h4>$@Model.Precio</h4>
+                    <p class="card-text">@Model.Descripcion</p>
+                </div>
+                <div class="card-footer">
+                    @Html.ActionLink("Volver", "Index", "Home", null, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Agregar al carrito", "Agregar", "Carrito", null, new { @class = "btn btn-primary btn-sm pull-left" })
+                    @Html.ActionLink("Comprar", "Comprar", "Comprars", null, new { @class = "btn btn-primary btn-sm pull-left" })
+                </div>
             </div>
-            <br/>
-            <div class="row">
-                @Html.ActionLink("Comprar", "Detalles", "Productos", new { id = Model.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
-            </div>
         </div>
+        <!-- /.col-lg-9 -->
+
     </div>
 </div>
 

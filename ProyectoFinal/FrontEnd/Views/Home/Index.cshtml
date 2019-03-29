@@ -9,16 +9,17 @@
     <div class="row">
         @foreach (var producto in Model)
         {
-            <div class="col-sm-4">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
-                    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
                     <div class="card-body">
-                        <h5 class="card-title">@producto.Nombre</h5>
-                        <p class="card-text">Descripcion: @producto.Descripcion</p>
-                        <p class="card-text">Precio: $@producto.Precio</p>
-                        <div class="card text-center">
-                            @Html.ActionLink("Detalles", "Detalles", "Productos", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
-                        </div>
+                        <h4 class="card-title">
+                            @producto.Nombre
+                        </h4>
+                        <h6>$@producto.Precio</h6>
+                    </div>
+                    <div class="card-footer">
+                        @Html.ActionLink("Detalles", "Detalles", "Productos", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
                     </div>
                 </div>
             </div>
