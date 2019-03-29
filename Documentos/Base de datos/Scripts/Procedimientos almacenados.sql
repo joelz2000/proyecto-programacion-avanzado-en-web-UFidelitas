@@ -10,7 +10,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_agregarRol 
+CREATE PROCEDURE sp_agregarRol 
 	-- Add the parameters for the stored procedure here
 	@pNombre varchar(25),
 	@pDescripcion text,
@@ -92,7 +92,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_actualizarRol
+CREATE PROCEDURE sp_actualizarRol
 	@pId int,
 	@pNombre varchar(25),
 	@pDescripcion text,
@@ -141,7 +141,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_agregarUsuario
+CREATE PROCEDURE sp_agregarUsuario
 	@pNombre varchar(25),
 	@pApellidos varchar(125),
 	@pContrasena varchar(125),
@@ -286,7 +286,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_agregarRolUser
+CREATE  PROCEDURE sp_agregarRolUser
 	@pRolId int,
 	@pUserId int,
 	@pEstadoId int
@@ -312,7 +312,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_ObtenerRolesUser
+CREATE  PROCEDURE sp_ObtenerRolesUser
 	
 AS
 BEGIN
@@ -336,7 +336,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_obtenerRolUserId
+CREATE PROCEDURE sp_obtenerRolUserId
 
 	@idUser int
 AS
@@ -362,7 +362,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter  PROCEDURE sp_actualizarRolesUser
+CREATE PROCEDURE sp_actualizarRolesUser
 	@idRolOriginal int,
 	@idUser int,
 	@idRolNueva int,
@@ -388,7 +388,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE [dbo].[sp_agregarFacturacion]
+CREATE PROCEDURE [dbo].[sp_agregarFacturacion]
 	@pNombre varchar(250),
 	@pfecha date,
 	@pDescripcion text,
@@ -436,7 +436,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create or alter PROCEDURE [dbo].[sp_actualizarFacturacion]
+create PROCEDURE [dbo].[sp_actualizarFacturacion]
 	@pIdFacturacion int,
 	@pNombre varchar(250),
 	@pfecha date,
@@ -548,7 +548,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-Create or alter PROCEDURE [dbo].[sp_agregarFacturacionProducto]
+Create PROCEDURE [dbo].[sp_agregarFacturacionProducto]
 	
 	@pFacturacionId int,
 	@pProductoId int,
@@ -600,7 +600,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE or alter PROCEDURE sp_actualizarFacturacionesProducto
+CREATE PROCEDURE sp_actualizarFacturacionesProducto
 	@pIdProducto int,
 	@pIdFacturacion int,
 	@cantidad int,
@@ -711,7 +711,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create or ALTER PROCEDURE [dbo].[sp_eliminarPromocionProducto]
+create PROCEDURE [dbo].[sp_eliminarPromocionProducto]
 	@pPromocionId int,
 	@pProductoId int
 AS
@@ -736,7 +736,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create or ALTER PROCEDURE [dbo].[sp_eliminarUsuarioPromocion]
+create PROCEDURE [dbo].[sp_eliminarUsuarioPromocion]
 	@pUsuarioId int,
 	@pPromocionId int
 AS
@@ -761,7 +761,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create or ALTER PROCEDURE [dbo].[sp_obtenerFacturacionProductoByIdFacturacion]
+create PROCEDURE [dbo].[sp_obtenerFacturacionProductoByIdFacturacion]
 	@pFacturacionId int
 AS
 BEGIN
