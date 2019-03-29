@@ -35,26 +35,29 @@ namespace FrontEnd.Controllers.Admin
             
             foreach (var item in categorias)
             {
-                
-                foreach (var itemEstado in estadoBD)
+                if (item.id_estado == 1)
                 {
-                    if(item.id_estado == itemEstado.id_estado)
+                    continue;
+                }
+                else
+                {
+                    foreach (var itemEstado in estadoBD)
                     {
-                        estados = new estados
+                        if (item.id_estado == itemEstado.id_estado)
                         {
-                            estado = itemEstado.estado
-                        };
+                            categoriaVM = new CategoriasViewModel
+                            {
+                                id_categoria = item.id_categoria,
+                                nombre = item.nombre,
+                                descripcion = item.descripcion,
+                                estado = itemEstado.estado
+                            };
+                            categoriasVM.Add(categoriaVM);
+                            break;
+                        }
                     }
                 }
-
-                categoriaVM = new CategoriasViewModel
-                {
-                    id_categoria = item.id_categoria,
-                    nombre = item.nombre,
-                    descripcion = item.descripcion,
-                    estado = estados.estado
-                };
-                categoriasVM.Add(categoriaVM);
+                
             }
             return View("~/Views/Admin/CategoriasAdmin/Index.cshtml", categoriasVM);
         }
@@ -68,17 +71,14 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Create
         public ActionResult Create()
         {
-            CategoriasViewModel categoriaVM = new CategoriasViewModel();
-            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
-            {
-                categoriaVM.estados = unidad.genericDAL.GetAll().ToList();
-            }
             
-            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml", categoriaVM);
+            
+            return View("~/Views/Admin/CategoriasAdmin/Create.cshtml");
         }
 
         // POST: CategoriasAdmin/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(CategoriasViewModel categoriaVM)
         {
             try
@@ -87,16 +87,25 @@ namespace FrontEnd.Controllers.Admin
                 categorias categoria = new categorias
                 {
                     nombre = categoriaVM.nombre,
-                    descripcion = categoriaVM.descripcion
+                    descripcion = categoriaVM.descripcion,
+                    id_estado = 2
                 };
-
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                if (categoria.nombre != null)
                 {
-                    unidad.genericDAL.Add(categoria);
-                    unidad.Complete();
+                    using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                    {
+                        unidad.genericDAL.Add(categoria);
+                        unidad.Complete();
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+                
 
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+               
             }
             catch
             {
@@ -107,11 +116,26 @@ namespace FrontEnd.Controllers.Admin
         // GET: CategoriasAdmin/Edit/5
         public ActionResult Edit(int id)
         {
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             CategoriasViewModel categoriasViewModel;
             categorias categoria;
+
+            // ver si el producto tiene estado bloqueado. Si si, devolver 404
+            
+
+
             using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
             {
                 categoria = unidad.genericDAL.Get(id);
+            }
+
+            if (categoria.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             categoriasViewModel = new CategoriasViewModel {
@@ -130,31 +154,30 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+                if (ModelState.IsValid)
                 {
-                    categorias categoria = new categorias
+                    using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
                     {
-                        id_categoria = categoriasViewModel.id_categoria,
-                        nombre = categoriasViewModel.nombre,
-                        descripcion = categoriasViewModel.descripcion
+                        categorias categoria = new categorias
+                        {
+                            id_categoria = categoriasViewModel.id_categoria,
+                            nombre = categoriasViewModel.nombre,
+                            descripcion = categoriasViewModel.descripcion
 
-                    };
+                        };
 
-                    unidad.genericDAL.Update(categoria);
-                    unidad.Complete();
+                        unidad.genericDAL.Update(categoria);
+                        unidad.Complete();
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
-                // TODO: Add update logic here
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Categoria actualizada correctamente" +
-                        "</div> ";
-                return RedirectToAction("Index");
+
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 

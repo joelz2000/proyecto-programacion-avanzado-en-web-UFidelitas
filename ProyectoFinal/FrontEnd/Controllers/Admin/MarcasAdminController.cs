@@ -69,17 +69,21 @@ namespace FrontEnd.Controllers.Admin
                     descripcion = marcaVM.descripcion
                 };
 
-                using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
+                if (marca.nombre != null)
                 {
-                    unidad.genericDAL.Add(marca);
-                    unidad.Complete();
+                    using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
+                    {
+                        unidad.genericDAL.Add(marca);
+                        unidad.Complete();
+                    }
+                    Session["mensaje"] =
+                            "<div class='alert alert-success alert-dismissible'>" +
+                            "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
+                            "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
+                            "       ¡La marca fue agregada!" +
+                            "</div> ";
                 }
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       ¡La marca fue agregada!" +
-                        "</div> ";
+                
 
                 return RedirectToAction("Index");
             }
