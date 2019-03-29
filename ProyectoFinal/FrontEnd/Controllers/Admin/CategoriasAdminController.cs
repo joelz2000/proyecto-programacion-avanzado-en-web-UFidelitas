@@ -141,7 +141,8 @@ namespace FrontEnd.Controllers.Admin
             categoriasViewModel = new CategoriasViewModel {
                 id_categoria = categoria.id_categoria,
                 nombre = categoria.nombre,
-                descripcion = categoria.descripcion
+                descripcion = categoria.descripcion,
+                id_estado = 2
             };
 
             
@@ -162,8 +163,9 @@ namespace FrontEnd.Controllers.Admin
                         {
                             id_categoria = categoriasViewModel.id_categoria,
                             nombre = categoriasViewModel.nombre,
-                            descripcion = categoriasViewModel.descripcion
-
+                            descripcion = categoriasViewModel.descripcion,
+                            id_estado = 2
+                            
                         };
 
                         unidad.genericDAL.Update(categoria);
@@ -181,40 +183,30 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
+        private UnidadDeTrabajo<categorias> unidad_categorias = new UnidadDeTrabajo<categorias>(new BDContext());
         // GET: CategoriasAdmin/Delete/5
         public ActionResult Delete(int id)
         {
+           
             try
             {
-                categorias categoria;
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
+               
+                if (id == 0)
                 {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-                    categoria= unidad.genericDAL.Get(id);
-                }
-                using (UnidadDeTrabajo<categorias> unidad = new UnidadDeTrabajo<categorias>(new BDContext()))
-                {
-                 
-                    unidad.genericDAL.Remove(categoria);
-                    unidad.Complete();
-                }
-                Session["mensaje"] =
-                       "<div class='alert alert-success alert-dismissible'>" +
-                       "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                       "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                       "      Categoria Eliminada Correctamente" +
-                       "</div> ";
-                return RedirectToAction("Index");
+                categorias categoria = unidad_categorias.genericDAL.Get(id);
+                categoria.id_estado = 1;
+                unidad_categorias.genericDAL.Update(categoria);
+                unidad_categorias.Complete();
+                
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                Session["mensaje"] =
-                      "<div class='alertalert-danger alert-dismissible'>" +
-                      "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                      "   <h4><i class='icon fa fa-ban'></i> Alerta!</h4>" +
-                      "      Categoria Eliminada Correctamente" +
-                      "</div> ";
-                return View("~/Views/Admin/CategoriasAdmin/Index.cshtml");
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+              
             }
         }
 
