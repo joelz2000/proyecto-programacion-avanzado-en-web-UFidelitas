@@ -53,8 +53,12 @@
 @section Scripts
 {
     <script>
-        $(document).ready(function() {
-            $('#carritoTabla').DataTable();
-        } );
+        $("#carritoTabla").DataTable({
+            responsive: true,
+            "destroy": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+        });
     </script>
 }
