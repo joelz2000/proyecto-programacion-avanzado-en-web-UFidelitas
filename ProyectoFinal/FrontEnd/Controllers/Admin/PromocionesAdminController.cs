@@ -11,6 +11,10 @@ namespace FrontEnd.Controllers.Admin
 {
     public class PromocionesAdminController : Controller
     {
+
+        UnidadDeTrabajo<promociones> unidad_promocion = new UnidadDeTrabajo<promociones>(new BDContext());
+        UnidadDeTrabajo<estados> unidad_estados = new UnidadDeTrabajo<estados>(new BDContext());
+
         // GET: PromocionesAdmin
         public ActionResult Index()
         {
@@ -20,45 +24,29 @@ namespace FrontEnd.Controllers.Admin
                 mensaje = Session["mensaje"].ToString();
             }
 
-            List<promociones> promociones;
-            using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
-            {
-                promociones = unidad.genericDAL.GetAll().ToList();
-            }
-            List<estados> estadoBD;
-            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
-            {
-                estadoBD = unidad.genericDAL.GetAll().ToList();
-            }
+            List<promociones> promociones = unidad_promocion.genericDAL.GetAll().ToList();
+            List<estados> estadoBD = unidad_estados.genericDAL.GetAll().ToList();
 
             List<PromocionesViewModel> promocionesVM = new List<PromocionesViewModel>();
             PromocionesViewModel promocionVM;
-            estados estados = new estados();
 
-
-            foreach (var item in promociones)
+            foreach (var promocion in promociones)
             {
-
-                foreach (var itemEstado in estadoBD)
+                if (promocion.id_estado == 1)
                 {
-                    if (item.id_estado == itemEstado.id_estado)
-                    {
-                        estados = new estados
-                        {
-                            estado = itemEstado.estado
-                        };
-                    }
+                    continue;
                 }
-
-                promocionVM = new PromocionesViewModel
+                else
                 {
-                    promocionId = item.promocionId,
-                    nombre = item.nombre,
-                    descripcion = item.descripcion,
-                    valor = (int)item.valor,
-                    estado = estados.estado
-                };
-                promocionesVM.Add(promocionVM);
+                    promocionVM = new PromocionesViewModel
+                    {
+                        promocionId = promocion.promocionId,
+                        nombre = promocion.nombre, 
+                        descripcion = promocion.descripcion,
+                        valor = promocion.valor
+                    };
+                    promocionesVM.Add(promocionVM);
+                }
             }
             return View("~/Views/Admin/PromocionesAdmin/Index.cshtml", promocionesVM);
         }
@@ -68,18 +56,13 @@ namespace FrontEnd.Controllers.Admin
             return View();
         }
 
-        [HttpPost]
         public ActionResult Create()
         {
             PromocionesViewModel promocionVM = new PromocionesViewModel();
-            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
-            {
-                promocionVM.estados = unidad.genericDAL.GetAll().ToList();
-            }
-
             return View("~/Views/Admin/PromocionesAdmin/Create.cshtml", promocionVM);
         }
 
+        [HttpPost]
         public ActionResult Create(PromocionesViewModel promocionVM)
         {
             try
@@ -88,7 +71,8 @@ namespace FrontEnd.Controllers.Admin
                 promociones promocion = new promociones
                 {
                     nombre = promocionVM.nombre,
-                    descripcion = promocionVM.descripcion
+                    descripcion = promocionVM.descripcion,
+                    valor = promocionVM.valor
                 };
 
                 using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))

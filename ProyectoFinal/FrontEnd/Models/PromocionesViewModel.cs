@@ -21,14 +21,6 @@ namespace FrontEnd.Models
         public string descripcion { get; set; }
 
         [Display(Name = "Valor")]
-        public int valor { get; set; }
-
-        [Display(Name = "Id Estado")]
-        public Nullable<int> id_estado { get; set; }
-
-        [Display(Name = "Estado")]
-        public string estado { get; set; }
-
-        public virtual IEnumerable<estados> estados { get; set; }
+        public int? valor { get; set; }
     }
 }
