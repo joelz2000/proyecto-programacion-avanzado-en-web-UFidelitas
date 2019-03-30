@@ -24,15 +24,10 @@ namespace FrontEnd.Controllers.Admin
             {
                 categorias = unidad.genericDAL.GetAll().ToList();
             }
-            List<estados> estadoBD;
-            using (UnidadDeTrabajo<estados> unidad = new UnidadDeTrabajo<estados>(new BDContext()))
-            {
-                estadoBD = unidad.genericDAL.GetAll().ToList();
-            }
-
+         
             List<CategoriasViewModel> categoriasVM = new List<CategoriasViewModel>();
             CategoriasViewModel categoriaVM;
-            estados estados = new estados();
+            
 
             
             foreach (var item in categorias)
@@ -43,21 +38,15 @@ namespace FrontEnd.Controllers.Admin
                 }
                 else
                 {
-                    foreach (var itemEstado in estadoBD)
+
+                    categoriaVM = new CategoriasViewModel
                     {
-                        if (item.id_estado == itemEstado.id_estado)
-                        {
-                            categoriaVM = new CategoriasViewModel
-                            {
-                                id_categoria = item.id_categoria,
-                                nombre = item.nombre,
-                                descripcion = item.descripcion,
-                                estado = itemEstado.estado
-                            };
-                            categoriasVM.Add(categoriaVM);
-                            break;
-                        }
-                    }
+                        id_categoria = item.id_categoria,
+                        nombre = item.nombre,
+                        descripcion = item.descripcion
+                    };
+                    categoriasVM.Add(categoriaVM);
+                    
                 }
                 
             }
