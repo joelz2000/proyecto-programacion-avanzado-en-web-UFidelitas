@@ -3,6 +3,7 @@ using BackEnd.Entities;
 using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,11 +17,7 @@ namespace FrontEnd.Controllers.Admin
         // GET: FacturacionC:\Users\gfumanaf\Documents\Universidad\I_CUA_2019\proyecto-programacion-avanzado-en-web-UFidelitas\ProyectoFinal\FrontEnd\Controllers\Admin\FacturacionAdminController.cs
         public ActionResult Index()
         {
-            string mensaje = "";
-            if (Session["mensaje"] != null)
-            {
-                mensaje = Session["mensaje"].ToString();
-            }
+            
             List<sp_obtenerFacturaciones_Result> facturaciones;
 
             IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
@@ -33,19 +30,28 @@ namespace FrontEnd.Controllers.Admin
 
             foreach (var item in facturaciones)
             {
-                facturacionVM = new FacturacionesViewModels
+                if (item.id_estado == 1)
                 {
-                    facturacionId = item.facturacionId,
-                    nombre = item.nombre,
-                    fecha = item.fecha,
-                    descripcion = item.descripcion,
-                    impuesto = item.impuesto,
-                    subtotal = item.subtotal,
-                    total = item.total,
-                    tipo = item.tipo
-                };
+                    continue;
+                }
+                else
+                {
+                    facturacionVM = new FacturacionesViewModels
+                    {
+                        facturacionId = item.facturacionId,
+                        nombre = item.nombre,
+                        fecha = item.fecha,
+                        descripcion = item.descripcion,
+                        impuesto = item.impuesto,
+                        subtotal = item.subtotal,
+                        total = item.total,
+                        tipo = item.tipo
+                    };
+                    facturacionesVM.Add(facturacionVM);
+                }
+               
 
-                facturacionesVM.Add(facturacionVM);
+               
             }
             return View("~/Views/Admin/FacturacionAdmin/Index.cshtml", facturacionesVM);
         }
@@ -105,17 +111,39 @@ namespace FrontEnd.Controllers.Admin
 
         // POST: Facturacion/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {    
+        public ActionResult Edit(FacturacionesViewModels facturacionesVM)
+        {
             try
             {
-                // TODO: Add update logic here
+                IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
+                if (ModelState.IsValid)
+                {
 
-                return RedirectToAction("Index");
+                    sp_obtenerFacturaciones_Result facturaciones = new sp_obtenerFacturaciones_Result
+                    {
+                       facturacionId = facturacionesVM.facturacionId,
+                       nombre = facturacionesVM.nombre,
+                       fecha = facturacionesVM.fecha,
+                       descripcion = facturacionesVM.descripcion,
+                       impuesto = (int) facturacionesVM.impuesto,
+                       tipo = facturacionesVM.tipo,
+                       id_estado = 2
+                    };
+
+
+                    facturacionDAL.actualizarFactura(facturaciones);
+
+                    // devolver que todo bien
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+
+                // modelo no valido, devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            catch
+            catch (DataException /* dex */ )
             {
-                return View();
+                // devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
