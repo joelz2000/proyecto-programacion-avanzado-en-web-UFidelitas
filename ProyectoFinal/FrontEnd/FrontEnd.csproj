@@ -196,6 +196,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Admin\CategoriasAdminController.cs" />
     <Compile Include="Controllers\Admin\FacturacionAdminController.cs" />
+    <Compile Include="Controllers\Admin\FacturacionProductosAdminController.cs" />
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
     <Compile Include="Controllers\Admin\ProductosAdminController.cs" />
     <Compile Include="Controllers\Admin\PromocionesAdminController.cs" />
@@ -7196,7 +7197,7 @@
     <Content Include="Views\Admin\MarcasAdmin\Delete.cshtml" />
     <Content Include="Views\Admin\MarcasAdmin\Create.cshtml" />
     <Content Include="Views\Admin\FacturacionAdmin\Index.cshtml" />
-    <Content Include="Views\Admin\FacturacionAdmin\ProductosFacturacion.cshtml" />
+    <Content Include="Views\Admin\FacturacionProductosAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

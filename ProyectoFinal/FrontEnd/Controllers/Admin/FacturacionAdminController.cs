@@ -88,11 +88,23 @@ namespace FrontEnd.Controllers.Admin
         // GET: Facturacion/Edit/5
         public ActionResult Edit(int id)
         {
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             FacturacionesViewModels facturacionesVM;
             sp_obtenerFacturacionId_Result facturaciones;
             IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
 
+
             facturaciones = facturacionDAL.obtenerFacturacionById(id);
+
+            if (facturaciones.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             facturacionesVM = new FacturacionesViewModels
             {
@@ -103,7 +115,8 @@ namespace FrontEnd.Controllers.Admin
                 impuesto = facturaciones.impuesto,
                 subtotal = facturaciones.subtotal,
                 total = facturaciones.total,
-                tipo = facturaciones.tipo
+                tipo = facturaciones.tipo,
+                id_estado = 2
             };
 
             return View("~/Views/Admin/FacturacionAdmin/Edit.cshtml", facturacionesVM);
@@ -116,23 +129,23 @@ namespace FrontEnd.Controllers.Admin
             try
             {
                 IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
+                sp_obtenerFacturaciones_Result facturaciones;
                 if (ModelState.IsValid)
                 {
-
-                    sp_obtenerFacturaciones_Result facturaciones = new sp_obtenerFacturaciones_Result
+                    
+                    
+                    facturacionDAL.actualizarFactura(facturaciones = new sp_obtenerFacturaciones_Result()
                     {
-                       facturacionId = facturacionesVM.facturacionId,
-                       nombre = facturacionesVM.nombre,
-                       fecha = facturacionesVM.fecha,
-                       descripcion = facturacionesVM.descripcion,
-                       impuesto = (int) facturacionesVM.impuesto,
-                       tipo = facturacionesVM.tipo,
-                       id_estado = 2
-                    };
+                        facturacionId = facturacionesVM.facturacionId,
+                        nombre = facturacionesVM.nombre,
+                        fecha = facturacionesVM.fecha,
+                        descripcion = facturacionesVM.descripcion,
+                        impuesto = facturacionesVM.impuesto,
+                        tipo = facturacionesVM.tipo,
+                        id_estado = facturacionesVM.id_estado
+                    });
 
-
-                    facturacionDAL.actualizarFactura(facturaciones);
-
+                    
                     // devolver que todo bien
                     return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
@@ -167,95 +180,6 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        // GET: Facturacion/Details/5
-        public ActionResult ProductosFacturacion(int id)
-        {
-            List<facturacion_producto> productosFacturacion;
-            List<productos> productos;
-            List<facturaciones> facturaciones;
-
-            //lista productos por facturacion
-            using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
-            {
-                productosFacturacion = unidad.genericDAL.GetAll().ToList();
-            }
-
-            //lista productos
-            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
-            {
-                productos = unidad.genericDAL.GetAll().ToList();
-            }
-
-            //lista factruaciones
-            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
-            {
-                facturaciones = unidad.genericDAL.GetAll().ToList();
-            }
-
-            //lista view model facturacion productos
-            List<FacturacionProductosViewModels> productoVM = new List<FacturacionProductosViewModels>();
-
-            //objeto facturacion producto view models
-            FacturacionProductosViewModels facturacion_Producto;
-
-            //objeto producto
-            productos producto = new productos();
-
-            //objeto facturaciones
-            facturaciones facturacion = new facturaciones();
-
-            foreach (var item in productosFacturacion)
-            {
-                if (item.facturacionId == id)
-                {
-                    
-                    //facturaciones
-
-                    foreach (var itemFacturaciones in facturaciones)
-                    {
-                        if (itemFacturaciones.facturacionId == item.facturacionId)
-                        {
-                            facturacion = new facturaciones
-                            {
-                              facturacionId = itemFacturaciones.facturacionId,
-                              nombre = itemFacturaciones.nombre,
-                            };
-                        }
-
-
-                    }
-
-                    //productos
-                    foreach (var itemProducto in productos)
-                    {
-                        if (itemProducto.productoId == item.productoId)
-                        {
-                            producto = new productos
-                            {
-                                productoId = itemProducto.productoId,
-                                nombre = itemProducto.nombre,
-                                precio = itemProducto.precio
-                            };
-                        }
-
-
-                    }
-
-                    //facturacion productos
-                    facturacion_Producto = new FacturacionProductosViewModels
-                    {
-                        facturacionId = facturacion.facturacionId,
-                        nombre = facturacion.nombre,
-                        productoId = producto.productoId,
-                        nombre1 = producto.nombre,
-                        precio = producto.precio,
-                        cantidad = item.cantidad
-                    };
-                    productoVM.Add(facturacion_Producto);
-                }
-            }
-            return View("~/Views/Admin/FacturacionAdmin/ProductosFacturacion.cshtml", productoVM);
-            
-        }
+        
     }
 }

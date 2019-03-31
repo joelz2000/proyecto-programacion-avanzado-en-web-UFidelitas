@@ -39,5 +39,8 @@ namespace FrontEnd.Models
 
         [Display(Name = "Tipo")]
         public string tipo { get; set; }
+
+        [Display(Name = "Id Estado")]
+        public Nullable<int> id_estado { get; set; }
     }
 }
