@@ -1,0 +1,142 @@
+﻿@model IEnumerable<FrontEnd.Models.DistribuidoresViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="btn-group">
+    @Html.ActionLink("Agregar Nuevo Distribuidor", "Create", null, new { @class = "btn btn-block btn-success" })
+    <br><br><br>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+
+            <div class="box-header">
+                <h2 class="box-title">Distribuidores</h2>
+            </div>
+
+            <div class="box-body table-responsive">
+                <table id="tablaDistribuidores" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.email)
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+                    
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_distribuidor }, new { @class = "btn btn-default btn-warning" })
+                                    @Html.ActionLink("Detalles", "Details", new { id = item.id_distribuidor }, new { @class= "btn btn-default btn-primary" })
+                                    <button type="button" class="btn btn-default  btn-danger" onclick="eliminar(@item.id_distribuidor)">Eliminar</button>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                    
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            cargarTabla();
+        });
+
+        // funcion para cargar DataTable con información de historial
+        var cargarTabla = function () {
+            var tabla = $("#tablaDistribuidores").DataTable({
+                responsive: true,
+                "destroy": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        }
+
+        function eliminar(id_distribuidor) {
+            Swal.fire({
+                title: 'Seguro que desea eliminar este distribuidor?',
+                text: "Esta accion no se puede revertir!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: `DistribuidoresAdmin/Delete/${id_distribuidor}`,
+                        data: {
+                            id_distribuidor: id_distribuidor
+                        },
+                        statusCode: {
+                            200: function () {
+                                Swal.fire(
+                                    'Exito!',
+                                    'Distribuidor eliminado',
+                                    'success'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            400: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Bad request',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            404: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Pagina no encontrada',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            500: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+
+                    });
+                }
+            })
+        }
+    </script>
+}
