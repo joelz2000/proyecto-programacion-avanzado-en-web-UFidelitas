@@ -124,6 +124,7 @@ namespace FrontEnd.Controllers.Admin
 
         // POST: Facturacion/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(FacturacionesViewModels facturacionesVM)
         {
             try
@@ -142,7 +143,7 @@ namespace FrontEnd.Controllers.Admin
                         descripcion = facturacionesVM.descripcion,
                         impuesto = facturacionesVM.impuesto,
                         tipo = facturacionesVM.tipo,
-                        id_estado = facturacionesVM.id_estado
+                        id_estado = 2
                     });
 
                     

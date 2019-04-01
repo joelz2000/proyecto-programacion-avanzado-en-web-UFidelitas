@@ -132,6 +132,7 @@ namespace FrontEnd.Controllers.Admin
 
         // POST: FacturacionProductos/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(FacturacionProductosViewModels facturacionProductosVM)
         {
             try
@@ -145,7 +146,7 @@ namespace FrontEnd.Controllers.Admin
                     productoId = facturacionProductosVM.productoId,
                     cantidad = facturacionProductosVM.cantidad
                 };
-
+                productosFacturacionDAL.agregarProductoFacturacion(facturacion);
 
                 if (productosFacturacionDAL.agregarProductoFacturacion(facturacion) == true)
                 {
