@@ -10,6 +10,33 @@ namespace BackEnd.DAL
     public class ProductosFacturacionDALImpl : IProductosFacturacionDAL
     {
         private BDContext context;
+
+        public bool agregarProductoFacturacion(sp_obtenerFacturacionesProducto_Result facturacionProductos)
+        {
+            try
+            {
+                using (context = new BDContext())
+                {
+                    context.sp_agregarFacturacionProducto
+                    (
+                      facturacionProductos.facturacionId,
+                      facturacionProductos.productoId,
+                      facturacionProductos.cantidad,
+                      facturacionProductos.id_estado
+                    );
+                    context.SaveChanges();
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+        }
+
         public List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id)
         {
             try

@@ -3,12 +3,15 @@
 @{
     ViewBag.Title = "ProductosFacturacion";
 }
-
+<div class="btn-group">
+    @Html.ActionLink("Agregar Nueva Categoria", "Create", "FacturacionProductosAdmin", null, new { @class = "btn btn-block btn-success" })
+    <br><br><br>
+</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Productos facturacion</h3>
+                <h3 class="box-title">Productos de la factura</h3>
             </div>
 
             <div class="box-body">

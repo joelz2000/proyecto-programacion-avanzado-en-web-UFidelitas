@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -110,22 +111,59 @@ namespace FrontEnd.Controllers.Admin
         // GET: FacturacionProductos/Create
         public ActionResult Create()
         {
-            return View();
+            FacturacionProductosViewModels facturacionProductosVM = new FacturacionProductosViewModels();
+
+            //lista productos
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+                facturacionProductosVM.productos = unidad.genericDAL.GetAll().ToList();
+            }
+
+            //lista factruaciones
+            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            {
+                facturacionProductosVM.facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+
+           
+
+            return View("~/Views/Admin/FacturacionProductosAdmin/Create.cshtml", facturacionProductosVM);
         }
 
         // POST: FacturacionProductos/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(FacturacionProductosViewModels facturacionProductosVM)
         {
             try
             {
-                // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
+                // TODO: Add insert logic here
+                sp_obtenerFacturacionesProducto_Result  facturacion = new sp_obtenerFacturacionesProducto_Result
+                {
+                    facturacionId = facturacionProductosVM.facturacionId,
+                    productoId = facturacionProductosVM.productoId,
+                    cantidad = facturacionProductosVM.cantidad
+                };
+
+
+                if (productosFacturacionDAL.agregarProductoFacturacion(facturacion) == true)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
+           
+              
+
+
+
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 

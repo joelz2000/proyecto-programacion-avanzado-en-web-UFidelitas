@@ -1,0 +1,106 @@
+﻿@model FrontEnd.Models.FacturacionProductosViewModels
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Agregar Producto en la factura</h3>
+    </div>
+    <div class="box-body">
+
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.facturacionId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.facturacionId, new SelectList(Model.facturaciones, "facturacionId", "facturacionId"), "--Seleccionar Facturacion--", htmlAttributes: new { @class = "form-control select2 select2-hidden-accessible" })
+                @Html.ValidationMessageFor(model => model.facturacionId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombre1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.productoId, new SelectList(Model.productos, "productoId", "nombre"), "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control select2 select2-hidden-accessible" })
+                @Html.ValidationMessageFor(model => model.productoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cantidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="box-footer">
+        @Html.ActionLink("Regresar", "Index", "FacturacionAdmin")
+        <button type="submit" class="btn btn-primary pull-right" id="Guardar" onclick="guardar()">Crear</button>
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Create", "FacturacionProductosAdmin")';
+            var newUrl = '@Url.Action("Index"   , "FacturacionProductosAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    facturacionId: $("#facturacionId").val(),
+                    nombre: $("#nombre").val(),
+
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Producto agregado a la factura!',
+                            'El producto ha sido agregado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+    </script>
+}

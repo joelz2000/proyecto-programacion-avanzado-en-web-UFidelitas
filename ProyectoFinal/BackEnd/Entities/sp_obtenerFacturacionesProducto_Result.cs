@@ -17,5 +17,11 @@ namespace BackEnd.Entities
         public string nombre { get; set; }
         public int productoId { get; set; }
         public string nombre1 { get; set; }
+
+        public Nullable<int> cantidad { get; set; }
+
+
+        public Nullable<int> id_estado { get; set; }
+
     }
 }

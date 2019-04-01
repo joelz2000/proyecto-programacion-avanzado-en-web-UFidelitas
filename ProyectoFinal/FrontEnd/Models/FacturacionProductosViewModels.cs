@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BackEnd.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,5 +27,9 @@ namespace FrontEnd.Models
 
         [Display(Name = "Precio Producto")]
         public Nullable<double> precio { get; set; }
+
+        public IEnumerable<productos> productos { get; set; }
+
+        public IEnumerable<facturaciones> facturaciones { get; set; }
     }
 }
