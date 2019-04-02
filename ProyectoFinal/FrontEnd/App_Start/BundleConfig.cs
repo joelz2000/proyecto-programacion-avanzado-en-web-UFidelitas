@@ -56,7 +56,7 @@ namespace FrontEnd
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/theme.min.css",
-                      "~/Content/SweetAlert/sweetalert2.min.css",
+                      "~/Content/sweetalert2.min.css",
                       "~/Content/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/Datatables4").Include(

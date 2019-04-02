@@ -89,6 +89,9 @@
     <Compile Include="Entities\Canton.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\carrito.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\categorias.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
@@ -168,6 +171,9 @@
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerProductosDisponibles_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerProductosUsuarioCarrito_Result.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_ObtenerRolesUser_Result.cs">

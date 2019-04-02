@@ -12,6 +12,6 @@ namespace BackEnd.DAL
 
         List<sp_obtenerFacturacionProductoByIdFacturacion_Result> obtenerProductosFacturacion(int id);
 
-        bool agregarProductoFacturacion(sp_obtenerFacturacionesProducto_Result facturacionProductos);
+        /* bool agregarProductoFacturacion(sp_obtenerFacturacionesProducto_Result facturacionProductos); */
     }
 }

@@ -74,6 +74,7 @@
         <AssociationConnector Association="BDprogramacionVModel.FK_rol_user_usuarios" ManuallyRouted="false" />
         <AssociationConnector Association="BDprogramacionVModel.FK_usuario_facturaciones_usuarios" ManuallyRouted="false" />
         <AssociationConnector Association="BDprogramacionVModel.FK_usuarios_promocion_usuarios" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BDprogramacionVModel.carrito" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -137,7 +137,7 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-
+                /* 
                 IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
                 // TODO: Add insert logic here
                 sp_obtenerFacturacionesProducto_Result  facturacion = new sp_obtenerFacturacionesProducto_Result
@@ -156,8 +156,8 @@ namespace FrontEnd.Controllers.Admin
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
                 }
-           
-              
+           */
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
 
 
 

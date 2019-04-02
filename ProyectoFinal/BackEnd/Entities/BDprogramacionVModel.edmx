@@ -14,6 +14,17 @@
           <Property Name="nombre" Type="varchar" MaxLength="85" />
           <Property Name="id_estado" Type="int" />
         </EntityType>
+        <EntityType Name="carrito">
+          <Key>
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="productoId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="cantidad_producto" Type="int" Nullable="false" />
+          <Property Name="fecha_agregado" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="fecha_modificado" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
         <EntityType Name="categorias">
           <Key>
             <PropertyRef Name="id_categoria" />
@@ -930,7 +941,9 @@
           <Parameter Name="pIdProducto" Type="int" Mode="In" />
           <Parameter Name="pImagen" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="sp_obtenerProductosDisponibles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_obtenerProductosUsuarioCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pUsuarioId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_obtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ObtenerRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerRolId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -951,6 +964,7 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="BDprogramacionVModelStoreContainer">
           <EntitySet Name="Canton" EntityType="Self.Canton" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="carrito" EntityType="Self.carrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="categorias" EntityType="Self.categorias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="colecciones" EntityType="Self.colecciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="distribuidor" EntityType="Self.distribuidor" Schema="dbo" store:Type="Tables" />
@@ -2397,6 +2411,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="carrito" EntityType="BDprogramacionVModel.carrito" />
+          <FunctionImport Name="sp_obtenerProductosUsuarioCarrito" ReturnType="Collection(BDprogramacionVModel.sp_obtenerProductosUsuarioCarrito_Result)">
+            <Parameter Name="pUsuarioId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -2523,6 +2541,24 @@
           <Property Type="Int32" Name="cantonId" Nullable="true" />
           <Property Type="String" Name="Usuario_ID" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="id_estado" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="carrito">
+          <Key>
+            <PropertyRef Name="productoId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="productoId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="cantidad_producto" Type="Int32" Nullable="false" />
+          <Property Name="fecha_agregado" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="fecha_modificado" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <ComplexType Name="sp_obtenerProductosUsuarioCarrito_Result">
+          <Property Type="Int32" Name="productoId" Nullable="false" />
+          <Property Type="Int32" Name="userId" Nullable="false" />
+          <Property Type="Int32" Name="cantidad_producto" Nullable="false" />
+          <Property Type="DateTime" Name="fecha_agregado" Nullable="false" />
+          <Property Type="DateTime" Name="fecha_modificado" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2887,24 +2923,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_obtenerProductosDisponibles" FunctionName="BDprogramacionVModel.Store.sp_obtenerProductosDisponibles">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerProductosDisponibles_Result">
-                <ScalarProperty Name="productoId" ColumnName="productoId" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="precio" ColumnName="precio" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="modelo" ColumnName="modelo" />
-                <ScalarProperty Name="id_categoria" ColumnName="id_categoria" />
-                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
-                <ScalarProperty Name="id_coleccion" ColumnName="id_coleccion" />
-                <ScalarProperty Name="id_bodega" ColumnName="id_bodega" />
-                <ScalarProperty Name="id_distribuidor" ColumnName="id_distribuidor" />
-                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
-                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_obtenerRoles" FunctionName="BDprogramacionVModel.Store.sp_obtenerRoles">
             <ResultMapping>
               <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerRoles_Result">
@@ -2993,6 +3011,28 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="BDprogramacionVModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="BDprogramacionVModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="carrito">
+            <EntityTypeMapping TypeName="BDprogramacionVModel.carrito">
+              <MappingFragment StoreEntitySet="carrito">
+                <ScalarProperty Name="fecha_modificado" ColumnName="fecha_modificado" />
+                <ScalarProperty Name="fecha_agregado" ColumnName="fecha_agregado" />
+                <ScalarProperty Name="cantidad_producto" ColumnName="cantidad_producto" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerProductosUsuarioCarrito" FunctionName="BDprogramacionVModel.Store.sp_obtenerProductosUsuarioCarrito">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerProductosUsuarioCarrito_Result">
+                <ScalarProperty Name="productoId" ColumnName="productoId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="cantidad_producto" ColumnName="cantidad_producto" />
+                <ScalarProperty Name="fecha_agregado" ColumnName="fecha_agregado" />
+                <ScalarProperty Name="fecha_modificado" ColumnName="fecha_modificado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

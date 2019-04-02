@@ -200,7 +200,7 @@ namespace FrontEnd.Controllers
                     await roleManager.CreateAsync(new IdentityRole("Usuario"));
                     await UserManager.AddToRoleAsync(user.Id, "Usuario");
                     context.sp_agregarRolUser(2, usuario_BD.userId, usuario_BD.id_estado);
-
+                    
                     context.SaveChanges();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

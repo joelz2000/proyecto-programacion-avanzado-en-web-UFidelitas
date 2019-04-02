@@ -1,54 +1,56 @@
-﻿@{
+﻿@model IEnumerable<FrontEnd.Models.IndexCarritoViewModels>
+@{
     /**/
 
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Productos en carrito</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        @foreach (var producto in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            @producto.Nombre
+                        </h4>
+                        <h6>$@producto.Precio</h6>
+                        <h6>Cantidad en carrito: @producto.cantidad</h6>
+                    </div>
+                    <div class="card-footer">
+                        @Html.ActionLink("Detalles", "Detalles", "Productos", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Editar", "Editar", "Carrito", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+                        <button type="button" class="btn btn-primary btn-sm" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        }
 
-
-<table id="carritoTabla" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>
-                Codigo
-            </th>
-            <th>
-                Producto
-            <th>
-                Precio
-            </th>
-            <th>
-                Modelo
-            </th>
-            <th>
-                Cantidad
-            </th>
-            <th>
-                Marca
-            </th>
-            <th>
-                Acciones
-            </th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr>
-            <td>Algo</td>
-            <td>Algo</td>
-            <td>Algo</td>
-            <td>Algo</td>
-            <td>Algo</td>
-            <td>Algo</td>
-            <td>
-                Detalles |
-                Editar |
-                <button type="button" class="btn btn-link" onclick="eliminar()">Eliminar</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <aside style="float: right; margin: 0 3%;">
+                @{
+                    double total = 0;
+                    double subtotal = 0;
+                    foreach (var producto in Model)
+                    {
+                        total += (double)(producto.cantidad * producto.Precio);
+                    }
+                    <h6>Total: </h6>
+                    <p>$@total</p>
+                    <h6>Impuestos: </h6>
+                    <p>13%</p>
+                    <h6>Subtotal: </h6>
+                    subtotal = total + (total * 0.13);
+                    <p>$@subtotal</p>
+                }
+                @Html.ActionLink("Finalizar compra", "Compra", "Carrito", null, new { @class = "btn btn-primary btn-sm pull-right" })
+            </aside>
+    </div>
+</div>
 
 @section Scripts
 {
