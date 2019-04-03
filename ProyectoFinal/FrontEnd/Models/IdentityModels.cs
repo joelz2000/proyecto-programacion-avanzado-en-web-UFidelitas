@@ -29,5 +29,7 @@ namespace FrontEnd.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<FrontEnd.Models.EditarCarritoViewModel> EditarCarritoViewModels { get; set; }
     }
 }

@@ -41,6 +41,17 @@ namespace FrontEnd.Models
         [Required]
         [Display(Name = "Ultima modificacion")]
         public DateTime fecha_modificado { get; set; }
+    }
 
+    public class EditarCarritoViewModel
+    {
+        [Required]
+        [Key]
+        [Display(Name = "Codigo")]
+        public int Id_Producto { get; set; }
+
+        [Required]
+        [Display(Name = "Cantidad")]
+        public int? cantidad { get; set; }
     }
 }

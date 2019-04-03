@@ -633,5 +633,18 @@ namespace BackEnd.Entities
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_obtenerProductosUsuarioCarrito_Result>("sp_obtenerProductosUsuarioCarrito", pUsuarioIdParameter);
         }
+    
+        public virtual int sp_eliminarProductoCarrito(Nullable<int> productoId_eliminar, Nullable<int> userId_eliminar)
+        {
+            var productoId_eliminarParameter = productoId_eliminar.HasValue ?
+                new ObjectParameter("productoId_eliminar", productoId_eliminar) :
+                new ObjectParameter("productoId_eliminar", typeof(int));
+    
+            var userId_eliminarParameter = userId_eliminar.HasValue ?
+                new ObjectParameter("userId_eliminar", userId_eliminar) :
+                new ObjectParameter("userId_eliminar", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_eliminarProductoCarrito", productoId_eliminarParameter, userId_eliminarParameter);
+        }
     }
 }

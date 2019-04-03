@@ -131,6 +131,112 @@ namespace FrontEnd.Controllers.User
             }
         }
 
+        public ActionResult Editar(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+            
+            try
+            {
+
+                id = (int)id;
+                BDContext context = new BDContext();
+
+                // obtener el id del usuario que esta logueado
+                var userID = User.Identity.GetUserId();
+
+                // obtener el usuario con ese id de base de datos
+                var usuario_BD = context.usuarios.Where(u => u.Usuario_ID.Equals(userID)).Single();
+
+                // obtener productos del carrito del usuario
+                List<sp_obtenerProductosUsuarioCarrito_Result> lista_productos_cliente = context.sp_obtenerProductosUsuarioCarrito(usuario_BD.userId).ToList();
+
+                EditarCarritoViewModel productoVM = null;
+
+                foreach (var producto in lista_productos_cliente)
+                {
+                    if(producto.productoId == id)
+                    {
+                        productoVM = new EditarCarritoViewModel
+                        {
+                            Id_Producto = producto.productoId,
+                            cantidad = producto.cantidad_producto
+                        };
+                        break;
+                    }
+                }
+
+                if(productoVM == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+                }
+
+                return View("~/Views/User/Carrito/Editar.cshtml", productoVM);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Editar(int? Id_Producto, int? cantidad_producto)
+        {
+            try
+            {
+                BDContext context = new BDContext();
+
+                // obtener el id del usuario que esta logueado
+                var userID = User.Identity.GetUserId();
+
+                // obtener el usuario con ese id de base de datos
+                var usuario_BD = context.usuarios.Where(u => u.Usuario_ID.Equals(userID)).Single();
+
+                carrito carrito = new carrito
+                {
+                    productoId = (int)Id_Producto,
+                    userId = usuario_BD.userId,
+                    cantidad_producto = (int)cantidad_producto,
+                    fecha_modificado = DateTime.UtcNow
+                };
+
+                unidad_carrito.genericDAL.Update(carrito);
+                unidad_carrito.Complete();
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        // POST: Carrito/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            BDContext context = new BDContext();
+
+            // obtener el id del usuario que esta logueado
+            var userID = User.Identity.GetUserId();
+
+            // obtener el usuario con ese id de base de datos
+            var usuario_BD = context.usuarios.Where(u => u.Usuario_ID.Equals(userID)).Single();
+
+            // eliminar producto con el procedimiento almacenado
+            context.sp_eliminarProductoCarrito(id, usuario_BD.userId);
+
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
 
     }
 }

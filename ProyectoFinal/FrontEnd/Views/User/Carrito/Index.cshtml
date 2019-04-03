@@ -8,49 +8,68 @@
 
 <h2>Productos en carrito</h2>
 <hr />
-<div class="container">
+<section style="float: left; margin: 0 1.5%; width: 61%;">
     <div class="row">
-        @foreach (var producto in Model)
-        {
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            @producto.Nombre
-                        </h4>
-                        <h6>$@producto.Precio</h6>
-                        <h6>Cantidad en carrito: @producto.cantidad</h6>
+        @{
+            if (Model.Count() > 0)
+            {
+                foreach (var producto in Model)
+                {
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    @producto.Nombre
+                                </h4>
+                                <h6>$@producto.Precio</h6>
+                                <h6>Cantidad en carrito: @producto.cantidad</h6>
+                            </div>
+                            <div class="card-footer">
+                                @Html.ActionLink("Detalles", "Detalles", "Productos", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+                                @Html.ActionLink("Editar", "Editar", "Carrito", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
+                                <button type="button" class="btn btn-primary btn-sm" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        @Html.ActionLink("Detalles", "Detalles", "Productos", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
-                        @Html.ActionLink("Editar", "Editar", "Carrito", new { id = producto.Id_Producto }, new { @class = "btn btn-primary btn-sm" })
-                        <button type="button" class="btn btn-primary btn-sm" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
-                    </div>
-                </div>
-            </div>
-        }
-
-            <aside style="float: right; margin: 0 3%;">
-                @{
-                    double total = 0;
-                    double subtotal = 0;
-                    foreach (var producto in Model)
-                    {
-                        total += (double)(producto.cantidad * producto.Precio);
-                    }
-                    <h6>Total: </h6>
-                    <p>$@total</p>
-                    <h6>Impuestos: </h6>
-                    <p>13%</p>
-                    <h6>Subtotal: </h6>
-                    subtotal = total + (total * 0.13);
-                    <p>$@subtotal</p>
                 }
-                @Html.ActionLink("Finalizar compra", "Compra", "Carrito", null, new { @class = "btn btn-primary btn-sm pull-right" })
-            </aside>
+            }
+            else
+            {
+                <div class="col-lg-12 col-md-12">
+                    <h5>Aun no hay productos en su carrito. Dirijase a comprar!</h5>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    @Html.ActionLink("Comprar", "Index", "Home", null, new { @class = "btn btn-primary btn-sm" })
+                </div>
+            }
+        }
     </div>
-</div>
+</section>
+@{
+    if (Model.Count() > 0)
+    {
+        <aside style="float: right; margin: 0 1.5%; width: 30%;">
+            @{
+                double total = 0;
+                double subtotal = 0;
+                foreach (var producto in Model)
+                {
+                    total += (double)(producto.cantidad * producto.Precio);
+                }
+                <h6>Total: </h6>
+                <p>$@total</p>
+                <h6>Impuestos: </h6>
+                <p>13%</p>
+                <h6>Subtotal: </h6>
+                subtotal = total + (total * 0.13);
+                <p>$@subtotal</p>
+            }
+            @Html.ActionLink("Finalizar compra", "Compra", "Carrito", null, new { @class = "btn btn-primary btn-sm pull-right" })
+        </aside>
+
+    }
+}
 
 @section Scripts
 {
@@ -62,5 +81,66 @@
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
             }
         });
+
+        function eliminar(id_producto) {
+            Swal.fire({
+                title: 'Seguro que desea eliminar este producto del carrito?',
+                text: "Esta accion no se puede revertir!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: `Carrito/Delete/${id_producto}`,
+                        data: {
+                            id_producto: id_producto
+                        },
+                        statusCode: {
+                            200: function () {
+                                Swal.fire(
+                                    'Exito!',
+                                    'Producto eliminado',
+                                    'success'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            400: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Bad request',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            404: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Pagina no encontrada',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            500: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+
+                    });
+                }
+            })
+        }
     </script>
 }

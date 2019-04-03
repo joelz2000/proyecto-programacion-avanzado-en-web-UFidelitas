@@ -12,31 +12,32 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-            @Html.ActionLink("Am@zon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Menu" aria-controls="Menu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="Menu">
-                @{Html.RenderAction("Navbar", "Layout");}
-            </div>
-        </nav>
-
-
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</p>
-            </footer>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        @Html.ActionLink("Am@zon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Menu" aria-controls="Menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="Menu">
+            @{Html.RenderAction("Navbar", "Layout");}
         </div>
+    </nav>
 
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/popper")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/datatables4")
-        @Scripts.Render("~/bundles/sweetalert")
-        @RenderSection("scripts", required: false)
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+
+    <footer style="clear: both;">
+        <p>&copy; @DateTime.Now.Year - Programacion Web Avanzada - I CUA 2019</p>
+    </footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/popper")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables4")
+    @Scripts.Render("~/bundles/sweetalert")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
