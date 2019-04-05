@@ -26,7 +26,7 @@ namespace FrontEnd.Controllers.User
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: HomeAdmin/Details/5
+        // GET: Productos/Detalles/5
         public ActionResult Detalles(int? id)
         {
             // revisar si el URL contiene un ID, si no entonces devolver 404
@@ -56,7 +56,6 @@ namespace FrontEnd.Controllers.User
                 Precio = producto.precio,
                 Descripcion = producto.descripcion,
                 Modelo = producto.modelo,
-                cantidad = producto.cantidad,
                 marca = marca.nombre,
                 coleccion = coleccion.nombre,
                 categoria = categoria.nombre,
