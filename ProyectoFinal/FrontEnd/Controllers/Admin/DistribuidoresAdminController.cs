@@ -181,26 +181,33 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        // GET: Distribuidores/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+       
 
         // POST: Distribuidores/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            distribuidor distribuidor = new distribuidor();
+            using (UnidadDeTrabajo<distribuidor> unidad_distribuidor = new UnidadDeTrabajo<distribuidor>(new BDContext()))
+            {
+                // buscar el producto y los demas datos
+                distribuidor = unidad_distribuidor.genericDAL.Get(id);
+                distribuidor.id_estado = 1;
+               
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            using (UnidadDeTrabajo<distribuidor> unidad_distribuidor = new UnidadDeTrabajo<distribuidor>(new BDContext()))
             {
-                return View();
+                unidad_distribuidor.genericDAL.Update(distribuidor);
+                unidad_distribuidor.Complete();
             }
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
