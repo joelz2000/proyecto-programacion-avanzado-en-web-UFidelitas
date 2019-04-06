@@ -3,6 +3,7 @@ using BackEnd.Entities;
 using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -106,22 +107,77 @@ namespace FrontEnd.Controllers.Admin
         // GET: Distribuidores/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DistribuidoresViewModel distribuidoresViewModel;
+            distribuidor distribuidor;
+
+            // ver si el producto tiene estado bloqueado. Si si, devolver 404
+
+
+
+            using (UnidadDeTrabajo<distribuidor> unidad = new UnidadDeTrabajo<distribuidor>(new BDContext()))
+            {
+                distribuidor = unidad.genericDAL.Get(id);
+            }
+
+            if (distribuidor.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            distribuidoresViewModel = new DistribuidoresViewModel
+            {
+                id_distribuidor = distribuidor.id_distribuidor,
+                nombre = distribuidor.nombre,
+                email = distribuidor.email,
+                direccion = distribuidor.direccion,
+                id_estado = 2
+            };
+
+
+            return View("~/Views/Admin/DistribuidoresAdmin/Edit.cshtml", distribuidoresViewModel);
         }
 
         // POST: Distribuidores/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(DistribuidoresViewModel distribuidorVM)
         {
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
 
-                return RedirectToAction("Index");
+                    distribuidor distribuidor = new distribuidor
+                    {
+                        id_distribuidor = distribuidorVM.id_distribuidor,
+                        nombre = distribuidorVM.nombre,
+                        email = distribuidorVM.email,
+                        direccion = distribuidorVM.direccion,
+                        id_estado = 2
+                    };
+                    using (UnidadDeTrabajo<distribuidor> unidad_distribuidor = new UnidadDeTrabajo<distribuidor>(new BDContext()))
+                    {
+
+                        unidad_distribuidor.genericDAL.Update(distribuidor);
+                        unidad_distribuidor.Complete();
+                        return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    }
+                    // devolver que todo bien
+                   
+                }
+
+                // modelo no valido, devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            catch
+            catch (DataException /* dex */ )
             {
-                return View();
+                // devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 

@@ -1,0 +1,107 @@
+﻿@model FrontEnd.Models.DistribuidoresViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Actualizar @Model.nombre</h3>
+    </div>
+
+    <div class="box-body">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+        @Html.HiddenFor(model => model.id_distribuidor, new { id = "id_distribuidor" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.direccion, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <!-- /.box-body -->
+        <div class="box-footer">
+            @Html.ActionLink("Regresar", "Index")
+            <button type="submit" class="btn btn-info pull-right" id="Guardar" onclick="guardar()">Editar</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Edit", "DistribuidoresAdmin")';
+            var newUrl = '@Url.Action("Index", "DistribuidoresAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    id_distribuidor: $("#id_distribuidor").val(),
+                    nombre: $("#nombre").val(),
+                    email: $("#email").val(),
+                    direccion: $("#direccion").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Distribuidor editado!',
+                            'El distribuidor ha sido editado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+}
