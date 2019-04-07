@@ -22,5 +22,8 @@ namespace FrontEnd.Models
 
         [Display(Name = "Valor")]
         public int? valor { get; set; }
+
+        [Display(Name = "id estado")]
+        public int?id_estado { get; set; }
     }
 }

@@ -12,46 +12,100 @@
     </div>
 
     <div class="box-body">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+        @Html.HiddenFor(model => model.promocionId)
 
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.promocionId)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.valor, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.valor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <!-- /.box-body -->
-            <div class="box-footer">
-                @Html.ActionLink("Regresar", "Index")
-                <input type="submit" value="Actualizar" class="btn btn-info pull-right" />
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
         </div>
-        }
-    </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "control-label " })
+            @Html.EditorFor(model => model.valor, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.valor, "", new { @class = "text-danger" })
+
+        </div>
+
+        <!-- /.box-body -->
+        <div class="box-footer">
+            @Html.ActionLink("Regresar", "Index")
+            <button type="submit" class="btn btn-info pull-right" id="Guardar" onclick="guardar()">Editar</button>
+        </div>
+    </div>
 </div>
+
+
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Edit", "PromocionesAdmin")';
+            var newUrl = '@Url.Action("Index", "PromocionesAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    promocionId: $("#promocionId").val(),
+                    nombre: $("#nombre").val(),
+                    descripcion: $("#descripcion").val(),
+                    valor: $("#valor").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Promocion editado!',
+                            'La Promocion ha sido editado exitosamente!',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.href = newUrl;
+                        });
+
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        });
+
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        )
+                        setTimeout(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+    </script>
+}

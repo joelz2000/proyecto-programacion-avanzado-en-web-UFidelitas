@@ -3,12 +3,15 @@ using BackEnd.Entities;
 using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class PromocionesAdminController : Controller
     {
 
@@ -18,12 +21,7 @@ namespace FrontEnd.Controllers.Admin
         // GET: PromocionesAdmin
         public ActionResult Index()
         {
-            string mensaje = "";
-            if (Session["mensaje"] != null)
-            {
-                mensaje = Session["mensaje"].ToString();
-            }
-
+   
             List<promociones> promociones = unidad_promocion.genericDAL.GetAll().ToList();
             List<estados> estadoBD = unidad_estados.genericDAL.GetAll().ToList();
 
@@ -63,6 +61,7 @@ namespace FrontEnd.Controllers.Admin
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(PromocionesViewModel promocionVM)
         {
             try
@@ -72,7 +71,8 @@ namespace FrontEnd.Controllers.Admin
                 {
                     nombre = promocionVM.nombre,
                     descripcion = promocionVM.descripcion,
-                    valor = promocionVM.valor
+                    valor = promocionVM.valor,
+                    id_estado = 2
                 };
 
                 using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
@@ -80,120 +80,118 @@ namespace FrontEnd.Controllers.Admin
                     unidad.genericDAL.Add(promocion);
                     unidad.Complete();
                 }
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Promocion Agregada" +
-                        "</div> ";
 
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
         public ActionResult Edit(int id)
         {
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             PromocionesViewModel promocionesViewModel;
             promociones promocion;
+
+           
+
             using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
             {
                 promocion = unidad.genericDAL.Get(id);
+            }
+
+            // ver si el producto tiene estado bloqueado. Si si, devolver 404
+            if (promocion.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             promocionesViewModel = new PromocionesViewModel
             {
                 promocionId = promocion.promocionId,
                 nombre = promocion.nombre,
-                descripcion = promocion.descripcion
+                descripcion = promocion.descripcion,
+                valor = promocion.valor,
+                id_estado = 2
+                
             };
 
             return View("~/Views/Admin/PromocionesAdmin/Edit.cshtml", promocionesViewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(PromocionesViewModel promocionesViewModel)
         {
             try
             {
-                using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
+                if (ModelState.IsValid)
                 {
                     promociones promocion = new promociones
                     {
                         promocionId = promocionesViewModel.promocionId,
                         nombre = promocionesViewModel.nombre,
-                        descripcion = promocionesViewModel.descripcion
+                        descripcion = promocionesViewModel.descripcion,
+                        valor = promocionesViewModel.valor,
+                        id_estado = 2
                     };
 
-                    unidad.genericDAL.Update(promocion);
-                    unidad.Complete();
+                    using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
+                    {
+                        unidad.genericDAL.Update(promocion);
+                        unidad.Complete();
+                        return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    }
+                   
                 }
-                // TODO: Add update logic here
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       Promocion actualizada correctamente" +
-                        "</div> ";
-                return RedirectToAction("Index");
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
-            catch
+            catch (DataException /* dex */ )
             {
-                return View();
+                // devolver error 500
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
-
+        
+        [HttpPost]
         public ActionResult Delete(int id)
         {
             try
             {
+                // revisar si el URL contiene un ID, si no entonces devolver 404
+                if (id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
                 promociones promocion;
                 using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
 
                     promocion = unidad.genericDAL.Get(id);
+                    promocion.id_estado = 1;
                 }
+
                 using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
                 {
 
-                    unidad.genericDAL.Remove(promocion);
+                    unidad.genericDAL.Update(promocion);
                     unidad.Complete();
                 }
-                Session["mensaje"] =
-                       "<div class='alert alert-success alert-dismissible'>" +
-                       "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                       "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                       "      Promocion Eliminada Correctamente" +
-                       "</div> ";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                Session["mensaje"] =
-                      "<div class='alertalert-danger alert-dismissible'>" +
-                      "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                      "   <h4><i class='icon fa fa-ban'></i> Alerta!</h4>" +
-                      "      Promocion Eliminada Correctamente" +
-                      "</div> ";
-                return View("~/Views/Admin/PromocionesAdmin/Index.cshtml");
-            }
-        }
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return View();
-            }
+              return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+    }
         }
     }
 }
