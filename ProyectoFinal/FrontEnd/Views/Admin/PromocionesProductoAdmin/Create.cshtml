@@ -1,0 +1,95 @@
+﻿@model FrontEnd.Models.PromocionesProductoViewModels
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Agregar Distribuidor</h3>
+    </div>
+    <div class="box-body">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+        <div class="form-group">
+            @Html.LabelFor(model => model.promocionId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.promocionId, new SelectList(Model.promociones, "promocionId", "Nombre"), "--Seleccionar Promocion--")
+            @Html.ValidationMessageFor(model => model.promocionId, "", new { @class = "text-danger" })
+
+        </div>
+
+        <<div class="form-group">
+            @Html.LabelFor(model => model.productoId, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.productoId, new SelectList(Model.productos, "productoId", "Nombre"), "--Seleccionar Producto--")
+            @Html.ValidationMessageFor(model => model.productoId, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Volver", "Index", "PromocionesProductoAdmin", routeValues: new { id = @Model.promocionId }, htmlAttributes: new { @class = "btn btn-primary" })
+            <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Agregar </button>
+        </div>
+    </div>
+</div>
+
+    @section Scripts
+{
+        <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Create", "DistribuidoresAdmin")';
+            var newUrl = '@Url.Action("Index"   , "DistribuidoresAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    nombre: $("#nombre").val(),
+                    email: $("#email").val(),
+
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Distribuidor agregado!',
+                            'Distribuidor ha sido agregado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+        </script>
+    }
+

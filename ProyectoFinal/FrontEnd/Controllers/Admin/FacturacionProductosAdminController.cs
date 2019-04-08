@@ -111,23 +111,23 @@ namespace FrontEnd.Controllers.Admin
         // GET: FacturacionProductos/Create
         public ActionResult Create()
         {
-            FacturacionProductosViewModels facturacionProductosVM = new FacturacionProductosViewModels();
+            FacturacionProductosViewModels promocionProductoVM = new FacturacionProductosViewModels();
 
             //lista productos
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
-                facturacionProductosVM.productos = unidad.genericDAL.GetAll().ToList();
+                promocionProductoVM.productos = unidad.genericDAL.GetAll().ToList();
             }
 
             //lista factruaciones
             using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
             {
-                facturacionProductosVM.facturaciones = unidad.genericDAL.GetAll().ToList();
+                promocionProductoVM.facturaciones = unidad.genericDAL.GetAll().ToList();
             }
 
            
 
-            return View("~/Views/Admin/FacturacionProductosAdmin/Create.cshtml", facturacionProductosVM);
+            return View("~/Views/Admin/PromocionesProductoAdmin/Create.cshtml", promocionProductoVM);
         }
 
         // POST: FacturacionProductos/Create
