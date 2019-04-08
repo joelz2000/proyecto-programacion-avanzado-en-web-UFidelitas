@@ -201,6 +201,7 @@
     <Compile Include="Controllers\Admin\HomeAdminController.cs" />
     <Compile Include="Controllers\Admin\ProductosAdminController.cs" />
     <Compile Include="Controllers\Admin\PromocionesAdminController.cs" />
+    <Compile Include="Controllers\Admin\VentasAdminController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\Admin\MarcasAdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Models\ProductosViewModels.cs" />
     <Compile Include="Models\PromocionesViewModel.cs" />
     <Compile Include="Models\UsuariosViewModels.cs" />
+    <Compile Include="Models\VentasViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -7199,6 +7201,7 @@
     <Content Include="Views\User\Carrito\Editar.cshtml" />
     <Content Include="Views\User\Carrito\Compra.cshtml" />
     <Content Include="Views\Admin\DistribuidoresAdmin\Edit.cshtml" />
+    <Content Include="Views\Admin\VentasAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
