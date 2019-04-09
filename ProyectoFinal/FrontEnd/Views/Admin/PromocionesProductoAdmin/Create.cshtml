@@ -8,27 +8,22 @@
 
 <div class="box box-info">
     <div class="box-header with-border">
-        <h3 class="box-title">Agregar Distribuidor</h3>
+        <h3 class="box-title">Agregar Producto a la facturacion</h3>
     </div>
     <div class="box-body">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+
+        @Html.HiddenFor(promocion => promocion.promocionId, new { id = "promocionId" })
         <div class="form-group">
-            @Html.LabelFor(model => model.promocionId, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.promocionId, new SelectList(Model.promociones, "promocionId", "Nombre"), "--Seleccionar Promocion--")
-            @Html.ValidationMessageFor(model => model.promocionId, "", new { @class = "text-danger" })
-
-        </div>
-
-        <<div class="form-group">
             @Html.LabelFor(model => model.productoId, htmlAttributes: new { @class = "control-label" })
-            @Html.DropDownListFor(model => model.productoId, new SelectList(Model.productos, "productoId", "Nombre"), "--Seleccionar Producto--")
+            @Html.DropDownListFor(model => model.productoId, new SelectList(Model.lista_productos, "Value", "Text"), "--Seleccionar Producto--", htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.productoId, "", new { @class = "text-danger" })
 
         </div>
 
         <div class="form-group">
-            @Html.ActionLink("Volver", "Index", "PromocionesProductoAdmin", routeValues: new { id = @Model.promocionId }, htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Volver", "Index", "PromocionesProductoAdmin", routeValues: new { id = Model.promocionId }, htmlAttributes: new { @class = "btn btn-primary" })
             <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Agregar </button>
         </div>
     </div>
@@ -38,22 +33,22 @@
 {
         <script>
         function guardar() {
-            var saveUrl = '@Url.Action("Create", "DistribuidoresAdmin")';
-            var newUrl = '@Url.Action("Index"   , "DistribuidoresAdmin")';
+            var saveUrl = '@Url.Action("Create", "PromocionesProductoAdmin", routeValues: new { id = @Model.promocionId })';
+            var newUrl = '@Url.Action("Index"   , "PromocionesProductoAdmin", routeValues: new { id = @Model.promocionId })';
             $.ajax({
                 type: 'POST',
                 url: saveUrl,
                 data: {
                     __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
-                    nombre: $("#nombre").val(),
-                    email: $("#email").val(),
+                    productoId: $("#productoId").val(),
+                    promocionId: $("#promocionId").val(),
 
                 },
                 statusCode: {
                     200: function () {
                         Swal.fire(
-                            'Distribuidor agregado!',
-                            'Distribuidor ha sido agregado exitosamente!',
+                            'Producto agregado!',
+                            'Producto ha sido agregado exitosamente!',
                             'success'
                         ).then(function () {
                             window.location.href = newUrl;

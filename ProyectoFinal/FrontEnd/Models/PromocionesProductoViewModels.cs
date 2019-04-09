@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FrontEnd.Models
 {
@@ -39,8 +40,7 @@ namespace FrontEnd.Models
         public Nullable<int> id_estado { get; set; }
 
 
-        public IEnumerable<productos> productos { get; set; }
-
-        public IEnumerable<promociones> promociones { get; set; }
+        public List<SelectListItem> lista_productos = new List<SelectListItem>();
+        public List<SelectListItem> lista_promociones = new List<SelectListItem>();
     }
 }

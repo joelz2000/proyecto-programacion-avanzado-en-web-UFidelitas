@@ -15,7 +15,7 @@
         <div class="box">
 
             <div class="box-header">
-                <h2 class="box-title">Promociones</h2>
+                <h2 class="box-title">Productos de la promocion</h2>
             </div>
 
 
@@ -29,18 +29,6 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.nombreProducto)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.fecha_inicial_promocion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.fecha_final_promocion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.valor)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.id_estado)
                             </th>
                             <th>
                                 Acciones
@@ -60,18 +48,7 @@
                                     @Html.DisplayFor(modelItem => item.nombreProducto)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.fecha_inicial_promocion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.fecha_final_promocion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.valor)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.id_estado)
-                                </td>
-                                <td>
+
                                     <button type="button" class="btn btn-danger" onclick="eliminar(@item.promocionId, @item.productoId)">Eliminar</button>
                                 </td>
                             </tr>
@@ -79,6 +56,11 @@
                     </tbody>
 
                 </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                @Html.ActionLink("Regresar", "Index", "PromocionesAdmin")
+               
             </div>
         </div>
 

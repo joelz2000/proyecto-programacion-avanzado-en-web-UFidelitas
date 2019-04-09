@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,9 +13,10 @@ namespace FrontEnd.Controllers.Admin
     public class PromocionesProductoAdminController : Controller
     {
         // GET: PromocionesProducto
+        int id_promocion = 0;
         public ActionResult Index(int id)
         {
-
+            
             List<promociones_productos> promocionesProducto;
             List<promociones> promociones;
             List<productos> productos;
@@ -63,8 +65,7 @@ namespace FrontEnd.Controllers.Admin
                             promocion = new promociones
                             {
                                 promocionId = itemPromociones.promocionId,
-                                nombre = itemPromociones.nombre,
-                                valor = itemPromociones.valor
+                                nombre = itemPromociones.nombre
                             };
                         }
 
@@ -92,15 +93,13 @@ namespace FrontEnd.Controllers.Admin
                         promocionId = itemPromocionProducto.promocionId,
                         productoId = itemPromocionProducto.productoId,
                         nombrePromocion = promocion.nombre,
-                        nombreProducto = producto.nombre,
-                        fecha_inicial_promocion = itemPromocionProducto.fecha_inicial_promocion,
-                        fecha_final_promocion = itemPromocionProducto.fecha_final_promocion,
-                        valor = promocion.valor
+                        nombreProducto = producto.nombre
 
                     };
                     promocionesProductoVM.Add(promocionProductoVM);
                 }
             }
+                id_promocion = id;
             return View("~/Views/Admin/PromocionesProductoAdmin/Index.cshtml", promocionesProductoVM);
         }
 
@@ -115,36 +114,64 @@ namespace FrontEnd.Controllers.Admin
         {
             PromocionesProductoViewModels PromocionesProductosVM = new PromocionesProductoViewModels();
 
+            List<productos> productos = new List<productos>();          
+            
             //lista productos
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
-                PromocionesProductosVM.productos = unidad.genericDAL.GetAll().ToList();
+
+                productos = unidad.genericDAL.GetAll().ToList();
+                
             }
 
-            //lista factruaciones
-            using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
+          
+
+            foreach (var producto in productos)
             {
-                PromocionesProductosVM.promociones = unidad.genericDAL.GetAll().ToList();
+                if (producto.id_estado != 1)
+                {
+                    PromocionesProductosVM.lista_productos.Add(new SelectListItem()
+                    {
+                        Text = producto.nombre,
+                        Value = producto.productoId.ToString()
+                    });
+                }
             }
+            /*
+            PromocionesProductosVM = new PromocionesProductoViewModels
+            {
+                promocionId = id_promocion
+            };
 
-
+        */
 
             return View("~/Views/Admin/PromocionesProductoAdmin/Create.cshtml", PromocionesProductosVM);
         }
 
         // POST: PromocionesProducto/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(PromocionesProductoViewModels promocionProductoVM)
         {
             try
             {
-                // TODO: Add insert logic here
+                promociones_productos promocion_producto = new promociones_productos
+                {
+                    productoId = promocionProductoVM.productoId,
+                    promocionId = promocionProductoVM.promocionId
+                };
 
-                return RedirectToAction("Index");
+                using (UnidadDeTrabajo<promociones_productos> unidad  = new UnidadDeTrabajo<promociones_productos>(new BDContext()))
+                {
+                    unidad.genericDAL.Add(promocion_producto);
+                    unidad.Complete();
+                }
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
