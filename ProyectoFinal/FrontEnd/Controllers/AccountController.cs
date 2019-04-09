@@ -187,20 +187,20 @@ namespace FrontEnd.Controllers
                     var usuario_BD = context.usuarios.Where(u => u.Usuario_ID.Equals(usuario.Usuario_ID)).Single();
 
                     // descomentar si se quiere agregar un usuario con privilegios de admin
+                    
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("Admin"));
+                    await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    context.sp_agregarRolUser(1, usuario_BD.userId, usuario_BD.id_estado);
+                    
                     /*
-                       var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
-                       var roleManager = new RoleManager<IdentityRole>(roleStore);
-                       await roleManager.CreateAsync(new IdentityRole("Admin"));
-                       await UserManager.AddToRoleAsync(user.Id, "Admin");
-                       context.sp_agregarRolUser(1, usuario_BD.userId, usuario_BD.id_estado);
-                    */
-
                     var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                     var roleManager = new RoleManager<IdentityRole>(roleStore);
                     await roleManager.CreateAsync(new IdentityRole("Usuario"));
                     await UserManager.AddToRoleAsync(user.Id, "Usuario");
                     context.sp_agregarRolUser(2, usuario_BD.userId, usuario_BD.id_estado);
-                    
+                    */
                     context.SaveChanges();
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
