@@ -53,53 +53,62 @@ namespace FrontEnd.Controllers.Admin
 
             foreach (var itemPromocionProducto in promocionesProducto)
             {
-                if (itemPromocionProducto.promocionId == id)
+                if (producto.id_estado == 1)
                 {
-
-                    //facturaciones
-
-                    foreach (var itemPromociones in promociones)
-                    {
-                        if (itemPromociones.promocionId == itemPromocionProducto.promocionId)
-                        {
-                            promocion = new promociones
-                            {
-                                promocionId = itemPromociones.promocionId,
-                                nombre = itemPromociones.nombre
-                            };
-                        }
-
-
-                    }
-
-                    //productos
-                    foreach (var itemProducto in productos)
-                    {
-                        if (itemProducto.productoId == itemPromocionProducto.productoId)
-                        {
-                            producto = new productos
-                            {
-                                productoId = itemProducto.productoId,
-                                nombre = itemProducto.nombre
-                            };
-                        }
-
-
-                    }
-
-                    //promociones productos
-                    promocionProductoVM = new PromocionesProductoViewModels
-                    {
-                        promocionId = itemPromocionProducto.promocionId,
-                        productoId = itemPromocionProducto.productoId,
-                        nombrePromocion = promocion.nombre,
-                        nombreProducto = producto.nombre
-
-                    };
-                    promocionesProductoVM.Add(promocionProductoVM);
+                    continue;
                 }
+                else
+                {
+                    if (itemPromocionProducto.promocionId == id)
+                    {
+
+                        //facturaciones
+
+                        foreach (var itemPromociones in promociones)
+                        {
+                            if (itemPromociones.promocionId == itemPromocionProducto.promocionId)
+                            {
+                                promocion = new promociones
+                                {
+                                    promocionId = itemPromociones.promocionId,
+                                    nombre = itemPromociones.nombre
+                                };
+                            }
+
+
+                        }
+
+                        //productos
+                        foreach (var itemProducto in productos)
+                        {
+                            if (itemProducto.productoId == itemPromocionProducto.productoId)
+                            {
+                                producto = new productos
+                                {
+                                    productoId = itemProducto.productoId,
+                                    nombre = itemProducto.nombre
+                                };
+                            }
+
+
+                        }
+
+                        //promociones productos
+                        promocionProductoVM = new PromocionesProductoViewModels
+                        {
+                            promocionId = itemPromocionProducto.promocionId,
+                            productoId = itemPromocionProducto.productoId,
+                            nombrePromocion = promocion.nombre,
+                            nombreProducto = producto.nombre
+
+                        };
+                        promocionesProductoVM.Add(promocionProductoVM);
+                    }
+                    id_promocion = id;
+                }
+                
             }
-                id_promocion = id;
+                
             return View("~/Views/Admin/PromocionesProductoAdmin/Index.cshtml", promocionesProductoVM);
         }
 
@@ -194,26 +203,51 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        // GET: PromocionesProducto/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        
 
         // POST: PromocionesProducto/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int idPromocion, int idProducto)
         {
-            try
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (idPromocion == 0)
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            // buscar el producto y los demas datos
+            promociones_productos promociones_Productos = new promociones_productos();
+            promociones promociones = new promociones();
+            productos productos = new productos();
+
+            using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
             {
-                return View();
+
+                promociones.promocionId = unidad.genericDAL.Get(idPromocion).promocionId;
             }
+
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+
+                productos.productoId = unidad.genericDAL.Get(idProducto).productoId;
+            }
+
+            using (UnidadDeTrabajo<promociones_productos> unidad = new UnidadDeTrabajo<promociones_productos>(new BDContext()))
+            {
+                promociones_Productos.id_estado = 1;
+            }
+            using (UnidadDeTrabajo<promociones_productos> unidad = new UnidadDeTrabajo<promociones_productos>(new BDContext()))
+            {
+                
+                unidad.genericDAL.Update(promociones_Productos);
+                unidad.Complete();
+            }
+
+            
+            
+
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
