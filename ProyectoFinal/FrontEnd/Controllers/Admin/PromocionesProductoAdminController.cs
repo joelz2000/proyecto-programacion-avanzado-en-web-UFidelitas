@@ -110,8 +110,9 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: PromocionesProducto/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            int id_producto_nav = id;
             PromocionesProductoViewModels PromocionesProductosVM = new PromocionesProductoViewModels();
 
             List<productos> productos = new List<productos>();          
@@ -124,7 +125,7 @@ namespace FrontEnd.Controllers.Admin
                 
             }
 
-          
+           PromocionesProductosVM.promocionId = id_producto_nav;
 
             foreach (var producto in productos)
             {
@@ -135,15 +136,11 @@ namespace FrontEnd.Controllers.Admin
                         Text = producto.nombre,
                         Value = producto.productoId.ToString()
                     });
+                   
+                    
                 }
             }
-            /*
-            PromocionesProductosVM = new PromocionesProductoViewModels
-            {
-                promocionId = id_promocion
-            };
-
-        */
+       
 
             return View("~/Views/Admin/PromocionesProductoAdmin/Create.cshtml", PromocionesProductosVM);
         }

@@ -3,10 +3,15 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@{
+    var idProm = 0;
+    foreach (var item2 in Model)
+    {
+        idProm = item2.promocionId;};
+    }
 
 <div class="btn-group">
-    @Html.ActionLink("Agregar Nuevo Producto a la promocion", "Create", null, new { @class = "btn btn-block btn-success" })
+    @Html.ActionLink("Agregar Nuevo Producto a la promocion", "Create", routeValues: new { id = idProm }, htmlAttributes: new { @class = "btn btn-block btn-success" })
     <br><br><br>
 </div>
 
@@ -24,11 +29,12 @@
                 <table id="tablaPromocionesProducto" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.nombrePromocion)
-                            </th>
+
                             <th>
                                 @Html.DisplayNameFor(model => model.nombreProducto)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.nombrePromocion)
                             </th>
                             <th>
                                 Acciones
@@ -37,21 +43,21 @@
                     </thead>
 
                     <tbody>
-
+                        
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nombrePromocion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nombreProducto)
-                                </td>
-                                <td>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombreProducto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombrePromocion)
+                            </td>
 
-                                    <button type="button" class="btn btn-danger" onclick="eliminar(@item.promocionId, @item.productoId)">Eliminar</button>
-                                </td>
-                            </tr>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="eliminar(@item.promocionId, @item.productoId)">Eliminar</button>
+                            </td>
+                        </tr>
                         }
                     </tbody>
 
@@ -59,8 +65,10 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
+
+
                 @Html.ActionLink("Regresar", "Index", "PromocionesAdmin")
-               
+
             </div>
         </div>
 
