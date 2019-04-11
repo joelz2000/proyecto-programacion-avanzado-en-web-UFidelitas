@@ -207,10 +207,10 @@ namespace FrontEnd.Controllers.Admin
 
         // POST: PromocionesProducto/Delete/5
         [HttpPost]
-        public ActionResult Delete(int idPromocion, int idProducto)
+        public ActionResult Delete(int id_promocion, int id_producto)
         {
             // revisar si el URL contiene un ID, si no entonces devolver 404
-            if (idPromocion == 0)
+            if (id_promocion == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -223,13 +223,13 @@ namespace FrontEnd.Controllers.Admin
             using (UnidadDeTrabajo<promociones> unidad = new UnidadDeTrabajo<promociones>(new BDContext()))
             {
 
-                promociones.promocionId = unidad.genericDAL.Get(idPromocion).promocionId;
+                promociones.promocionId = unidad.genericDAL.Get(id_promocion).promocionId;
             }
 
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
 
-                productos.productoId = unidad.genericDAL.Get(idProducto).productoId;
+                productos.productoId = unidad.genericDAL.Get(id_producto).productoId;
             }
 
             using (UnidadDeTrabajo<promociones_productos> unidad = new UnidadDeTrabajo<promociones_productos>(new BDContext()))
