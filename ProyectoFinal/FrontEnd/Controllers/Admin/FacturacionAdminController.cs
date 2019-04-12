@@ -130,7 +130,7 @@ namespace FrontEnd.Controllers.Admin
             try
             {
                 IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
-                sp_obtenerFacturaciones_Result facturaciones;
+                sp_obtenerFacturaciones_Result facturaciones = new sp_obtenerFacturaciones_Result();
                 if (ModelState.IsValid)
                 {
                     

@@ -94,7 +94,10 @@
             });
         }
 
+       
+
         function eliminar(id_promocion, id_producto) {
+             var URL = '@Url.Action("Delete", "PromocionesProductoAdmin")'
             Swal.fire({
                 title: 'Seguro que desea eliminar este Producto de la Promocion?',
                 text: "Esta accion no se puede revertir!",
@@ -107,7 +110,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: "PromocionesProductoAdmin/Delete/"+id_promocion+"?id_producto="+id_producto+"",
+                        url: URL,
                         data: {
                             id_promocion: id_promocion,
                             id_producto: id_producto

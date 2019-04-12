@@ -54,7 +54,7 @@ namespace FrontEnd.Controllers.Admin
 
             foreach (var itemPromocionProducto in promocionesProducto)
             {
-                if (producto.id_estado == 1)
+                if (itemPromocionProducto.id_estado == 1)
                 {
                     continue;
                 }
@@ -235,6 +235,8 @@ namespace FrontEnd.Controllers.Admin
 
             using (UnidadDeTrabajo<promociones_productos> unidad = new UnidadDeTrabajo<promociones_productos>(new BDContext()))
             {
+                promociones_Productos.productoId = id_producto;
+                promociones_Productos.promocionId = id_promocion;
                 promociones_Productos.id_estado = 1;
             }
             using (UnidadDeTrabajo<promociones_productos> unidad = new UnidadDeTrabajo<promociones_productos>(new BDContext()))

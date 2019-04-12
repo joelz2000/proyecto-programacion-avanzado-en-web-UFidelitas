@@ -97,7 +97,7 @@
                 url: saveUrl,
                 data: {
                     __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
-                    id_categoria: $("#facturacionId").val(),
+                    facturacionId: $("#facturacionId").val(),
                     nombre: $("#nombre").val(),
                     fecha: $("#fecha").val(),
                     descripcion: $("#descripcion").val(),
@@ -113,7 +113,7 @@
                         )
                         setTimeout(function () {
                             window.location.href = newUrl;
-                        }, 3000);
+                        }, 2000);
 
                     },
                     400: function () {
@@ -124,7 +124,7 @@
                         )
                         setTimeout(function () {
                             location.reload();
-                        }, 3000);
+                        }, 2000);
 
                     },
                     404: function () {
@@ -135,7 +135,7 @@
                         )
                         setTimeout(function () {
                             location.reload();
-                        }, 3000);
+                        }, 2000);
                     },
                     500: function () {
                         Swal.fire(
@@ -145,7 +145,7 @@
                         )
                         setTimeout(function () {
                             location.reload();
-                        }, 3000);
+                        }, 2000);
                     }
                 }
 
