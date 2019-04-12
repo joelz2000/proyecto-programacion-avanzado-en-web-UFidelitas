@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class PromocionesProductoAdminController : Controller
     {
         // GET: PromocionesProducto

@@ -107,7 +107,7 @@
                 if (result.value) {
                     $.ajax({
                         type: 'POST',
-                        url: `PromocionesProductoAdmin/Delete/idPromo=${id_promocion}&idProducto=${id_producto}`,
+                        url: "PromocionesProductoAdmin/Delete/"+id_promocion+"?id_producto="+id_producto+"",
                         data: {
                             id_promocion: id_promocion,
                             id_producto: id_producto
