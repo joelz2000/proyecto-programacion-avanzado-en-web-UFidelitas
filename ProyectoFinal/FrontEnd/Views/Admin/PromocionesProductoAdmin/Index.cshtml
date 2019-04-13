@@ -4,12 +4,8 @@
     ViewBag.Title = "Index";
 }
 @{
-    var idProm = 0;
-    foreach (var item2 in Model)
-    {
-        idProm = item2.promocionId;};
-    }
-
+    var idProm = @ViewContext.RouteData.Values["id"];
+}
 <div class="btn-group">
     @Html.ActionLink("Agregar Nuevo Producto a la promocion", "Create", routeValues: new { id = idProm }, htmlAttributes: new { @class = "btn btn-block btn-success" })
     <br><br><br>
