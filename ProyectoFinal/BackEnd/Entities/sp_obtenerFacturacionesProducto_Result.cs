@@ -17,5 +17,7 @@ namespace BackEnd.Entities
         public string nombre { get; set; }
         public int productoId { get; set; }
         public string nombre1 { get; set; }
+        public int cantidad { get; set; }
+        public int id_estado { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace FrontEnd.Controllers.Admin
 {
     public class FacturacionProductosAdminController : Controller
     {
+        int id_promocion = 0;
         // GET: FacturacionProductos
         public ActionResult Index(int id)
         {
@@ -49,54 +50,64 @@ namespace FrontEnd.Controllers.Admin
             //objeto facturaciones
             facturaciones facturacion = new facturaciones();
 
+
             foreach (var item in productosFacturacion)
             {
-                if (item.facturacionId == id)
+                if (item.id_estado == 1)
+                {
+                    continue;
+                }
+                else
                 {
 
-                    //facturaciones
-
-                    foreach (var itemFacturaciones in facturaciones)
+                    if (item.facturacionId == id)
                     {
-                        if (itemFacturaciones.facturacionId == item.facturacionId)
+
+                        //facturaciones
+
+                        foreach (var itemFacturaciones in facturaciones)
                         {
-                            facturacion = new facturaciones
+                            if (itemFacturaciones.facturacionId == item.facturacionId)
                             {
-                                facturacionId = itemFacturaciones.facturacionId,
-                                nombre = itemFacturaciones.nombre,
-                            };
+                                facturacion = new facturaciones
+                                {
+                                    facturacionId = itemFacturaciones.facturacionId,
+                                    nombre = itemFacturaciones.nombre,
+                                };
+                            }
+
+
                         }
 
-
-                    }
-
-                    //productos
-                    foreach (var itemProducto in productos)
-                    {
-                        if (itemProducto.productoId == item.productoId)
+                        //productos
+                        foreach (var itemProducto in productos)
                         {
-                            producto = new productos
+                            if (itemProducto.productoId == item.productoId)
                             {
-                                productoId = itemProducto.productoId,
-                                nombre = itemProducto.nombre,
-                                precio = itemProducto.precio
-                            };
+                                producto = new productos
+                                {
+                                    productoId = itemProducto.productoId,
+                                    nombre = itemProducto.nombre,
+                                    precio = itemProducto.precio
+                                };
+                            }
+
+
                         }
 
-
+                        //facturacion productos
+                        facturacion_Producto = new FacturacionProductosViewModels
+                        {
+                            facturacionId = facturacion.facturacionId,
+                            nombre = facturacion.nombre,
+                            productoId = producto.productoId,
+                            nombre1 = producto.nombre,
+                            precio = producto.precio,
+                            cantidad = item.cantidad
+                        };
+                        productoVM.Add(facturacion_Producto);
                     }
-
-                    //facturacion productos
-                    facturacion_Producto = new FacturacionProductosViewModels
-                    {
-                        facturacionId = facturacion.facturacionId,
-                        nombre = facturacion.nombre,
-                        productoId = producto.productoId,
-                        nombre1 = producto.nombre,
-                        precio = producto.precio,
-                        cantidad = item.cantidad
-                    };
-                    productoVM.Add(facturacion_Producto);
+                    id_promocion = id;
                 }
             }
             return View("~/Views/Admin/FacturacionProductosAdmin/Index.cshtml", productoVM);
@@ -109,25 +120,39 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: FacturacionProductos/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            FacturacionProductosViewModels promocionProductoVM = new FacturacionProductosViewModels();
+            
+             FacturacionProductosViewModels facturacionProductoVM = new FacturacionProductosViewModels();
+
+            List<productos> productos = new List<productos>();
 
             //lista productos
             using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
             {
-                promocionProductoVM.productos = unidad.genericDAL.GetAll().ToList();
+
+                productos = unidad.genericDAL.GetAll().ToList();
+
             }
 
-            //lista factruaciones
-            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            facturacionProductoVM.facturacionId = id;
+
+            foreach (var producto in productos)
             {
-                promocionProductoVM.facturaciones = unidad.genericDAL.GetAll().ToList();
+                if (producto.id_estado != 1)
+                {
+                    facturacionProductoVM.lista_productos.Add(new SelectListItem()
+                    {
+                        Text = producto.nombre,
+                        Value = producto.productoId.ToString()
+                    });
+
+
+                }
             }
 
-           
 
-            return View("~/Views/Admin/PromocionesProductoAdmin/Create.cshtml", promocionProductoVM);
+            return View("~/Views/Admin/FacturacionProductosAdmin/Create.cshtml", facturacionProductoVM);
         }
 
         // POST: FacturacionProductos/Create
@@ -137,30 +162,20 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-                /* 
-                IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
-                // TODO: Add insert logic here
-                sp_obtenerFacturacionesProducto_Result  facturacion = new sp_obtenerFacturacionesProducto_Result
+                facturacion_producto facturacion_producto = new facturacion_producto
                 {
-                    facturacionId = facturacionProductosVM.facturacionId,
                     productoId = facturacionProductosVM.productoId,
+                    facturacionId = facturacionProductosVM.facturacionId,
                     cantidad = facturacionProductosVM.cantidad
                 };
-                productosFacturacionDAL.agregarProductoFacturacion(facturacion);
 
-                if (productosFacturacionDAL.agregarProductoFacturacion(facturacion) == true)
+                using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    unidad.genericDAL.Add(facturacion_producto);
+                    unidad.Complete();
                 }
-                else
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-                }
-           */
+
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
-
-
-
             }
             catch
             {
