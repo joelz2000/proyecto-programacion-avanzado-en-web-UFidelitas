@@ -1,0 +1,155 @@
+﻿@model FrontEnd.Models.ComprasViewModels
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+    </div>
+
+    <div class="box-body">
+       
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+
+        <div class="form-group">
+            <label class="control-label">Nombre Titular</label>
+            <input class="form-control" type="text" name="NombreTitular" value="" placeholder="Nombre del Titular" />
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Numero de Tarjeta</label>
+            <input class="form-control" type="text" name="NumeroTarjeta" value="" placeholder="XXXX-XXXX-XXXX" />
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Fecha Vencimiento</label>
+            <input class="form-control" type="date" name="Fecha Vencimiento" value="" placeholder="Fecha de Vencimiento" />
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">CSV</label>
+            <input class="form-control" type="text" name="Csv" value="" placeholder="Codigo de Seguridad" />
+
+        </div>
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idPais, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.idPais, new SelectList(Model.lista_pais, "Value", "Text"), "--Seleccionar Pais--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.idPais, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idProvincia, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.idProvincia, new SelectList(Model.lista_provincia, "Value", "Text"), "--Seleccionar Provincia--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.idProvincia, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idCanton, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.idCanton, new SelectList(Model.lista_canton, "Value", "Text"), "--Seleccionar Canton--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.idCanton, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idDistrito, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.idDistrito, new SelectList(Model.lista_distrito, "Value", "Text"), "--Seleccionar Distrito--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.idDistrito, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.direccion, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Finalizar Compra</button>
+        </div>
+    </div>
+  </div>
+
+
+
+@section Scripts
+{
+<script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Create", "Compra")';
+            var newUrl = '@Url.Action("Index", "Home")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    
+                    idPais: $("#idPais").val(),
+                    idProvincia: $("#idProvincia").val(),
+                    idCanton: $("#idCanton").val(),
+                    idDistrito: $("#idDistrito").val(),
+                    direccion: $("#direccion").val(),
+                    telefono: $("#telefono").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Compra Finalizada!',
+                            'Gracias por su compra!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+</script>
+}
