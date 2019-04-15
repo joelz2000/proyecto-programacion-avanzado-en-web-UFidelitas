@@ -1,0 +1,214 @@
+﻿@model FrontEnd.Models.UsuarioInfoCompraViewModel
+@{
+    ViewBag.Title = "Compra";
+}
+
+<style>
+    #tuneado{
+        margin-top: 30px;
+    }
+</style>
+
+<h2>Finalizar compra</h2>
+<div class="form-horizontal">
+    <hr style="background-color: white;" />
+
+    <h4>Datos de envío:</h4>
+
+    <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row form-group">
+        <div class="col-sm-4">
+            @Html.LabelFor(m => m.id_provincia)
+            @Html.DropDownListFor(m => m.id_provincia, new SelectList(Model.lista_provincias, "Value", "Text"), new { @class = "form-control", @style = "background:black; color:white;" })
+            @Html.ValidationMessageFor(m => m.id_provincia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-4">
+            <label for="id_canton">Canton de envío</label>
+            <select class="form-control" style="background-color:black; color: white;" id="id_canton">
+                <option value="0">Seleccionar</option>
+            </select>
+        </div>
+        <div class="col-sm-4">
+            <label for="id_distrito">Distrito de envío</label>
+            <select class="form-control" style="background-color:black; color: white;" id="id_distrito">
+                <option value="0">Seleccionar</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.direccion, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.direccion, new { @class = "form-control", @placeholder = "Direccion exacta de envio", @style = "background:black; color:white;" })
+        @Html.ValidationMessageFor(m => m.direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <h4>Datos de pago:</h4>
+
+    <div class="row form-group">
+        <div class="col-sm-11">
+            @Html.LabelFor(m => m.tarjeta_credito, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.tarjeta_credito, new { @class = "form-control", @placeholder = "1234 5678 9012 3456", @style = "background:black; color:white;" })
+            @Html.ValidationMessageFor(m => m.tarjeta_credito, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-1 text-center" id="tuneado">
+            <img src="" id="imagen_tipo">
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.nombre_tarjeta, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.nombre_tarjeta, new { @class = "form-control", @placeholder = "Nombre en la tarjeta", @style = "background:black; color:white;" })
+        @Html.ValidationMessageFor(m => m.nombre_tarjeta, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="row form-group">
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.fecha)
+            @Html.EditorFor(m => m.fecha, new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/yy", @maxlength="5", @style = "background:black; color:white;" } })
+            @Html.ValidationMessageFor(m => m.fecha, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-6">
+            @Html.LabelFor(m => m.cvv)
+            @Html.EditorFor(m => m.cvv, new { htmlAttributes = new { @class = "form-control", @placeholder = "123", @maxlength = "3", @style = "background:black; color:white;" } })
+            @Html.ValidationMessageFor(m => m.cvv, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="Comprar" onclick="comprar()">Finalizar compra</button>
+        @Html.ActionLink("Volver", "Index", "Carrito", htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/Cleave/cleave.min.js"></script>
+    <script>
+        var tarjeta_credito = new Cleave('#tarjeta_credito', {
+            creditCard: true,
+            onCreditCardTypeChanged: function (type) {
+                console.log(type);
+                if (type == "visa") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/visa.png");
+                }
+                else if (type == "mastercard") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/mastercard.png");
+                }
+                else if (type == "amex") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/amex.png");
+                }
+                else if (type == "diners") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/diners-club.png");
+                }
+                else if (type == "jcb") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/jcb.png");
+                }
+                else if (type == "discover") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/discover.png");
+                }
+                else if (type == "unknown") {
+                    $("#imagen_tipo").attr("src", "https://img.icons8.com/color/48/000000/cancel.png");
+                }
+            }
+        });
+
+        var fecha_vencimiento = new Cleave('#fecha', {
+            date: true,
+            datePattern: ['m', 'y']
+        });
+
+        $('#id_provincia').on("change", function () {  
+            var url = '@Url.Action("obtenerCantones", "Compra")';
+            $.ajax({ 
+                type: 'GET',
+                url: url,
+                data: {
+                    id_provincia: $(this).children("option:selected").val(),
+                },
+            }).done(function (response) {
+                    $('#id_canton').html('');  
+                    var options = '';  
+                    options += '<option value="0">Seleccionar</option>';
+                    for (var canton in response) {
+                        options += '<option value="' + canton + '">' + response[canton] + '</option>';  
+                    }  
+                    $('#id_canton').append(options);  
+            });
+        });  
+
+        $('#id_canton').on("change", function () {  
+            var url = '@Url.Action("obtenerDistritos", "Compra")';
+            $.ajax({ 
+                type: 'GET',
+                url: url,
+                data: {
+                    id_distrito: $(this).children("option:selected").val(),
+                },
+            }).done(function (response) {
+                    $('#id_distrito').html('');  
+                    var options = '';  
+                    options += '<option value="0">Seleccionar</option>';
+                    for (var distrito in response) {
+                        options += '<option value="' + distrito + '">' + response[distrito] + '</option>';  
+                    }  
+                    $('#id_distrito').append(options);  
+            });
+        });  
+
+        function comprar() {
+            var saveUrl = '@Url.Action("Index", "Compra")';
+            var indexUrl = '@Url.Action("Index", "Home")';
+            var procesarUrl = '@Url.Action("Procesar", "Compra")';
+            var id_provincia = $("#id_provincia").children("option:selected").val();
+            var id_canton = $("#id_canton").children("option:selected").val();
+            var id_distrito = $("#id_distrito").children("option:selected").val();
+            var direccion = $("#direccion").val();
+            var tarjeta_credito = $("#tarjeta_credito").val();
+            var nombre_tarjeta = $("#nombre_tarjeta").val();
+            var fecha = $("#fecha").val();
+            var cvv = $("#cvv").val();
+
+            $.ajax({
+                type: 'POST',
+                url: procesarUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    id_provincia: id_provincia,
+                    id_canton: id_canton,
+                    id_distrito: id_distrito,
+                    direccion: direccion,
+                    tarjeta_credito: tarjeta_credito,
+                    nombre_tarjeta: nombre_tarjeta,
+                    fecha: fecha,
+                    cvv: cvv,
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire({
+                            title: 'Compra terminada',
+                            text: "Su compra ha sido procesada con éxito!",
+                            type: 'success',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Volver a inicio',
+                        }).then(() => {
+                            window.location.href = indexUrl;
+                        })
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            window.location.href = saveUrl;
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+}

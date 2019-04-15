@@ -238,11 +238,5 @@ namespace FrontEnd.Controllers.User
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-        // GET: Carrito/Compra
-        public ActionResult Compra()
-        {
-            return View("~/Views/User/Carrito/Compra.cshtml");
-        }
-
     }
 }

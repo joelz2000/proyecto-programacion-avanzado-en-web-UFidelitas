@@ -208,6 +208,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\User\CarritoController.cs" />
+    <Compile Include="Controllers\User\CompraController.cs" />
     <Compile Include="Controllers\User\ProductosController.cs" />
     <Compile Include="CustomAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -6610,6 +6611,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Cleave\cleave.min.js" />
     <Content Include="Scripts\Custom\CustomJS.js" />
     <Content Include="Scripts\Datatables\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\Datatables\datatables.min.js" />
@@ -7117,6 +7119,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.creditCardValidator.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -7201,11 +7204,11 @@
     <Content Include="Views\Admin\DistribuidoresAdmin\Index.cshtml" />
     <Content Include="Views\Admin\DistribuidoresAdmin\Create.cshtml" />
     <Content Include="Views\User\Carrito\Editar.cshtml" />
-    <Content Include="Views\User\Carrito\Compra.cshtml" />
     <Content Include="Views\Admin\DistribuidoresAdmin\Edit.cshtml" />
     <Content Include="Views\Admin\VentasAdmin\Index.cshtml" />
     <Content Include="Views\Admin\PromocionesProductoAdmin\Index.cshtml" />
     <Content Include="Views\Admin\PromocionesProductoAdmin\Create.cshtml" />
+    <Content Include="Views\User\Compra\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />
@@ -7217,6 +7220,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Compra\" />
     <Folder Include="Views\Layout\" />
   </ItemGroup>
   <ItemGroup>

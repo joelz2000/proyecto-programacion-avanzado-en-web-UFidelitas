@@ -903,6 +903,9 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_eliminarCarritoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_usuario" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_eliminarFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pIdFacturacion" Type="int" Mode="In" />
         </Function>
@@ -929,6 +932,12 @@
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_obtenerCantonesPorIDProvincia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idProvincia" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_obtenerDistritosPorIDCanton" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCanton" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_obtenerFacturaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerFacturacionesUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -948,6 +957,7 @@
         <Function Name="sp_obtenerProductosUsuarioCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUsuarioId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_obtenerProvincias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_ObtenerRolesUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerRolId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -956,6 +966,7 @@
         <Function Name="sp_obtenerRolUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idUser" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_obtenerUltimoIdFactura" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_obtenerUsuariosId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="pUsuarioId" Type="int" Mode="In" />
@@ -2423,6 +2434,18 @@
             <Parameter Name="productoId_eliminar" Mode="In" Type="Int32" />
             <Parameter Name="userId_eliminar" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_obtenerCantonesPorIDProvincia" ReturnType="Collection(BDprogramacionVModel.sp_obtenerCantonesPorIDProvincia_Result)">
+          <Parameter Name="idProvincia" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerDistritosPorIDCanton" ReturnType="Collection(BDprogramacionVModel.sp_obtenerDistritosPorIDCanton_Result)">
+          <Parameter Name="idCanton" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerProvincias" ReturnType="Collection(BDprogramacionVModel.sp_obtenerProvincias_Result)" />
+          <FunctionImport Name="sp_eliminarCarritoCliente">
+          <Parameter Name="id_usuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_obtenerUltimoIdFactura" ReturnType="Collection(BDprogramacionVModel.sp_obtenerUltimoIdFactura_Result2)">
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_obtenerFacturaciones_Result">
           <Property Type="Int32" Name="facturacionId" Nullable="false" />
@@ -2567,6 +2590,32 @@
           <Property Type="Int32" Name="cantidad_producto" Nullable="false" />
           <Property Type="DateTime" Name="fecha_agregado" Nullable="false" />
           <Property Type="DateTime" Name="fecha_modificado" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerCantonesPorIDProvincia_Result">
+          <Property Type="Int32" Name="provinciaId" Nullable="false" />
+          <Property Type="Int32" Name="cantonId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="85" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerDistritosPorIDCanton_Result">
+          <Property Type="Int32" Name="provinciaId" Nullable="false" />
+          <Property Type="Int32" Name="cantonId" Nullable="false" />
+          <Property Type="Int32" Name="distritoId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="85" />
+          <Property Type="Int32" Name="id_estado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerProvincias_Result">
+          <Property Type="Int32" Name="provinciaId" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="85" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerUltimoIdFactura_Result">
+          <Property Type="Decimal" Name="Column1" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerUltimoIdFactura_Result1">
+          <Property Type="Decimal" Name="Column1" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="sp_obtenerUltimoIdFactura_Result2">
+          <Property Type="Decimal" Name="Column1" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3042,6 +3091,43 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_eliminarProductoCarrito" FunctionName="BDprogramacionVModel.Store.sp_eliminarProductoCarrito" />
+          <FunctionImportMapping FunctionImportName="sp_obtenerCantonesPorIDProvincia" FunctionName="BDprogramacionVModel.Store.sp_obtenerCantonesPorIDProvincia">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerCantonesPorIDProvincia_Result">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerDistritosPorIDCanton" FunctionName="BDprogramacionVModel.Store.sp_obtenerDistritosPorIDCanton">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerDistritosPorIDCanton_Result">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="cantonId" ColumnName="cantonId" />
+                <ScalarProperty Name="distritoId" ColumnName="distritoId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_obtenerProvincias" FunctionName="BDprogramacionVModel.Store.sp_obtenerProvincias">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerProvincias_Result">
+                <ScalarProperty Name="provinciaId" ColumnName="provinciaId" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_eliminarCarritoCliente" FunctionName="BDprogramacionVModel.Store.sp_eliminarCarritoCliente" />
+          <FunctionImportMapping FunctionImportName="sp_obtenerUltimoIdFactura" FunctionName="BDprogramacionVModel.Store.sp_obtenerUltimoIdFactura" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDprogramacionVModel.sp_obtenerUltimoIdFactura_Result2">
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

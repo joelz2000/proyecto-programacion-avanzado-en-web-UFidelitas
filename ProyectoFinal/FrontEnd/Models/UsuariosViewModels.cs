@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FrontEnd.Models
 {
@@ -31,6 +32,46 @@ namespace FrontEnd.Models
 
         [Required]
         private int rol;
+    }
+
+    public class UsuarioInfoCompraViewModel
+    {
+
+        [Required]
+        [Display(Name = "Provincia de envío")]
+        public int id_provincia { get; set; }
+        public List<SelectListItem> lista_provincias = new List<SelectListItem>();
+
+        [Required]
+        [Display(Name = "Canton de envío")]
+        public int id_canton { get; set; }
+
+        [Required]
+        [Display(Name = "Distrito de envío")]
+        public int id_distrito { get; set; }
+
+        [Required]
+        [Display(Name = "Dirección exacta")]
+        public string direccion { get; set; }
+
+        [Required]
+        [Display(Name = "Número de tarjeta de crédito")]
+        [DataType(DataType.CreditCard)]
+        public string tarjeta_credito { get; set; }
+
+        [Required]
+        [Display(Name = "Fecha de vencimiento")]
+        public string fecha { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "CVV")]
+        public string cvv { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nombre como aparece en la tarjeta")]
+        public string nombre_tarjeta { get; set; }
     }
 
     public class NavbarUsuarioViewModel

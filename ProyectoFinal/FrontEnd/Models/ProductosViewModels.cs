@@ -64,6 +64,11 @@ namespace FrontEnd.Models
         [Required]
         [Display(Name = "Cantidad")]
         public int? cantidad { get; set; }
+    
+        [Display(Name = "Cantidad a comprar")]
+        public int? cantidad_compra { get; set; }
+
+        public string identificador { get; set; }
 
         [Required]
         [Display(Name = "Marca")]

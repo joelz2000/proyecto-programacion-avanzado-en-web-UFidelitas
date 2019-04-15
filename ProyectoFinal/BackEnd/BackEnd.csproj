@@ -149,6 +149,12 @@
     <Compile Include="Entities\rol_user.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_obtenerCantonesPorIDProvincia_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerDistritosPorIDCanton_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_obtenerFacturacionesProducto_Result.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
@@ -176,6 +182,9 @@
     <Compile Include="Entities\sp_obtenerProductosUsuarioCarrito_Result.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\sp_obtenerProvincias_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\sp_ObtenerRolesUser_Result.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
@@ -186,6 +195,15 @@
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerRolUserId_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerUltimoIdFactura_Result.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerUltimoIdFactura_Result1.cs">
+      <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\sp_obtenerUltimoIdFactura_Result2.cs">
       <DependentUpon>BDProgramacionVModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\sp_obtenerUsuariosId_Result.cs">
