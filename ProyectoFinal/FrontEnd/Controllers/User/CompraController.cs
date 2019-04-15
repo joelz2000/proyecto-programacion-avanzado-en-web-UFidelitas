@@ -101,23 +101,38 @@ namespace FrontEnd.Controllers.User
                 unidad_usuario_facturaciones.Complete();
 
                 // asignar productos a factura
-                facturacion_producto facturacion_producto;
-                List<facturacion_producto> lista_facturaciones_producto = new List<facturacion_producto>();
+                /*facturacion_producto facturacion_producto;
+                List<facturacion_producto> lista_facturaciones_producto = new List<facturacion_producto>();*/
+
+                IProductosFacturacionDAL productosFacturacionDAL = new ProductosFacturacionDALImpl();
+
+                sp_obtenerFacturacionesProducto_Result facturacionProducto;
                 foreach (var producto in lista_productos_cliente)
                 {
-                    facturacion_producto = new facturacion_producto
+                    /*facturacion_producto = new facturacion_producto
                     {
                         productoId = producto.productoId,
                         cantidad = producto.cantidad_producto,
                         id_estado = 2,
                         facturacionId = (int)id_factura.Column1,
                     };
-                    lista_facturaciones_producto.Add(facturacion_producto);
+                    lista_facturaciones_producto.Add(facturacion_producto);*/
+
+                    facturacionProducto = new sp_obtenerFacturacionesProducto_Result
+                    {
+                        productoId = producto.productoId,
+                        facturacionId = (int)id_factura.Column1,
+                        cantidad = producto.cantidad_producto,
+                        id_estado = 2
+                    };
+
+                    productosFacturacionDAL.agregarProductoFacturacion(facturacionProducto);
+
                 }
 
-                unidad_facturacion_producto.genericDAL.AddRange(lista_facturaciones_producto);
+               /* unidad_facturacion_producto.genericDAL.AddRange(lista_facturaciones_producto);
                 unidad_facturacion_producto.Complete();
-
+                */
                 // limipar el carrito del usuario
                 context.sp_eliminarCarritoCliente(usuario_BD.userId);
 
