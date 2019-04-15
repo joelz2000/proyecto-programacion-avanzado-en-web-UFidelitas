@@ -217,6 +217,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CarritoViewModels.cs" />
     <Compile Include="Models\CategoriasViewModel.cs" />
+    <Compile Include="Models\ComprasViewModels.cs" />
     <Compile Include="Models\DistribuidoresViewModel.cs" />
     <Compile Include="Models\FacturacionesViewModels.cs" />
     <Compile Include="Models\FacturacionProductosViewModels.cs" />

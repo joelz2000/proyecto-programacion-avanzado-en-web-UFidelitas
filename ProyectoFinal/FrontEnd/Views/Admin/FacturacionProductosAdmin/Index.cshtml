@@ -3,8 +3,13 @@
 @{
     ViewBag.Title = "ProductosFacturacion";
 }
+
+@{
+    var idFact = @ViewContext.RouteData.Values["id"];
+
+}
 <div class="btn-group">
-    @Html.ActionLink("Agregar Nueva Categoria", "Create", "FacturacionProductosAdmin", null, new { @class = "btn btn-block btn-success" })
+    @Html.ActionLink("Agregar Nuevo Producto a la facturacion", "Create", routeValues: new {id = idFact }, htmlAttributes: new { @class = "btn btn-block btn-success" })
     <br><br><br>
 </div>
 <div class="row">
@@ -56,7 +61,7 @@
                                     @Html.DisplayFor(modelItem => item.precio)
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-default  btn-danger" onclick="eliminar(@item.productoId, @item.facturacionId)">Eliminar</button>
+                                    <button type="button" class="btn btn-danger" onclick="eliminar(@item.productoId, @item.facturacionId)">Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -67,7 +72,7 @@
 
             <div class="box-footer">
                 @Html.ActionLink("Regresar", "Index", "FacturacionAdmin")
-               
+
             </div>
         </div>
     </div>

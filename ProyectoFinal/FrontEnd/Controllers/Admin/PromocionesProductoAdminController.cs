@@ -122,7 +122,6 @@ namespace FrontEnd.Controllers.Admin
         // GET: PromocionesProducto/Create
         public ActionResult Create(int id)
         {
-            int id_producto_nav = id;
             PromocionesProductoViewModels PromocionesProductosVM = new PromocionesProductoViewModels();
 
             List<productos> productos = new List<productos>();          
@@ -135,7 +134,7 @@ namespace FrontEnd.Controllers.Admin
                 
             }
 
-           PromocionesProductosVM.promocionId = id_producto_nav;
+           PromocionesProductosVM.promocionId = id;
 
             foreach (var producto in productos)
             {
