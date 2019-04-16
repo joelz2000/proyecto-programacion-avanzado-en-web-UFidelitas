@@ -1,9 +1,11 @@
 ﻿using BackEnd.DAL;
 using BackEnd.Entities;
 using FrontEnd.Models;
+using IronPdf;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -106,6 +108,18 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        
+        public ActionResult PDF()
+        {
+            /*
+            var htmlToPdf = new HtmlToPdf();
+            var html = @"<h1>Hello World!</h1><br><p>This is IronPdf.</p>";
+            // turn html to pdf
+            var pdf = htmlToPdf.RenderHtmlAsPdf(html);
+            // save resulting pdf into file
+            pdf.SaveAs("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");*/
+
+           
+            return Redirect("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");
+        }
     }
 }
