@@ -76,10 +76,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.tipo)
                                 </td>
-                                <td>@Html.ActionLink("Ver", "Index", "FacturacionProductosAdmin", new { id = item.facturacionId }, null)</td>
                                 <td>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.facturacionId }, new { @class = "btn btn-default btn-warning" })
-                                    <button type="button" class="btn btn-default  btn-danger" onclick="eliminar(@item.facturacionId)">Eliminar</button>
+                                    @Html.ActionLink("Ver", "Index", "FacturacionProductosAdmin", new { id = item.facturacionId }, null)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("PDF", "Edit", new { id = item.facturacionId }, new { @class = "btn btn-warning" })
+                                    
                                 </td>
                             </tr>
                         }
@@ -112,66 +114,6 @@
                 }
             });
         }
-
-        function eliminar(id_categoria) {
-            Swal.fire({
-                title: 'Seguro que desea eliminar esta categoria?',
-                text: "Esta accion no se puede revertir!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Eliminar'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: 'POST',
-                        url: `CategoriasAdmin/Delete/${id_categoria}`,
-                        data: {
-                            id_categoria: id_categoria
-                        },
-                        statusCode: {
-                            200: function () {
-                                Swal.fire(
-                                    'Exito!',
-                                    'Categoria eliminada',
-                                    'success'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            400: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Bad request',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            404: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Pagina no encontrada',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            500: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            }
-                        }
-
-                    });
-                }
-            })
-        }
+        
     </script>
 }

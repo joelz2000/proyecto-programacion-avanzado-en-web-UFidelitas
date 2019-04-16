@@ -84,83 +84,8 @@ namespace FrontEnd.Controllers.Admin
                 return View();
             }
         }
-
-        // GET: Facturacion/Edit/5
-        public ActionResult Edit(int id)
-        {
-            // revisar si el URL contiene un ID, si no entonces devolver 404
-            if (id == 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            FacturacionesViewModels facturacionesVM;
-            sp_obtenerFacturacionId_Result facturaciones;
-            IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
-
-
-            facturaciones = facturacionDAL.obtenerFacturacionById(id);
-
-            if (facturaciones.id_estado == 1)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            facturacionesVM = new FacturacionesViewModels
-            {
-                facturacionId = facturaciones.facturacionId,
-                nombre = facturaciones.nombre,
-                fecha = facturaciones.fecha,
-                descripcion = facturaciones.descripcion,
-                impuesto = facturaciones.impuesto,
-                subtotal = facturaciones.subtotal,
-                total = facturaciones.total,
-                tipo = facturaciones.tipo,
-                id_estado = 2
-            };
-
-            return View("~/Views/Admin/FacturacionAdmin/Edit.cshtml", facturacionesVM);
-        }
-
-        // POST: Facturacion/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(FacturacionesViewModels facturacionesVM)
-        {
-            try
-            {
-                IFacturacionDAL facturacionDAL = new FacturacionDALImpl();
-                sp_obtenerFacturaciones_Result facturaciones = new sp_obtenerFacturaciones_Result();
-                if (ModelState.IsValid)
-                {
-                    
-                    
-                    facturacionDAL.actualizarFactura(facturaciones = new sp_obtenerFacturaciones_Result()
-                    {
-                        facturacionId = facturacionesVM.facturacionId,
-                        nombre = facturacionesVM.nombre,
-                        fecha = facturacionesVM.fecha,
-                        descripcion = facturacionesVM.descripcion,
-                        impuesto = facturacionesVM.impuesto,
-                        tipo = facturacionesVM.tipo,
-                        id_estado = 2
-                    });
-
-                    
-                    // devolver que todo bien
-                    return new HttpStatusCodeResult(HttpStatusCode.OK);
-                }
-
-                // modelo no valido, devolver error 500
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-            }
-            catch (DataException /* dex */ )
-            {
-                // devolver error 500
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
-            }
-        }
-
+       
+        
         // GET: Facturacion/Delete/5
         public ActionResult Delete(int id)
         {
