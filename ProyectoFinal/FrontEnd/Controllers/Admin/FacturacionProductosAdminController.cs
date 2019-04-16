@@ -120,7 +120,7 @@ namespace FrontEnd.Controllers.Admin
         }
 
         // GET: FacturacionProductos/Create
-        public ActionResult Create(int id)
+        /*public ActionResult Create(int id)
         {
             
              FacturacionProductosViewModels facturacionProductoVM = new FacturacionProductosViewModels();
@@ -154,9 +154,9 @@ namespace FrontEnd.Controllers.Admin
 
             return View("~/Views/Admin/FacturacionProductosAdmin/Create.cshtml", facturacionProductoVM);
         }
-
+        */
         // POST: FacturacionProductos/Create
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FacturacionProductosViewModels facturacionProductosVM)
         {
@@ -182,7 +182,7 @@ namespace FrontEnd.Controllers.Admin
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
-
+        */
         // GET: FacturacionProductos/Edit/5
         public ActionResult Edit(int id)
         {

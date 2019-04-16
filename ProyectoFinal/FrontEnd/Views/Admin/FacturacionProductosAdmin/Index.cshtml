@@ -4,14 +4,8 @@
     ViewBag.Title = "ProductosFacturacion";
 }
 
-@{
-    var idFact = @ViewContext.RouteData.Values["id"];
 
-}
-<div class="btn-group">
-    @Html.ActionLink("Agregar Nuevo Producto a la facturacion", "Create", routeValues: new {id = idFact }, htmlAttributes: new { @class = "btn btn-block btn-success" })
-    <br><br><br>
-</div>
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -38,7 +32,6 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.precio)
                             </th>
-                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,9 +52,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.precio)
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-danger" onclick="eliminar(@item.productoId, @item.facturacionId)">Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -95,66 +85,7 @@
                 }
             });
         }
-        function eliminar(id_producto, id_facturacion) {
-            Swal.fire({
-                title: 'Seguro que desea eliminar este producto de la factura?',
-                text: "Esta accion no se puede revertir!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Eliminar'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: 'POST',
-                        url: `CategoriasAdmin/Delete/${id_categoria}`,
-                        data: {
-                            id_categoria: id_categoria
-                        },
-                        statusCode: {
-                            200: function () {
-                                Swal.fire(
-                                    'Exito!',
-                                    'Categoria eliminada',
-                                    'success'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            400: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Bad request',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            404: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Pagina no encontrada',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            },
-                            500: function () {
-                                Swal.fire(
-                                    'Error!',
-                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
-                                    'error'
-                                ).then(function () {
-                                    location.reload();
-                                });
-                            }
-                        }
-
-                    });
-                }
-            })
-        }
+        
 
     </script>
 }
