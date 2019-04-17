@@ -108,7 +108,7 @@ namespace FrontEnd.Controllers.Admin
             }
         }
 
-        public ActionResult PDF()
+        public ActionResult obtenerPDF(int id, string nombre)
         {
             /*
             var htmlToPdf = new HtmlToPdf();
@@ -119,7 +119,7 @@ namespace FrontEnd.Controllers.Admin
             pdf.SaveAs("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");*/
 
            
-            return Redirect("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");
+            return Redirect("~/Content/dist/facturacionesPDF/"+nombre+id+".Pdf");
         }
     }
 }

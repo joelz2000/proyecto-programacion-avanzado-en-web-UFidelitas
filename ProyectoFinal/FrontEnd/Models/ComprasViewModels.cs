@@ -62,4 +62,31 @@ namespace FrontEnd.Models
 
 
     }
+
+    public class FacturacionPDF
+    {
+        
+        [Display(Name = "Producto")]
+        public string nombreProducto { get; set; }
+
+        [Key]
+        [Display(Name = "id Facturacion")]
+        public int idFacturacion { get; set; }
+
+
+        [Display(Name = "Factura")]
+        public string nombreFactura { get; set; }
+
+        [Display(Name = "Precio")]
+        public Nullable<double>  precio { get; set; }
+
+        [Display(Name = "Subtotal")]
+        public Nullable<double>subtotal { get; set; }
+
+        [Display(Name = "Fecha de compra")]
+        [Required]
+        public Nullable<System.DateTime> fecha { get; set; }
+
+
+    }
 }

@@ -1,10 +1,12 @@
 ﻿using BackEnd.DAL;
 using BackEnd.Entities;
 using FrontEnd.Models;
+using IronPdf;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -87,20 +89,23 @@ namespace FrontEnd.Controllers.User
                 };
 
                 // agregar factura
+
                 unidad_facturaciones.genericDAL.Add(factura);
                 unidad_facturaciones.Complete();
 
                 // asignar factura a usuario
+
                 usuario_facturaciones factura_usuario = new usuario_facturaciones
                 {
                     usuarioId = usuario_BD.userId,
-                    facturacionId = (int) id_factura.Column1,
+                    facturacionId = (int)id_factura.Column1,
                     id_estado = 2
                 };
                 unidad_usuario_facturaciones.genericDAL.Add(factura_usuario);
                 unidad_usuario_facturaciones.Complete();
 
                 // asignar productos a factura
+
                 /*facturacion_producto facturacion_producto;
                 List<facturacion_producto> lista_facturaciones_producto = new List<facturacion_producto>();*/
 
@@ -130,9 +135,14 @@ namespace FrontEnd.Controllers.User
 
                 }
 
-               /* unidad_facturacion_producto.genericDAL.AddRange(lista_facturaciones_producto);
-                unidad_facturacion_producto.Complete();
-                */
+                //generar factura PDF
+
+                generarFactura((int)id_factura.Column1);
+                
+                
+                /* unidad_facturacion_producto.genericDAL.AddRange(lista_facturaciones_producto);
+                 unidad_facturacion_producto.Complete();
+                 */
                 // limipar el carrito del usuario
                 context.sp_eliminarCarritoCliente(usuario_BD.userId);
 
@@ -143,7 +153,268 @@ namespace FrontEnd.Controllers.User
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
+        public void generarFactura(int idfactura)
+        {
+            List<facturacion_producto> productosFacturacion;
+            List<productos> productos;
+            List<facturaciones> facturaciones;
 
+            //lista productos por facturacion
+            using (UnidadDeTrabajo<facturacion_producto> unidad = new UnidadDeTrabajo<facturacion_producto>(new BDContext()))
+            {
+                productosFacturacion = unidad.genericDAL.GetAll().ToList();
+            }
+
+            //lista productos
+            using (UnidadDeTrabajo<productos> unidad = new UnidadDeTrabajo<productos>(new BDContext()))
+            {
+                productos = unidad.genericDAL.GetAll().ToList();
+            }
+
+            //lista factruaciones
+            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            {
+                facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+
+          
+            //objeto producto
+            productos producto = new productos();
+
+            //objeto facturaciones
+            facturaciones facturacion = new facturaciones();
+
+            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            {
+                facturacion = unidad.genericDAL.Get(idfactura);
+            }
+            var Renderer = new HtmlToPdf();
+
+            var html = @" 
+                    <!doctype html>
+                    <html>
+                    <head>
+                        <meta charset=""utf-8"">
+                          <title> Factura </title>
+  
+                          <style>
+                            .invoice-container {
+                                max-width: 800px;
+                                margin: auto;
+                                padding: 30px;
+                                border: 1px solid #eee;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+                                font-size: 16px;
+                                line-height: 24px;
+                                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                                color: #555;
+                            }
+
+                                .invoice-container table {
+                                    width: 100%;
+                                    line-height: inherit;
+                                    text-align: left;
+                                }
+
+                                    .invoice-container table td {
+                                        padding: 5px;
+                                        vertical-align: top;
+                                    }
+
+                                    .invoice-container table tr td:nth-child(2) {
+                                        text-align: right;
+                                    }
+
+                                    .invoice-container table tr.top table td {
+                                        padding-bottom: 20px;
+                                    }
+
+                                        .invoice-container table tr.top table td.title {
+                                            font-size: 45px;
+                                            line-height: 45px;
+                                            color: #333;
+                                        }
+
+                                    .invoice-container table tr.information table td {
+                                        padding-bottom: 40px;
+                                    }
+
+                                    .invoice-container table tr.heading td {
+                                        background: #eee;
+                                        border-bottom: 1px solid #ddd;
+                                        font-weight: bold;
+                                    }
+
+                                    .invoice-container table tr.details td {
+                                        padding-bottom: 20px;
+                                    }
+
+                                    .invoice-container table tr.item td {
+                                        border-bottom: 1px solid #eee;
+                                    }
+
+                                    .invoice-container table tr.item.last td {
+                                        border-bottom: none;
+                                    }
+
+                                    .invoice-container table tr.total td:nth-child(2) {
+                                        border-top: 2px solid #eee;
+                                        font-weight: bold;
+                                    }
+
+                            @@media only print {
+                                .invoice-container table tr.top table td {
+                                    width: 100%;
+                                    display: block;
+                                    text-align: center;
+                                }
+
+                                .invoice-container table tr.information table td {
+                                    width: 100%;
+                                    display: block;
+                                    text-align: center;
+                                }
+                            }
+                        </style>
+                         </head>
+                     <body>
+                        <div class=""invoice-container"">
+                                <table cellpadding=""0"" cellspacing =""0"">
+     
+                                    <tr class=""top"">
+                                        <td colspan=""2"">
+                                            <table>
+                                                <tr>
+                                                    <td class=""title"">
+                                                        Some company
+                                                    </td>
+                                                    <td>
+                                                        Invoice #:" + idfactura + @"<br>
+                                                        Created:" + facturacion.fecha + @"<br>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                </tr>
+                                <tr class=""information"">
+                                    <td colspan= ""2"">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    Just another company, Inc.<br>
+                                                    01 Another st.<br>
+                                                    Another City, AK 00001
+                                                </td>
+                                                <td>
+                                                    Awesome company, Inc.< br >
+                                                    Steve Stevenson<br>
+                                                    awesomeSteve@awesomecompany.com
+                                                </td>
+                                            </tr>
+                                        </table>
+                                     </td>
+                                 </tr>
+ 
+                                <tr class=""heading"">
+                                    <td>
+                                        Producto Nombre
+                                    </td>
+                                    <td>
+                                        Precio
+                                    </td>
+                                </tr>";
+
+            var html2 = "";
+            foreach (var item in productosFacturacion)
+            {
+                if (item.id_estado == 1)
+                {
+                    continue;
+                }
+                else
+                {
+
+                    if (item.facturacionId == idfactura)
+                    {
+
+                        //facturaciones
+
+                        foreach (var itemFacturaciones in facturaciones)
+                        {
+                            if (itemFacturaciones.facturacionId == item.facturacionId)
+                            {
+                                facturacion = new facturaciones
+                                {
+                                    facturacionId = itemFacturaciones.facturacionId,
+                                    nombre = itemFacturaciones.nombre,
+                                    subtotal= itemFacturaciones.subtotal
+                                };
+                            }
+
+
+                        }
+                        
+                        //productos
+                        foreach (var itemProducto in productos)
+                        {
+                            if (itemProducto.productoId == item.productoId)
+                            {
+                                producto = new productos
+                                {
+                                    productoId = itemProducto.productoId,
+                                    nombre = itemProducto.nombre,
+                                    precio = itemProducto.precio
+                                };
+
+                                html2 = @" <tr class=""item"">
+                                        <td>" + producto.nombre + @"</td>
+                                        <td>
+                                           " + producto.precio + @"
+                                        </td>
+                                 </tr>";
+                            }
+
+                                
+                        }
+
+                    }
+                }
+            }
+
+            var html3 = @"<tr class=""total"">
+                                    <td></td>
+                                    <td>Total:" +
+                                         facturacion.subtotal
+                                    +@"</td>
+                                </tr>
+                           </table>
+                       </div>
+                    </body>
+                    </html>
+
+                    ";
+            /*  FacturacionPDF facturacionPDF;
+
+              facturacionPDF = new FacturacionPDF
+              {
+                  nombreProducto = producto.nombre,
+                  idFacturacion = facturacion.facturacionId,
+                  nombreFactura = facturacion.nombre,
+                  subtotal = facturacion.subtotal,
+                  precio = producto.precio,
+                  fecha = facturacion.fecha
+              };
+
+              List<FacturacionPDF> facturacionesPDF = new List<FacturacionPDF>();
+              facturacionesPDF.Add(facturacionPDF);*/
+
+            var htmlTotal = html + html2 + html3;
+            var PDF = Renderer.RenderHtmlAsPdf(htmlTotal);
+
+            // save resulting pdf into file
+            PDF.SaveAs("~/Content/dist/facturacionesPDF/"+facturacion.nombre+facturacion.facturacionId+".pdf");
+
+        }
         public JsonResult obtenerCantones(int id_provincia)
         {
             BDContext context = new BDContext();
@@ -175,6 +446,6 @@ namespace FrontEnd.Controllers.User
 
             return Json(diccionarioDistritos, JsonRequestBehavior.AllowGet);
         }
-
+        
     }
 }

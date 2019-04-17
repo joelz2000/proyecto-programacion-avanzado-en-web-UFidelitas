@@ -1,0 +1,84 @@
+﻿@model IEnumerable<FrontEnd.Models.FacturacionPDF>
+@{
+    ViewBag.Title = "FacturaPDF";
+}
+@{
+    Layout = "";
+}
+
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Factura</title>
+    <link rel="stylesheet" href="~/Content/estilos.css" />
+</head>
+<body>
+    <div class="invoice-container">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                Some company
+                            </td>
+                            <td>
+                                Invoice #: @Html.DisplayNameFor(model => model.idFacturacion)<br>
+                                Created: @Html.DisplayNameFor(model => model.fecha)<br>
+                              
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                Just another company, Inc.<br>
+                                01 Another st.<br>
+                                Another City, AK 00001
+                            </td>
+                            <td>
+                                Awesome company, Inc.<br>
+                                Steve Stevenson<br>
+                                awesomeSteve@awesomecompany.com
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="heading">
+                <td>
+                    Item name
+                </td>
+                <td>
+                    Price
+                </td>
+            </tr>
+
+            <tr class="item">
+                <td>
+                    Just couple of more items to hit Paging for A4 size page.
+                </td>
+                <td>
+                    100.00
+                </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+                <td>
+                    Total: 100500.00
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+
+
