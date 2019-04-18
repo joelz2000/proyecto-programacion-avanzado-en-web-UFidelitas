@@ -3,85 +3,82 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
-    </dl>
+<div class="container-fluid d-flex flex-row flex-wrap">
+
+    <div id="content-fotoPerfil" class="d-inline-flex p-2 col-lg-3">
+        <div id="fotoPerfil" class="d-flex flex-column">
+            <img class="img-thumbnail" src="~/Content/dist/img/avatar5.png" alt="Alternate Text" />
+            <a class="btn btn-outline-primary m-2" href="#">Editar Foto de Perfil</a>
+        </div>
+    </div>
+
+    <div id="content-InformacionPersonal" class="bg-white rounded col-lg-9">
+        <div id="informacionPersonal" class="d-flex flex-column">
+
+            <div id="header-informacionPersonal" class="p-2 mt-2 mb-0 border-bottom">
+                <h2 class="text-dark">Informacion Personal</h2>
+            </div>
+
+            <div id="body-informacionPersonal" class="">
+                <form>
+                    <div class="form-row p-2 mt-3">
+                        <div class="form-group col-md-4">
+                            <label for="inputNombre" class="text-dark">Nombre:</label>
+                            <input type="text" class="form-control bg-white" id="inputNombre" placeholder="Nombre" value="Joel">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputApellido1" class="text-dark">Apellido 1:</label>
+                            <input type="text" class="form-control bg-white" id="inputApellido1" placeholder="Apellido 1" value="Zuniga">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="inputApellido2" class="text-dark">Apellido 2:</label>
+                            <input type="text" class="form-control bg-white" id="inputApellido2" placeholder="Apellido 2" value="Jimenez">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="inputTelefono" class="text-dark">Telefono:</label>
+                            <input type="text" class="form-control bg-white" id="inputTelefono" placeholder="Telefono" value="85859688">
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail" class="text-dark">Correo Electronico:</label>
+                            <input type="email" class="form-control bg-white" id="inputEmail" placeholder="Correo Electronico" value="joelz2000@live.com">
+                        </div>
+                        <div class="form-group row border-top col-md-12 mb-0">
+                            <button type="submit" class="btn btn-primary mt-2">Editar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-Direccion" class="bg-white rounded col-lg-10 mt-5">
+        <div id="Direccion" class="d-flex flex-column">
+
+            <div id="header-Direccion" class="p-2 mt-2 mb-0 border-bottom">
+                <h2 class="text-dark">Direccion</h2>
+            </div>
+
+            <div id="body-Direccion" class="">
+                <form>
+                    <div class="form-row p-2 mt-3">
+                        <div class="form-group col-md-12">
+                            <label for="inputDireccion" class="text-dark">Direccion:</label>
+                            <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="exampleFormControlSelect1" class="text-dark">Pais</label>
+                            <select class="form-control bg-white" id="exampleFormControlSelect1">
+                                <option>Costa Rica</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
