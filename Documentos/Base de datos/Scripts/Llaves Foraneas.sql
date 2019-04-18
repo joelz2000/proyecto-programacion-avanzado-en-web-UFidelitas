@@ -225,3 +225,4 @@ REFERENCES [dbo].[usuarios] ([userId])
 GO
 ALTER TABLE [dbo].[usuarios_promocion] CHECK CONSTRAINT [FK_usuarios_promocion_usuarios]
 GO
+
