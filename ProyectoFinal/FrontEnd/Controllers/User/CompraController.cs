@@ -306,7 +306,7 @@ namespace FrontEnd.Controllers.User
                                                     Another City, AK 00001
                                                 </td>
                                                 <td>
-                                                    Awesome company, Inc.< br >
+                                                    Awesome company, Inc.<br>
                                                     Steve Stevenson<br>
                                                     awesomeSteve@awesomecompany.com
                                                 </td>
@@ -320,33 +320,35 @@ namespace FrontEnd.Controllers.User
                                         Producto Nombre
                                     </td>
                                     <td>
-                                        Precio
+                                        Cantidad
                                     </td>
+                                    <td>Precio</td>
                                 </tr>";
 
-            var html2 = "";
-            foreach (var item in productosFacturacion)
+            
+            foreach (var itemProductoFacturacion in productosFacturacion)
             {
-                if (item.id_estado == 1)
+                if (itemProductoFacturacion.id_estado == 1)
                 {
                     continue;
                 }
                 else
                 {
 
-                    if (item.facturacionId == idfactura)
+                    if (itemProductoFacturacion.facturacionId == idfactura)
                     {
 
                         //facturaciones
 
                         foreach (var itemFacturaciones in facturaciones)
                         {
-                            if (itemFacturaciones.facturacionId == item.facturacionId)
+                            if (itemFacturaciones.facturacionId == itemProductoFacturacion.facturacionId)
                             {
                                 facturacion = new facturaciones
                                 {
                                     facturacionId = itemFacturaciones.facturacionId,
                                     nombre = itemFacturaciones.nombre,
+                                    total = itemFacturaciones.total,
                                     subtotal= itemFacturaciones.subtotal
                                 };
                             }
@@ -357,7 +359,7 @@ namespace FrontEnd.Controllers.User
                         //productos
                         foreach (var itemProducto in productos)
                         {
-                            if (itemProducto.productoId == item.productoId)
+                            if (itemProducto.productoId == itemProductoFacturacion.productoId)
                             {
                                 producto = new productos
                                 {
@@ -366,12 +368,11 @@ namespace FrontEnd.Controllers.User
                                     precio = itemProducto.precio
                                 };
 
-                                html2 = @" <tr class=""item"">
-                                        <td>" + producto.nombre + @"</td>
-                                        <td>
-                                           " + producto.precio + @"
-                                        </td>
-                                 </tr>";
+                                html += @"<tr class=""item"">
+                                            <td>" + producto.nombre + @"</td>
+                                            <td>" + itemProductoFacturacion.cantidad + @"</td>
+                                            <td>" + producto.precio + @"</td>
+                                        </tr>";
                             }
 
                                 
@@ -381,12 +382,27 @@ namespace FrontEnd.Controllers.User
                 }
             }
 
-            var html3 = @"<tr class=""total"">
+                        html += @"
+                                <br><br>
+                                <tr class=""total"">
                                     <td></td>
-                                    <td>Total:" +
-                                         facturacion.subtotal
-                                    +@"</td>
+                                    <td>IVA:</td>
+                                    <td>13%</td>
                                 </tr>
+                                <tr class=""total"">
+                                    <td></td>
+                                    <td>Subtotal:</td>
+                                    <td>" + facturacion.subtotal + @"</td>
+
+                                </tr>
+                                <tr class=""total"">
+                                    <td></td>
+                                    <td>Total:</td>
+                                    <td>" + facturacion.total + @"</td>
+
+                                </tr>
+
+
                            </table>
                        </div>
                     </body>
@@ -408,8 +424,8 @@ namespace FrontEnd.Controllers.User
               List<FacturacionPDF> facturacionesPDF = new List<FacturacionPDF>();
               facturacionesPDF.Add(facturacionPDF);*/
 
-            var htmlTotal = html + html2 + html3;
-            var PDF = Renderer.RenderHtmlAsPdf(htmlTotal);
+         
+            var PDF = Renderer.RenderHtmlAsPdf(html);
 
             // save resulting pdf into file
             PDF.SaveAs("~/Content/dist/facturacionesPDF/"+facturacion.nombre+facturacion.facturacionId+".pdf");
