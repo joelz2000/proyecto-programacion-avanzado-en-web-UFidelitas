@@ -1,0 +1,110 @@
+﻿@model FrontEnd.Models.PerfilUsuarioViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+
+<div class="container d-flex flex-row flex-wrap">
+
+    <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3" style="height:650px;">
+        <div id="fotoPerfil" class="d-flex flex-column">
+            <img class="img-thumbnail" src="~/Content/dist/img/avatar5.png" alt="Alternate Text" />
+            <a class="btn btn-outline-primary m-2" href="#">Editar Foto de Perfil</a>
+        </div>
+    </div>
+
+    <div class="container-fluid d-flex flex-column flex-wrap col-lg-9 h-100">
+
+        <div id="content-InformacionPersonal" class="bg-white rounded col-lg-12 h-100">
+            <div id="informacionPersonal" class="d-flex flex-column h-100">
+
+                <div id="header-informacionPersonal" class="p-2 mt-2 mb-0 border-bottom">
+                    <h2 class="text-dark">Informacion Personal</h2>
+                </div>
+
+                <div id="body-informacionPersonal" class="">
+                    <form>
+                        <div class="form-row p-2 mt-3">
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(m => m.nombre, new { @class = "text-dark" })
+                                @Html.EditorFor(m => m.nombre, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                                @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(m => m.apellidos, new { @class = "text-dark" })
+                                @Html.EditorFor(m => m.apellidos, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                                @Html.ValidationMessageFor(m => m.apellidos, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(m => m.Telefono, new { @class = "text-dark" })
+                                @Html.EditorFor(m => m.Telefono, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                                @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                @Html.LabelFor(m => m.correo, new { @class = "text-dark" })
+                                @Html.EditorFor(m => m.correo, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                                @Html.ValidationMessageFor(m => m.correo, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group row border-top col-md-12 mb-0">
+                                <button type="submit" class="btn btn-primary mt-2 ml-2">Editar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-Direccion" class="bg-white rounded col-lg-12 mt-5 h-100">
+            <div id="Direccion" class="d-flex flex-column h-100">
+
+                <div id="header-Direccion" class="p-2 mt-2 mb-0 border-bottom">
+                    <h2 class="text-dark">Direccion</h2>
+                </div>
+
+                <div id="body-Direccion" class="">
+                    <form>
+                        <div class="form-row p-2 mt-3">
+                            <div class="form-group col-md-12">
+                                <label for="inputDireccion" class="text-dark">Direccion:</label>
+                                <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="SelectPais" class="text-dark">Pais:</label>
+                                <select class="form-control bg-white" id="SelectPais">
+                                    <option>Costa Rica</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="selectProvincia" class="text-dark">Provincia:</label>
+                                <select class="form-control bg-white" id="selectProvincia">
+                                    <option>San Jose</option>
+                                    <option>Heredia</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="selectCanton" class="text-dark">Canton:</label>
+                                <select class="form-control bg-white" id="selectCanton">
+                                    <option>San Jose</option>
+                                    <option>Pavas</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="selectProvincia" class="text-dark">Distrito:</label>
+                                <select class="form-control bg-white" id="exampleFormControlSelect1">
+                                    <option>Santa Catalina</option>
+                                    <option>Rohrmoser</option>
+                                </select>
+                            </div>
+                            <div class="form-group row border-top col-md-12 mb-0">
+                                <button type="submit" class="btn btn-primary mt-2">Editar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

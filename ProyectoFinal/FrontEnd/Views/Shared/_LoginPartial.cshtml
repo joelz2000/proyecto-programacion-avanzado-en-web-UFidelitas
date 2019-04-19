@@ -16,7 +16,7 @@
     {
         @Html.AntiForgeryToken()
         <div class="navbar nav ml-auto">
-            @Html.ActionLink("Hola, " + Model.nombre + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-item nav-link" })
+            @Html.ActionLink("Hola, " + Model.nombre + "!", "Edit", "PerfilUsuario", routeValues: new { id = Model.id_usuario }, htmlAttributes: new { title = "Manage", @class = "nav-item nav-link" })
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesion</a></li>
         </div>
 

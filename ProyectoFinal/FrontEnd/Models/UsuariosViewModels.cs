@@ -76,10 +76,62 @@ namespace FrontEnd.Models
 
     public class NavbarUsuarioViewModel
     {
+
+        [Key]
+        [Required]
+        [Display(Name = "Id Usuario:")]
+        public int id_usuario { get; set; }
+
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Nombre")]
         public string nombre;
+
+    }
+    public class PerfilUsuarioViewModel
+    {
+        [Key]
+        [Required]
+        [Display(Name = "Id Usuario:")]
+        public int id_usuario { get; set; }
+
+        [Required]
+        [Display(Name = "Nombre:")]
+        public string nombre { get; set; }
+
+        [Required]
+        [Display(Name = "Apellidos:")]
+        public string apellidos { get; set; }
+        [Required]
+        [Display(Name = "Correo Electronico:")]
+        public string correo { get; set; }
+
+        [Required]
+        [Display(Name = "Telefono:")]
+        public int Telefono { get; set; }
+
+        [Required]
+        [Display(Name = "Pais:")]
+        public int id_pais { get; set; }
+        public List<SelectListItem> lista_pais = new List<SelectListItem>();
+
+
+        [Required]
+        [Display(Name = "Provincia:")]
+        public int id_provincia { get; set; }
+        public List<SelectListItem> lista_provincias = new List<SelectListItem>();
+
+        [Required]
+        [Display(Name = "Canton:")]
+        public int id_canton { get; set; }
+
+        [Required]
+        [Display(Name = "Distrito:")]
+        public int id_distrito { get; set; }
+
+        [Required]
+        [Display(Name = "Dirección:")]
+        public string direccion { get; set; }
 
     }
 
