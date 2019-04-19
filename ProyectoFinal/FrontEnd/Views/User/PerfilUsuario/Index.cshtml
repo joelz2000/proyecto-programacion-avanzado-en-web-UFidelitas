@@ -71,31 +71,21 @@
                                 <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="SelectPais" class="text-dark">Pais:</label>
-                                <select class="form-control bg-white" id="SelectPais">
-                                    <option>Costa Rica</option>
-                                </select>
+                                @Html.LabelFor(m => m.id_provincia, new {@class = "text-dark" })
+                                @Html.DropDownListFor(m => m.id_provincia, new SelectList(Model.lista_provincias, "Value" , "Text"), new { @class = "form-control bg-white"})
+                                @Html.ValidationMessageFor(m => m.id_provincia, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-group col-md-12">
-                                <label for="selectProvincia" class="text-dark">Provincia:</label>
-                                <select class="form-control bg-white" id="selectProvincia">
-                                    <option>San Jose</option>
-                                    <option>Heredia</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="selectCanton" class="text-dark">Canton:</label>
-                                <select class="form-control bg-white" id="selectCanton">
-                                    <option>San Jose</option>
-                                    <option>Pavas</option>
+                                <label for="id_canton" class="text-dark">Canton:</label>
+                                <select class="form-control bg-white" id="id_canton">
+                                    <option value="0">Seleccionar</option>
                                 </select>
                             </div>
 
                             <div class="form-group col-md-12">
-                                <label for="selectProvincia" class="text-dark">Distrito:</label>
-                                <select class="form-control bg-white" id="exampleFormControlSelect1">
-                                    <option>Santa Catalina</option>
-                                    <option>Rohrmoser</option>
+                                <label for="id_distrito" class="text-dark">Distrito:</label>
+                                <select class="form-control bg-white" id="id_distrito">
+                                    <option value="0">Seleccionar</option>
                                 </select>
                             </div>
                             <div class="form-group row border-top col-md-12 mb-0">
@@ -108,3 +98,52 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="~/Scripts/Cleave/cleave.min.js"></script>
+    <script>
+        
+
+        $('#id_provincia').on("change", function () {
+            var url = '@Url.Action("obtenerCantones", "Compra")';
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {
+                    id_provincia: $(this).children("option:selected").val(),
+                },
+            }).done(function (response) {
+                    $('#id_canton').html('');
+                    var options = '';
+                    options += '<option value="0">Seleccionar</option>';
+                    for (var canton in response) {
+                        options += '<option value="' + canton + '">' + response[canton] + '</option>';
+                    }
+                    $('#id_canton').append(options);
+            });
+        });
+
+        $('#id_canton').on("change", function () {
+            var url = '@Url.Action("obtenerDistritos", "Compra")';
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: {
+                    id_distrito: $(this).children("option:selected").val(),
+                },
+            }).done(function (response) {
+                    $('#id_distrito').html('');
+                    var options = '';
+                    options += '<option value="0">Seleccionar</option>';
+                    for (var distrito in response) {
+                        options += '<option value="' + distrito + '">' + response[distrito] + '</option>';
+                    }
+                    $('#id_distrito').append(options);
+            });
+        });
+
+        
+ 
+    </script>
+}

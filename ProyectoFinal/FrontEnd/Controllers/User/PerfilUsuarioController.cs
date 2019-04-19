@@ -11,46 +11,18 @@ namespace FrontEnd.Controllers.User
 {
     public class PerfilUsuarioController : Controller
     {
-        // GET: PerfilUsuario
-        public ActionResult Index()
-        {
-            
-            return View();
-        }
-
-        // GET: PerfilUsuario/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: PerfilUsuario/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PerfilUsuario/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: PerfilUsuario/Edit/5
         public ActionResult Edit(int id)
         {
             usuarios usuario;
+            List<Provincia> provincias = new List<Provincia>();
+            PerfilUsuarioViewModel perfilUsuarioVM = new PerfilUsuarioViewModel();
 
+            
+
+
+            //Usuario
             using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
             {
                 usuario = unidad.genericDAL.Get(id);
@@ -61,14 +33,66 @@ namespace FrontEnd.Controllers.User
                 usuario.telefono = 0;
             }
 
-            PerfilUsuarioViewModel perfilUsuarioVM = new PerfilUsuarioViewModel
+            if(usuario.provinciaId == null)
             {
-                id_usuario = usuario.userId,
-                nombre = usuario.nombre,
-                apellidos = usuario.apellidos,
-                correo = usuario.correoElectronico,
-                Telefono = (int)usuario.telefono
-            };
+                usuario.provinciaId = 0;
+            }
+
+            perfilUsuarioVM.id_usuario = usuario.userId;
+            perfilUsuarioVM.nombre = usuario.nombre;
+            perfilUsuarioVM.apellidos = usuario.apellidos;
+            perfilUsuarioVM.correo = usuario.correoElectronico;
+            perfilUsuarioVM.Telefono = (int)usuario.telefono;
+            perfilUsuarioVM.id_provincia = (int)usuario.provinciaId;
+
+
+            //Provincia
+
+            using (UnidadDeTrabajo<Provincia> unidad = new UnidadDeTrabajo<Provincia>(new BDContext()))
+            {
+                provincias = unidad.genericDAL.GetAll().ToList();
+            }
+
+            Provincia provincia = new Provincia(); 
+
+
+            using (UnidadDeTrabajo<Provincia> unidad = new UnidadDeTrabajo<Provincia>(new BDContext()))
+            {
+                provincia = unidad.genericDAL.Get((int)usuario.provinciaId);
+            }
+
+            string textProvincia;
+            if(provincia == null)
+            {
+                textProvincia = "Seleccionar";
+            }
+            else
+            {
+                textProvincia = provincia.nombre;
+            }
+            // valor por defecto
+            perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
+            {
+                Text = textProvincia,
+                Value = usuario.provinciaId.ToString()
+            });
+
+            foreach (var itemProvincia in provincias)
+            {
+                if(usuario.provinciaId != itemProvincia.provinciaId)
+                {
+                    perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
+                    {
+                        Text = itemProvincia.nombre,
+                        Value = itemProvincia.provinciaId.ToString()
+                    });
+                }
+               
+            }
+
+
+
+
             return View("~/Views/User/PerfilUsuario/Index.cshtml", perfilUsuarioVM);
         }
 
@@ -88,26 +112,37 @@ namespace FrontEnd.Controllers.User
             }
         }
 
-        // GET: PerfilUsuario/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult obtenerCantones(int id_provincia)
         {
-            return View();
+            BDContext context = new BDContext();
+            UnidadDeTrabajo<Canton> unidad_cantones = new UnidadDeTrabajo<Canton>(context);
+            List<sp_obtenerCantonesPorIDProvincia_Result> lista_cantones = new List<sp_obtenerCantonesPorIDProvincia_Result>();
+            lista_cantones = context.sp_obtenerCantonesPorIDProvincia(id_provincia).ToList();
+
+            var diccionarioCantones = new Dictionary<string, string>();
+            foreach (var canton in lista_cantones)
+            {
+                diccionarioCantones.Add(canton.cantonId.ToString(), canton.nombre);
+            }
+
+            return Json(diccionarioCantones, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: PerfilUsuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public JsonResult obtenerDistritos(int id_distrito)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            BDContext context = new BDContext();
+            UnidadDeTrabajo<Distrito> unidad_distritos = new UnidadDeTrabajo<Distrito>(context);
+            List<sp_obtenerDistritosPorIDCanton_Result> lista_distritos = new List<sp_obtenerDistritosPorIDCanton_Result>();
+            lista_distritos = context.sp_obtenerDistritosPorIDCanton(id_distrito).ToList();
 
-                return RedirectToAction("Index");
-            }
-            catch
+            var diccionarioDistritos = new Dictionary<string, string>();
+            foreach (var distrito in lista_distritos)
             {
-                return View();
+                diccionarioDistritos.Add(distrito.distritoId.ToString(), distrito.nombre);
             }
+
+            return Json(diccionarioDistritos, JsonRequestBehavior.AllowGet);
         }
+
     }
 }

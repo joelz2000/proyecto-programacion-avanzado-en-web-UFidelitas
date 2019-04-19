@@ -111,12 +111,6 @@ namespace FrontEnd.Models
         public int Telefono { get; set; }
 
         [Required]
-        [Display(Name = "Pais:")]
-        public int id_pais { get; set; }
-        public List<SelectListItem> lista_pais = new List<SelectListItem>();
-
-
-        [Required]
         [Display(Name = "Provincia:")]
         public int id_provincia { get; set; }
         public List<SelectListItem> lista_provincias = new List<SelectListItem>();
