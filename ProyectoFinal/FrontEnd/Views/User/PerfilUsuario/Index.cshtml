@@ -80,10 +80,9 @@
                             @Html.ValidationMessageFor(m => m.id_provincia, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="id_canton" class="text-dark">Canton:</label>
-                            <select class="form-control bg-white" id="id_canton">
-                                 <option value="@Model.id_canton">@Model.nombreCanton</option>
-                            </select>
+                            @Html.LabelFor(m => m.id_canton, new { @class = "text-dark" })
+                            @Html.DropDownListFor(m => m.id_canton, new SelectList(Model.lista_canton_usuario, "Value", "Text"), new { @class = "form-control bg-white" })
+                            @Html.ValidationMessageFor(m => m.id_canton, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group col-md-12">

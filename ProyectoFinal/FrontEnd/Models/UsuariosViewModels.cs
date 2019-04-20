@@ -118,12 +118,16 @@ namespace FrontEnd.Models
         public int id_provincia { get; set; }
         public List<SelectListItem> lista_provincias = new List<SelectListItem>();
 
+       
+
         [Required]
         [Display(Name = "Canton:")]
         public int id_canton { get; set; }
 
         [Display(Name = "Nombre Canton:")]
         public string nombreCanton { get; set; }
+
+        public List<SelectListItem> lista_canton_usuario = new List<SelectListItem>();
 
         [Required]
         [Display(Name = "Distrito:")]
