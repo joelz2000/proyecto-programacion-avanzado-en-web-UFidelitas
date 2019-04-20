@@ -19,6 +19,7 @@ namespace FrontEnd.Controllers.User
             usuarios usuario;
             List<Provincia> provincias = new List<Provincia>();
             List<Canton> cantones = new List<Canton>();
+            List<Distrito> distritos = new List<Distrito>();
             PerfilUsuarioViewModel perfilUsuarioVM = new PerfilUsuarioViewModel();
             Canton canton = new Canton();
             Distrito distrito = new Distrito();
@@ -40,13 +41,6 @@ namespace FrontEnd.Controllers.User
             }
 
 
-
-           
-            //Distrito del usuario
-
-            distrito = obtenerDistritoUsuario((int)usuario.distritoId);
-
-           
 
             //Provincia
             
@@ -98,10 +92,18 @@ namespace FrontEnd.Controllers.User
                 cantones = unidad.genericDAL.GetAll().ToList();
             }
 
-            
+           
 
+            
+            if(usuario.cantonId == null)
+            {
+                usuario.cantonId = 0;
+            }
+            
+                //obtener canton del usuario
             canton = obtenerCantonUsuario((int)usuario.cantonId);
 
+           
             string textCantones;
             if (canton == null)
             {
@@ -120,7 +122,7 @@ namespace FrontEnd.Controllers.User
 
             foreach (var itemCanton in cantones)
             {
-                if (usuario.provinciaId == itemCanton.provinciaId)
+                if (usuario.provinciaId == itemCanton.provinciaId && usuario.cantonId != itemCanton.cantonId)
                 {
                     perfilUsuarioVM.lista_canton_usuario.Add(new SelectListItem()
                     {
@@ -131,6 +133,51 @@ namespace FrontEnd.Controllers.User
 
             }
 
+            //distritos por canton del usuario
+
+            using (UnidadDeTrabajo<Distrito> unidad = new UnidadDeTrabajo<Distrito>(new BDContext()))
+            {
+                distritos = unidad.genericDAL.GetAll().ToList();
+            }
+
+            if (usuario.distritoId == null)
+            {
+                usuario.distritoId = 0;
+            }
+            //obtener canton del usuario
+            distrito = obtenerDistritoUsuario((int)usuario.distritoId);
+
+            string textDistrito;
+            if (distrito == null)
+            {
+                textDistrito = "Seleccionar";
+            }
+            else
+            {
+                textDistrito = distrito.nombre;
+            }
+            // valor por defecto
+            perfilUsuarioVM.lista_distrito_usuario.Add(new SelectListItem()
+            {
+                Text = textDistrito,
+                Value = usuario.distritoId.ToString()
+            });
+
+            foreach (var itemDistrito in distritos)
+            {
+                if (usuario.cantonId == itemDistrito.cantonId && usuario.distritoId != itemDistrito.distritoId)
+                {
+                    perfilUsuarioVM.lista_distrito_usuario.Add(new SelectListItem()
+                    {
+                        Text = itemDistrito.nombre,
+                        Value = itemDistrito.cantonId.ToString()
+                    });
+                }
+
+            }
+
+            
+
             perfilUsuarioVM.id_usuario = usuario.userId;
             perfilUsuarioVM.nombre = usuario.nombre;
             perfilUsuarioVM.apellidos = usuario.apellidos;
@@ -139,7 +186,7 @@ namespace FrontEnd.Controllers.User
             perfilUsuarioVM.id_provincia = (int)usuario.provinciaId;
             perfilUsuarioVM.Usuario_ID = usuario.Usuario_ID;
             perfilUsuarioVM.id_canton = canton.cantonId;
-            perfilUsuarioVM.nombreDistrito = distrito.nombre;
+            perfilUsuarioVM.id_distrito = distrito.distritoId;
 
 
            
@@ -194,6 +241,7 @@ namespace FrontEnd.Controllers.User
 
         public Canton obtenerCantonUsuario(int idDistrito)
         {
+            
             Canton canton = new Canton();
             if (idDistrito != 0)
             {

@@ -86,10 +86,9 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="id_distrito" class="text-dark">Distrito:</label>
-                            <select class="form-control bg-white" id="id_distrito">
-                                <option value="@Model.id_distrito">@Model.nombreDistrito</option>
-                            </select>
+                            @Html.LabelFor(m => m.id_distrito, new { @class = "text-dark" })
+                            @Html.DropDownListFor(m => m.id_distrito, new SelectList(Model.lista_distrito_usuario, "Value", "Text"), new { @class = "form-control bg-white" })
+                            @Html.ValidationMessageFor(m => m.id_distrito, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group row border-top col-md-12 mb-0">
                             <button type="submit" class="btn btn-primary mt-2" id="guardarInformacionPersonal" onclick="guardarInformacionPersonal()">Guardar</button>

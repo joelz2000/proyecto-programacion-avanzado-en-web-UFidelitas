@@ -132,6 +132,7 @@ namespace FrontEnd.Models
         [Required]
         [Display(Name = "Distrito:")]
         public int id_distrito { get; set; }
+        public List<SelectListItem> lista_distrito_usuario = new List<SelectListItem>();
 
         [Display(Name = "Nombre Distrito:")]
         public string nombreDistrito { get; set; }
