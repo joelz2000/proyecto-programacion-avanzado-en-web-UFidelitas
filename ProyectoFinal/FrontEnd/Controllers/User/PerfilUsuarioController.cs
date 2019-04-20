@@ -4,6 +4,7 @@ using FrontEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,9 +20,8 @@ namespace FrontEnd.Controllers.User
             List<Provincia> provincias = new List<Provincia>();
             PerfilUsuarioViewModel perfilUsuarioVM = new PerfilUsuarioViewModel();
 
-            
 
-
+          
             //Usuario
             using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
             {
@@ -38,31 +38,50 @@ namespace FrontEnd.Controllers.User
                 usuario.provinciaId = 0;
             }
 
-            perfilUsuarioVM.id_usuario = usuario.userId;
-            perfilUsuarioVM.nombre = usuario.nombre;
-            perfilUsuarioVM.apellidos = usuario.apellidos;
-            perfilUsuarioVM.correo = usuario.correoElectronico;
-            perfilUsuarioVM.Telefono = (int)usuario.telefono;
-            perfilUsuarioVM.id_provincia = (int)usuario.provinciaId;
 
+
+            //canton del usuario
+
+            Canton canton = new Canton();
+            if (usuario.cantonId != null)
+            {
+               
+                using (UnidadDeTrabajo<Canton> unidad = new UnidadDeTrabajo<Canton>(new BDContext()))
+                {
+                    canton = unidad.genericDAL.Get((int)usuario.cantonId);
+                }
+            }
+
+
+            //Distrito del usuario
+            Distrito distrito = new Distrito();
+            if (usuario.distritoId != null)
+            {
+              
+                using (UnidadDeTrabajo<Distrito> unidad = new UnidadDeTrabajo<Distrito>(new BDContext()))
+                {
+                    distrito = unidad.genericDAL.Get((int)usuario.distritoId);
+                }
+            }
+
+           
 
             //Provincia
-
+            
             using (UnidadDeTrabajo<Provincia> unidad = new UnidadDeTrabajo<Provincia>(new BDContext()))
             {
                 provincias = unidad.genericDAL.GetAll().ToList();
             }
 
-            Provincia provincia = new Provincia(); 
-
-
+            Provincia provincia = new Provincia();
+            
             using (UnidadDeTrabajo<Provincia> unidad = new UnidadDeTrabajo<Provincia>(new BDContext()))
             {
                 provincia = unidad.genericDAL.Get((int)usuario.provinciaId);
             }
 
             string textProvincia;
-            if(provincia == null)
+            if (provincia == null)
             {
                 textProvincia = "Seleccionar";
             }
@@ -70,7 +89,7 @@ namespace FrontEnd.Controllers.User
             {
                 textProvincia = provincia.nombre;
             }
-            // valor por defecto
+                    // valor por defecto
             perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
             {
                 Text = textProvincia,
@@ -79,7 +98,7 @@ namespace FrontEnd.Controllers.User
 
             foreach (var itemProvincia in provincias)
             {
-                if(usuario.provinciaId != itemProvincia.provinciaId)
+                if (usuario.provinciaId != itemProvincia.provinciaId)
                 {
                     perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
                     {
@@ -87,8 +106,22 @@ namespace FrontEnd.Controllers.User
                         Value = itemProvincia.provinciaId.ToString()
                     });
                 }
-               
+
             }
+
+
+            perfilUsuarioVM.id_usuario = usuario.userId;
+            perfilUsuarioVM.nombre = usuario.nombre;
+            perfilUsuarioVM.apellidos = usuario.apellidos;
+            perfilUsuarioVM.correo = usuario.correoElectronico;
+            perfilUsuarioVM.Telefono = (int)usuario.telefono;
+            perfilUsuarioVM.id_provincia = (int)usuario.provinciaId;
+            perfilUsuarioVM.Usuario_ID = usuario.Usuario_ID;
+            perfilUsuarioVM.nombreCanton = canton.nombre;
+            perfilUsuarioVM.nombreDistrito = distrito.nombre;
+
+
+           
 
 
 
@@ -98,17 +131,78 @@ namespace FrontEnd.Controllers.User
 
         // POST: PerfilUsuario/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarInformacionPersonal(PerfilUsuarioViewModel perfilUsuarioVM)
         {
             try
             {
-                // TODO: Add update logic here
+                usuarios usuario ;
 
-                return RedirectToAction("Index");
+                usuario = new usuarios()
+                {
+                    userId = perfilUsuarioVM.id_usuario,
+                    Usuario_ID = perfilUsuarioVM.Usuario_ID,
+                    nombre = perfilUsuarioVM.nombre,
+                    apellidos = perfilUsuarioVM.apellidos,
+                    telefono = perfilUsuarioVM.Telefono,
+                    correoElectronico = perfilUsuarioVM.correo,
+                    direccion = perfilUsuarioVM.direccion,
+                    provinciaId = perfilUsuarioVM.id_provincia,
+                    cantonId = perfilUsuarioVM.id_canton,
+                    distritoId = perfilUsuarioVM.id_distrito,
+                };
+
+
+                using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
+                {
+                    unidad.genericDAL.Update(usuario);
+                    unidad.Complete();
+                }
+
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarDireccion(PerfilUsuarioViewModel perfilUsuarioVM)
+        {
+            try
+            {
+                usuarios usuario;
+
+                usuario = new usuarios()
+                {
+                    userId = perfilUsuarioVM.id_usuario,
+                    Usuario_ID = perfilUsuarioVM.Usuario_ID,
+                    direccion = perfilUsuarioVM.direccion,
+                    provinciaId = perfilUsuarioVM.id_provincia,
+                    cantonId = perfilUsuarioVM.id_canton,
+                    distritoId = perfilUsuarioVM.id_distrito,
+                    nombre = perfilUsuarioVM.nombre,
+                    apellidos = perfilUsuarioVM.apellidos,
+                    telefono = perfilUsuarioVM.Telefono,
+                    correoElectronico = perfilUsuarioVM.correo
+                };
+
+
+                using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
+                {
+                    unidad.genericDAL.Update(usuario);
+                    unidad.Complete();
+                }
+
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 

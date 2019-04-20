@@ -23,35 +23,37 @@
                 </div>
 
                 <div id="body-informacionPersonal" class="">
-                    <form>
-                        <div class="form-row p-2 mt-3">
-                            <div class="form-group col-md-4">
-                                @Html.LabelFor(m => m.nombre, new { @class = "text-dark" })
-                                @Html.EditorFor(m => m.nombre, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
-                                @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-md-4">
-                                @Html.LabelFor(m => m.apellidos, new { @class = "text-dark" })
-                                @Html.EditorFor(m => m.apellidos, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
-                                @Html.ValidationMessageFor(m => m.apellidos, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                @Html.LabelFor(m => m.Telefono, new { @class = "text-dark" })
-                                @Html.EditorFor(m => m.Telefono, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
-                                @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                @Html.LabelFor(m => m.correo, new { @class = "text-dark" })
-                                @Html.EditorFor(m => m.correo, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
-                                @Html.ValidationMessageFor(m => m.correo, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group row border-top col-md-12 mb-0">
-                                <button type="submit" class="btn btn-primary mt-2 ml-2">Editar</button>
-                            </div>
+                    <form id="__AjaxAntiForgeryForm" action="#" method="post">@Html.AntiForgeryToken()</form>
+                    @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
+                    @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
+                    <div class="form-row p-2 mt-3">
+                        <div class="form-group col-md-4">
+                            @Html.LabelFor(m => m.nombre, new { @class = "text-dark" })
+                            @Html.EditorFor(m => m.nombre, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                            @Html.ValidationMessageFor(m => m.nombre, "", new { @class = "text-danger" })
                         </div>
-                    </form>
+                        <div class="form-group col-md-4">
+                            @Html.LabelFor(m => m.apellidos, new { @class = "text-dark" })
+                            @Html.EditorFor(m => m.apellidos, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                            @Html.ValidationMessageFor(m => m.apellidos, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.Telefono, new { @class = "text-dark" })
+                            @Html.EditorFor(m => m.Telefono, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                            @Html.ValidationMessageFor(m => m.Telefono, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.correo, new { @class = "text-dark" })
+                            @Html.EditorFor(m => m.correo, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                            @Html.ValidationMessageFor(m => m.correo, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group row border-top col-md-12 mb-0">
+                            <button type="submit" class="btn btn-primary mt-2" id="Guardar" onclick="guardarInformacionPersonal()">Guardar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,35 +66,36 @@
                 </div>
 
                 <div id="body-Direccion" class="">
-                    <form>
-                        <div class="form-row p-2 mt-3">
-                            <div class="form-group col-md-12">
-                                <label for="inputDireccion" class="text-dark">Direccion:</label>
-                                <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
-                            </div>
-                            <div class="form-group col-md-12">
-                                @Html.LabelFor(m => m.id_provincia, new {@class = "text-dark" })
-                                @Html.DropDownListFor(m => m.id_provincia, new SelectList(Model.lista_provincias, "Value" , "Text"), new { @class = "form-control bg-white"})
-                                @Html.ValidationMessageFor(m => m.id_provincia, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="id_canton" class="text-dark">Canton:</label>
-                                <select class="form-control bg-white" id="id_canton">
-                                    <option value="0">Seleccionar</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label for="id_distrito" class="text-dark">Distrito:</label>
-                                <select class="form-control bg-white" id="id_distrito">
-                                    <option value="0">Seleccionar</option>
-                                </select>
-                            </div>
-                            <div class="form-group row border-top col-md-12 mb-0">
-                                <button type="submit" class="btn btn-primary mt-2">Editar</button>
-                            </div>
+                    <form id="__AjaxAntiForgeryForm" action="#" method="post">@Html.AntiForgeryToken()</form>
+                    @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
+                    @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
+                    <div class="form-row p-2 mt-3">
+                        <div class="form-group col-md-12">
+                            <label for="inputDireccion" class="text-dark">Direccion:</label>
+                            <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
                         </div>
-                    </form>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(m => m.id_provincia, new { @class = "text-dark" })
+                            @Html.DropDownListFor(m => m.id_provincia, new SelectList(Model.lista_provincias, "Value", "Text"), new { @class = "form-control bg-white" })
+                            @Html.ValidationMessageFor(m => m.id_provincia, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="id_canton" class="text-dark">Canton:</label>
+                            <select class="form-control bg-white" id="id_canton">
+                                 <option value="@Model.id_canton">@Model.nombreCanton</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="id_distrito" class="text-dark">Distrito:</label>
+                            <select class="form-control bg-white" id="id_distrito">
+                                <option value="@Model.id_distrito">@Model.nombreDistrito</option>
+                            </select>
+                        </div>
+                        <div class="form-group row border-top col-md-12 mb-0">
+                            <button type="submit" class="btn btn-primary mt-2" id="guardarInformacionPersonal" onclick="guardarInformacionPersonal()">Guardar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,7 +126,9 @@
                     $('#id_canton').append(options);
             });
         });
+       
 
+         
         $('#id_canton').on("change", function () {
             var url = '@Url.Action("obtenerDistritos", "Compra")';
             $.ajax({
@@ -143,7 +148,121 @@
             });
         });
 
-        
+        function guardarInformacionPersonal() {
+            var saveUrl = '@Url.Action("EditarInformacionPersonal", "PerfilUsuario")';
+            var newUrl = '@Url.Action("Edit", "PerfilUsuario", routeValues: new { id = @Model.id_usuario })';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    id_usuario: $("#id_usuario").val(),
+                    nombre: $("#nombre").val(),
+                    apellidos: $("#apellidos").val(),
+                    Telefono: $("#Telefono").val(),
+                    correo: $("#correo").val(),
+                    Usuario_ID: $("#Usuario_ID").val(),
+                    id_provincia: $("#id_provincia").val(),
+                    id_canton: $("#id_canton").val(),
+                    id_distrito: $("#id_distrito").val(),
+
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Perfil Actualizado!',
+                            'Perfil ha sido actualizado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor Llena todos los datos de informacion personal o direccion',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+
+        function guardarDireccion() {
+            var saveUrl = '@Url.Action("EditarDireccion", "PerfilUsuario")';
+            var newUrl = '@Url.Action("Edit", "PerfilUsuario", routeValues: new { id = @Model.id_usuario })';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    id_usuario: $("#id_usuario").val(),
+                   
+                    Usuario_ID: $("#Usuario_ID").val(),
+
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Perfil Actualizado!',
+                            'Perfil ha sido actualizado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
  
     </script>
 }

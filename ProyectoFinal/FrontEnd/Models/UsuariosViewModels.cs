@@ -95,6 +95,9 @@ namespace FrontEnd.Models
         [Display(Name = "Id Usuario:")]
         public int id_usuario { get; set; }
 
+        [Key]
+        public string Usuario_ID { get; set; }
+
         [Required]
         [Display(Name = "Nombre:")]
         public string nombre { get; set; }
@@ -119,9 +122,15 @@ namespace FrontEnd.Models
         [Display(Name = "Canton:")]
         public int id_canton { get; set; }
 
+        [Display(Name = "Nombre Canton:")]
+        public string nombreCanton { get; set; }
+
         [Required]
         [Display(Name = "Distrito:")]
         public int id_distrito { get; set; }
+
+        [Display(Name = "Nombre Distrito:")]
+        public string nombreDistrito { get; set; }
 
         [Required]
         [Display(Name = "Dirección:")]
