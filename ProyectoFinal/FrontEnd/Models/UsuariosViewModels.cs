@@ -141,6 +141,9 @@ namespace FrontEnd.Models
         [Display(Name = "Dirección:")]
         public string direccion { get; set; }
 
+        public string imagenUsuario { get; set; }
     }
+
+    
 
 }

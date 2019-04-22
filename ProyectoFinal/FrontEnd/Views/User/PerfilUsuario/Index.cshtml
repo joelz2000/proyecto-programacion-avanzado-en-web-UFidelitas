@@ -1,16 +1,33 @@
 ﻿@model FrontEnd.Models.PerfilUsuarioViewModel
-@{
-    ViewBag.Title = "Manage";
-}
+
 
 
 <div class="container d-flex flex-row flex-wrap">
 
-    <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3" style="height:650px;">
-        <div id="fotoPerfil" class="d-flex flex-column">
-            <img class="img-thumbnail" src="~/Content/dist/img/avatar5.png" alt="Alternate Text" />
-            <a class="btn btn-outline-primary m-2" href="#">Editar Foto de Perfil</a>
+    <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3 h-100" >
+        <div id="fotoPerfil" class="d-flex flex-column w-100 h-100">
+
+            <img class="w-100 h-100 mb-2" alt="Responsive image" src="@Model.imagenUsuario" />
+            <form id="__AjaxAntiForgeryForm" action="#" enctype = "multipart/form-data" method="post">@Html.AntiForgeryToken()</form>
+            @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
+            @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="file" id="fotoPerfil" class="custom-file-input">
+                    <label class="custom-file-label" for="inputGroupFile01">Elegir foto</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" id="subirImagenPerfil" onclick="guardarInformacionPersonal()" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
+            </div>
+
+            <hr />
         </div>
+
+       
     </div>
 
     <div class="container-fluid d-flex flex-column flex-wrap col-lg-9 h-100">
@@ -124,6 +141,8 @@
                     $('#id_canton').append(options);
             });
         });
+
+        
        
 
          
@@ -163,6 +182,7 @@
                     id_provincia: $("#id_provincia").val(),
                     id_canton: $("#id_canton").val(),
                     id_distrito: $("#id_distrito").val(),
+                    fotoPerfil: $("#fotoPerfil").val(),
 
                 },
                 statusCode: {
@@ -260,7 +280,9 @@
                 }
 
             });
+
+            
         }
- 
+        
     </script>
 }

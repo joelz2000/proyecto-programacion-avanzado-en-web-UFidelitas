@@ -176,8 +176,20 @@ namespace FrontEnd.Controllers.User
 
             }
 
-            
 
+            string ruta;
+
+           
+            if (usuario.fotoPerfil == null)
+            {
+                 ruta = "/Content/dist/img/avatar5.png";
+                perfilUsuarioVM.imagenUsuario = ruta;
+            }
+            else
+            {
+                perfilUsuarioVM.imagenUsuario = usuario.fotoPerfil;
+            }
+          
             perfilUsuarioVM.id_usuario = usuario.userId;
             perfilUsuarioVM.nombre = usuario.nombre;
             perfilUsuarioVM.apellidos = usuario.apellidos;
@@ -200,11 +212,17 @@ namespace FrontEnd.Controllers.User
         // POST: PerfilUsuario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarInformacionPersonal(PerfilUsuarioViewModel perfilUsuarioVM)
+        public ActionResult EditarInformacionPersonal(PerfilUsuarioViewModel perfilUsuarioVM, HttpPostedFileBase file)
         {
             try
             {
                 usuarios usuario ;
+
+
+                //subir imagen de perfil
+
+                string rutaFotoPerfil = SubirImagenPerfil(perfilUsuarioVM.id_usuario, file);
+
 
                 usuario = new usuarios()
                 {
@@ -218,6 +236,7 @@ namespace FrontEnd.Controllers.User
                     provinciaId = perfilUsuarioVM.id_provincia,
                     cantonId = perfilUsuarioVM.id_canton,
                     distritoId = perfilUsuarioVM.id_distrito,
+                    fotoPerfil = rutaFotoPerfil
                 };
 
 
@@ -227,7 +246,7 @@ namespace FrontEnd.Controllers.User
                     unidad.Complete();
                 }
 
-
+                
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             catch
@@ -304,7 +323,28 @@ namespace FrontEnd.Controllers.User
             return Json(diccionarioDistritos, JsonRequestBehavior.AllowGet);
         }
 
-       
+        //Subir imagenes en el servidor y guardar nombre en la base de datos.
+        [HttpPost]
+        public string SubirImagenPerfil(int idUsuario, HttpPostedFileBase file)
+        {
+
+            
+            if (file == null) {
+                return "/Content/dist/img/avatar5.png";
+            }
+            else
+            {
+                string archivo = (file.FileName).ToLower();
+
+                file.SaveAs(Server.MapPath("/Content/dist/img/usuarios/" + archivo));
+
+                return archivo;
+            }
+
+         
+        }
+
+
 
     }
 }

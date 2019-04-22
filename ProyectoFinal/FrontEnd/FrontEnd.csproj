@@ -7227,6 +7227,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\dist\facturacionesPDF\" />
+    <Folder Include="Content\dist\img\usuarios\" />
     <Folder Include="Views\Compra\" />
     <Folder Include="Views\Layout\" />
   </ItemGroup>
