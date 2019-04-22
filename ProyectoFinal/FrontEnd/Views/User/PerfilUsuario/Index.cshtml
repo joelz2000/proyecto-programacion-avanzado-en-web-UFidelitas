@@ -8,21 +8,35 @@
         <div id="fotoPerfil" class="d-flex flex-column w-100 h-100">
 
             <img class="w-100 h-100 mb-2" alt="Responsive image" src="@Model.imagenUsuario" />
-            <form id="__AjaxAntiForgeryForm" action="#" enctype = "multipart/form-data" method="post">@Html.AntiForgeryToken()</form>
-            @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
-            @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+            @using (Html.BeginForm("SubirImagenPerfil", "PerfilUsuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.nombre, new { id = "nombre" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.apellidos, new { id = "apellidos" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.correo, new { id = "correo" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.Telefono, new { id = "telefono" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.direccion, new { id = "direccion" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.id_provincia, new { id = "provinciaId" })
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" name="file" id="fotoPerfil" class="custom-file-input">
+                        <label class="custom-file-label" for="inputGroupFile01">Elegir foto</label>
+                    </div>
                 </div>
-                <div class="custom-file">
-                    <input type="file" name="file" id="fotoPerfil" class="custom-file-input">
-                    <label class="custom-file-label" for="inputGroupFile01">Elegir foto</label>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" id="subirImagenPerfil" onclick="guardarInformacionPersonal()" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
-            </div>
+            }
+
+
+
+
+
+
 
             <hr />
         </div>
@@ -88,8 +102,9 @@
                     @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
                     <div class="form-row p-2 mt-3">
                         <div class="form-group col-md-12">
-                            <label for="inputDireccion" class="text-dark">Direccion:</label>
-                            <input type="text" class="form-control bg-white" id="inputDireccion" placeholder="Nombre" value="Avenida 31A">
+                            @Html.LabelFor(m => m.direccion, new { @class = "text-dark" })
+                            @Html.EditorFor(m => m.direccion, new { htmlAttributes = new { @class = "form-control bg-white", min = 0 } })
+                            @Html.ValidationMessageFor(m => m.direccion, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group col-md-12">
                             @Html.LabelFor(m => m.id_provincia, new { @class = "text-dark" })
@@ -182,7 +197,7 @@
                     id_provincia: $("#id_provincia").val(),
                     id_canton: $("#id_canton").val(),
                     id_distrito: $("#id_distrito").val(),
-                    fotoPerfil: $("#fotoPerfil").val(),
+                    direccion: $("#direccion").val(),
 
                 },
                 statusCode: {

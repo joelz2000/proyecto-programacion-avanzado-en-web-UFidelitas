@@ -199,9 +199,11 @@ namespace FrontEnd.Controllers.User
             perfilUsuarioVM.Usuario_ID = usuario.Usuario_ID;
             perfilUsuarioVM.id_canton = canton.cantonId;
             perfilUsuarioVM.id_distrito = distrito.distritoId;
+            perfilUsuarioVM.direccion = usuario.direccion;
 
 
-           
+
+
 
 
 
@@ -212,16 +214,13 @@ namespace FrontEnd.Controllers.User
         // POST: PerfilUsuario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarInformacionPersonal(PerfilUsuarioViewModel perfilUsuarioVM, HttpPostedFileBase file)
+        public ActionResult EditarInformacionPersonal(PerfilUsuarioViewModel perfilUsuarioVM)
         {
             try
             {
                 usuarios usuario ;
 
 
-                //subir imagen de perfil
-
-                string rutaFotoPerfil = SubirImagenPerfil(perfilUsuarioVM.id_usuario, file);
 
 
                 usuario = new usuarios()
@@ -235,8 +234,7 @@ namespace FrontEnd.Controllers.User
                     direccion = perfilUsuarioVM.direccion,
                     provinciaId = perfilUsuarioVM.id_provincia,
                     cantonId = perfilUsuarioVM.id_canton,
-                    distritoId = perfilUsuarioVM.id_distrito,
-                    fotoPerfil = rutaFotoPerfil
+                    distritoId = perfilUsuarioVM.id_distrito
                 };
 
 
@@ -325,12 +323,22 @@ namespace FrontEnd.Controllers.User
 
         //Subir imagenes en el servidor y guardar nombre en la base de datos.
         [HttpPost]
-        public string SubirImagenPerfil(int idUsuario, HttpPostedFileBase file)
+        public ActionResult SubirImagenPerfil(HttpPostedFileBase file)
         {
 
-            
+            var id_usuario = Request["id_usuario"];
+            var Usuario_ID = Request["Usuario_ID"];
+            var nombre = Request["nombre"];
+            var apellidos = Request["apellidos"];
+            var correo = Request["correo"];
+            var telefono = Request["telefono"];
+            var direccion = Request["direccion"];
+            var provinciaId = Request["provinciaId"];
+
+            string ruta = "";
+
             if (file == null) {
-                return "/Content/dist/img/avatar5.png";
+                ruta = "/Content/dist/img/avatar5.png";
             }
             else
             {
@@ -338,10 +346,34 @@ namespace FrontEnd.Controllers.User
 
                 file.SaveAs(Server.MapPath("/Content/dist/img/usuarios/" + archivo));
 
-                return archivo;
+                ruta = "/Content/dist/img/usuarios/" + archivo;
+
+                
             }
 
-         
+            usuarios usuario;
+
+            if (direccion != null) {
+                direccion = "No tiene direccion";
+            }
+            using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
+            {
+                usuario = new usuarios
+                {
+                    userId = Int32.Parse(id_usuario),
+                    Usuario_ID = Usuario_ID,
+                    nombre = nombre,
+                    apellidos = apellidos,
+                    telefono = Int32.Parse(telefono),
+                    correoElectronico = correo,
+                    direccion = direccion,
+                    provinciaId = Int32.Parse(provinciaId),
+                   
+                };
+                unidad.genericDAL.Update(usuario);
+                unidad.Complete();
+            }
+            return RedirectToAction("Edit", "PerfilUsuario", new { id= id_usuario});
         }
 
 
