@@ -68,7 +68,7 @@ namespace FrontEnd.Controllers.User
                 textProvincia = provincia.nombre;
                 valorProvincia = provincia.provinciaId;
             }
-                    // valor por defecto
+            // valor por defecto de provincia
             perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
             {
                 Text = textProvincia,
@@ -166,7 +166,7 @@ namespace FrontEnd.Controllers.User
             {
                 textDistrito = distrito.nombre;
             }
-            // valor por defecto
+            // valor por defecto distrito por usuario
             perfilUsuarioVM.lista_distrito_usuario.Add(new SelectListItem()
             {
                 Text = textDistrito,
@@ -186,7 +186,7 @@ namespace FrontEnd.Controllers.User
 
             }
 
-
+            //Asignar ruta de imagen de perfil
             string ruta;
 
            
