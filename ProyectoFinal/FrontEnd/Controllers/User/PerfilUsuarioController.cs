@@ -57,19 +57,22 @@ namespace FrontEnd.Controllers.User
             }
 
             string textProvincia;
-            if (provincia == null)
+            int valorProvincia;
+            if (usuario.provinciaId == 0)
             {
                 textProvincia = "Seleccionar";
+                valorProvincia = 0;
             }
             else
             {
                 textProvincia = provincia.nombre;
+                valorProvincia = provincia.provinciaId;
             }
                     // valor por defecto
             perfilUsuarioVM.lista_provincias.Add(new SelectListItem()
             {
                 Text = textProvincia,
-                Value = usuario.provinciaId.ToString()
+                Value = valorProvincia.ToString()
             });
 
             foreach (var itemProvincia in provincias)
@@ -105,21 +108,26 @@ namespace FrontEnd.Controllers.User
 
            
             string textCantones;
-            if (canton == null)
+            int valor;
+            if (canton.cantonId == 0)
             {
                 textCantones = "Seleccionar";
+                valor = 0;
             }
             else
             {
                 textCantones = canton.nombre;
+                valor = (int)usuario.cantonId;
             }
             // valor por defecto
             perfilUsuarioVM.lista_canton_usuario.Add(new SelectListItem()
             {
                 Text = textCantones,
-                Value = usuario.cantonId.ToString()
+                Value = valor.ToString()
             });
 
+
+           
             foreach (var itemCanton in cantones)
             {
                 if (usuario.provinciaId == itemCanton.provinciaId && usuario.cantonId != itemCanton.cantonId)
@@ -132,6 +140,8 @@ namespace FrontEnd.Controllers.User
                 }
 
             }
+            
+            
 
             //distritos por canton del usuario
 
@@ -144,7 +154,7 @@ namespace FrontEnd.Controllers.User
             {
                 usuario.distritoId = 0;
             }
-            //obtener canton del usuario
+            //obtener ditrito por usuario
             distrito = obtenerDistritoUsuario((int)usuario.distritoId);
 
             string textDistrito;
@@ -222,7 +232,7 @@ namespace FrontEnd.Controllers.User
 
 
 
-
+               
                 usuario = new usuarios()
                 {
                     userId = perfilUsuarioVM.id_usuario,
@@ -234,7 +244,8 @@ namespace FrontEnd.Controllers.User
                     direccion = perfilUsuarioVM.direccion,
                     provinciaId = perfilUsuarioVM.id_provincia,
                     cantonId = perfilUsuarioVM.id_canton,
-                    distritoId = perfilUsuarioVM.id_distrito
+                    distritoId = perfilUsuarioVM.id_distrito,
+                    fotoPerfil = perfilUsuarioVM.imagenUsuario,
                 };
 
 
@@ -333,12 +344,17 @@ namespace FrontEnd.Controllers.User
             var correo = Request["correo"];
             var telefono = Request["telefono"];
             var direccion = Request["direccion"];
-            var provinciaId = Request["provinciaId"];
+            var provinciaId = Request["id_provincia"];
+            var id_canton = Request["id_canton"];
+            var id_distrito = Request["id_distrito"];
+            //var fotoPerfil = Request.Files["fotoPerfil"]; 
 
+            
             string ruta = "";
 
             if (file == null) {
                 ruta = "/Content/dist/img/avatar5.png";
+              
             }
             else
             {
@@ -347,8 +363,7 @@ namespace FrontEnd.Controllers.User
                 file.SaveAs(Server.MapPath("/Content/dist/img/usuarios/" + archivo));
 
                 ruta = "/Content/dist/img/usuarios/" + archivo;
-
-                
+               
             }
 
             usuarios usuario;
@@ -368,15 +383,17 @@ namespace FrontEnd.Controllers.User
                     correoElectronico = correo,
                     direccion = direccion,
                     provinciaId = Int32.Parse(provinciaId),
-                   
+                    cantonId = Int32.Parse(id_canton),
+                    distritoId = Int32.Parse(id_distrito),
+                    fotoPerfil = ruta,
                 };
                 unidad.genericDAL.Update(usuario);
                 unidad.Complete();
+               
             }
-            return RedirectToAction("Edit", "PerfilUsuario", new { id= id_usuario});
+            return RedirectToAction("Edit","PerfilUsuario", new { id = id_usuario });
         }
 
-
-
+       
     }
 }

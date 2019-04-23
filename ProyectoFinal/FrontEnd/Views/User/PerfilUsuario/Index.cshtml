@@ -4,9 +4,10 @@
 
 <div class="container d-flex flex-row flex-wrap">
 
-    <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3 h-100" >
+    <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3 h-100">
         <div id="fotoPerfil" class="d-flex flex-column w-100 h-100">
 
+            @Html.HiddenFor(perfilUsuario => perfilUsuario.imagenUsuario, new { id = "imagenUsuario" })
             <img class="w-100 h-100 mb-2" alt="Responsive image" src="@Model.imagenUsuario" />
             @using (Html.BeginForm("SubirImagenPerfil", "PerfilUsuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -18,6 +19,8 @@
                 @Html.HiddenFor(perfilUsuario => perfilUsuario.Telefono, new { id = "telefono" })
                 @Html.HiddenFor(perfilUsuario => perfilUsuario.direccion, new { id = "direccion" })
                 @Html.HiddenFor(perfilUsuario => perfilUsuario.id_provincia, new { id = "provinciaId" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.id_canton, new { id = "cantonId" })
+                @Html.HiddenFor(perfilUsuario => perfilUsuario.id_distrito, new { id = "distritoId" })
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroupFileAddon01">Subir</span>
@@ -41,7 +44,7 @@
             <hr />
         </div>
 
-       
+
     </div>
 
     <div class="container-fluid d-flex flex-column flex-wrap col-lg-9 h-100">
@@ -136,10 +139,10 @@
 {
     <script src="~/Scripts/Cleave/cleave.min.js"></script>
     <script>
-        
+
 
         $('#id_provincia').on("change", function () {
-            var url = '@Url.Action("obtenerCantones", "Compra")';
+            var url = '@Url.Action("obtenerCantones", "PerfilUsuario")';
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -157,12 +160,12 @@
             });
         });
 
-        
-       
 
-         
+
+
+
         $('#id_canton').on("change", function () {
-            var url = '@Url.Action("obtenerDistritos", "Compra")';
+            var url = '@Url.Action("obtenerDistritos", "PerfilUsuario")';
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -198,7 +201,7 @@
                     id_canton: $("#id_canton").val(),
                     id_distrito: $("#id_distrito").val(),
                     direccion: $("#direccion").val(),
-
+                    imagenUsuario: $("#imagenUsuario").val(),
                 },
                 statusCode: {
                     200: function () {
@@ -242,62 +245,7 @@
             });
         }
 
-        function guardarDireccion() {
-            var saveUrl = '@Url.Action("EditarDireccion", "PerfilUsuario")';
-            var newUrl = '@Url.Action("Edit", "PerfilUsuario", routeValues: new { id = @Model.id_usuario })';
-            $.ajax({
-                type: 'POST',
-                url: saveUrl,
-                data: {
-                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
-                    id_usuario: $("#id_usuario").val(),
-                   
-                    Usuario_ID: $("#Usuario_ID").val(),
+       
 
-                },
-                statusCode: {
-                    200: function () {
-                        Swal.fire(
-                            'Perfil Actualizado!',
-                            'Perfil ha sido actualizado exitosamente!',
-                            'success'
-                        ).then(function () {
-                            window.location.href = newUrl;
-                        });
-                    },
-                    400: function () {
-                        Swal.fire(
-                            'Error!',
-                            'Bad request',
-                            'error'
-                        ).then(function () {
-                            location.reload();
-                        });
-                    },
-                    404: function () {
-                        Swal.fire(
-                            'Error!',
-                            'Pagina no encontrada',
-                            'error'
-                        ).then(function () {
-                            location.reload();
-                        });
-                    },
-                    500: function () {
-                        Swal.fire(
-                            'Error!',
-                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
-                            'error'
-                        ).then(function () {
-                            location.reload();
-                        });
-                    }
-                }
-
-            });
-
-            
-        }
-        
     </script>
 }
