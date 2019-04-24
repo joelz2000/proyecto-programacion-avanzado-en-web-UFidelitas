@@ -54,9 +54,9 @@
                                     <td>@producto.cantidad</td>
                                     <td>@producto.marca</td>
                                     <td>
-                                        @Html.ActionLink("Detalles", "Detalles", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
-                                        @Html.ActionLink("Editar", "Editar", "ProductosAdmin", new { id = producto.Id_Producto }, null) |
-                                        <button type="button" class="btn-link" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
+                                        @Html.ActionLink("Detalles", "Detalles", "ProductosAdmin", new { id = producto.Id_Producto }, new { @class = "btn btn-warning" })
+                                        @Html.ActionLink("Editar", "Editar", "ProductosAdmin", new { id = producto.Id_Producto }, new { @class = "btn btn-primary" })
+                                        <button type="button" class="btn btn-danger" onclick="eliminar(@producto.Id_Producto)">Eliminar</button>
                                     </td>
                                 </tr>
                             }

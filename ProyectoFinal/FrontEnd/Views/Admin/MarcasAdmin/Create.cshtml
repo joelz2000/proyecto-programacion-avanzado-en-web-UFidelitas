@@ -4,13 +4,13 @@
     ViewBag.Title = "Agregar Marca";
 }
 
-<h2>Agregar nueva marca</h2>
-<hr />
-<div class="container">
-    @using (Html.BeginForm("Create", "MarcasAdmin"))
-    {
-        @Html.AntiForgeryToken()
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Agregar Marca</h3>
+    </div>
+    <div class="box-body">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form id="__AjaxAntiForgeryForm" action="#" method="post"> @Html.AntiForgeryToken()</form>
         <div class="form-group">
             @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
@@ -23,8 +23,66 @@
         </div>
         <div class="form-group">
             @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-            <input type="submit" class="btn btn-primary" value="Guardar" />
+            <button type="submit" class="btn btn-primary" id="Guardar" onclick="guardar()">Guardar</button>
         </div>
-    }
+    </div>
 </div>
 
+
+@section Scripts
+{
+    <script>
+        function guardar() {
+            var saveUrl = '@Url.Action("Create", "MarcasAdmin")';
+            var newUrl = '@Url.Action("Index", "MarcasAdmin")';
+            $.ajax({
+                type: 'POST',
+                url: saveUrl,
+                data: {
+                    __RequestVerificationToken: $('[name = "__RequestVerificationToken"]').val(),
+                    nombre: $("#nombre").val(),
+                    descripcion: $("#descripcion").val(),
+                },
+                statusCode: {
+                    200: function () {
+                        Swal.fire(
+                            'Marca agregado!',
+                            'La Marca ha sido agregado exitosamente!',
+                            'success'
+                        ).then(function () {
+                            window.location.href = newUrl;
+                        });
+                    },
+                    400: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Bad request',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    404: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Pagina no encontrada',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    },
+                    500: function () {
+                        Swal.fire(
+                            'Error!',
+                            'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                            'error'
+                        ).then(function () {
+                            location.reload();
+                        });
+                    }
+                }
+
+            });
+        }
+    </script>
+}

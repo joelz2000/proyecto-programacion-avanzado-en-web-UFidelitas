@@ -3,43 +3,51 @@
 @{
     ViewBag.Title = "Detalles";
 }
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
 
-<h2>Detalles</h2>
-<h4>Mostrando detalles de @Model.Nombre</h4>
-<div class="container">
-    <div>
-        <hr />
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Nombre)</th>
-                        <th>@Html.DisplayNameFor(model => model.Precio)</th>
-                        <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
-                        <th>@Html.DisplayNameFor(model => model.Modelo)</th>
-                        <th>@Html.DisplayNameFor(model => model.cantidad)</th>
-                        <th>@Html.DisplayNameFor(model => model.marca)</th>
-                        <th>@Html.DisplayNameFor(model => model.distribuidor)</th>
-                        <th>@Html.DisplayFor(model => model.distribuidor)</th>
-                        <th>@Html.DisplayNameFor(model => model.categoria)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>@Html.DisplayFor(model => model.Nombre)</td>
-                        <td>$@Html.DisplayFor(model => model.Precio)</td>
-                        <td>@Html.DisplayFor(model => model.Descripcion)</td>
-                        <td>@Html.DisplayFor(model => model.Modelo)</td>
-                        <td>@Html.DisplayFor(model => model.cantidad)</td>
-                        <td>@Html.DisplayFor(model => model.marca)</td>
-                        <td>@Html.DisplayFor(model => model.distribuidor)</td>
-                        <td>@Html.DisplayFor(model => model.coleccion)</td>
-                        <td>@Html.DisplayFor(model => model.categoria)</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="box-header">
+                <h2 class="box-title">Detalles del producto</h2>
+            </div>
+
+            <div class="box-body table-responsive">
+                <table id="productosTabla" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                            <th>@Html.DisplayNameFor(model => model.Precio)</th>
+                            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                            <th>@Html.DisplayNameFor(model => model.Modelo)</th>
+                            <th>@Html.DisplayNameFor(model => model.cantidad)</th>
+                            <th>@Html.DisplayNameFor(model => model.marca)</th>
+                            <th>@Html.DisplayNameFor(model => model.distribuidor)</th>
+                            <th>@Html.DisplayFor(model => model.distribuidor)</th>
+                            <th>@Html.DisplayNameFor(model => model.categoria)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.Nombre)</td>
+                            <td>$@Html.DisplayFor(model => model.Precio)</td>
+                            <td>@Html.DisplayFor(model => model.Descripcion)</td>
+                            <td>@Html.DisplayFor(model => model.Modelo)</td>
+                            <td>@Html.DisplayFor(model => model.cantidad)</td>
+                            <td>@Html.DisplayFor(model => model.marca)</td>
+                            <td>@Html.DisplayFor(model => model.distribuidor)</td>
+                            <td>@Html.DisplayFor(model => model.coleccion)</td>
+                            <td>@Html.DisplayFor(model => model.categoria)</td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", new { id = Model.Id_Producto }, htmlAttributes: new { @class = "btn btn-primary" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="box-footer">
+                @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
         </div>
     </div>
-    @Html.ActionLink("Volver", "Index", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-    @Html.ActionLink("Editar", "Editar", new { id = Model.Id_Producto }, htmlAttributes: new { @class = "btn btn-primary" })
 </div>

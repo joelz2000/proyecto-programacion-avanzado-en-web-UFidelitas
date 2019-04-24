@@ -16,11 +16,7 @@ namespace FrontEnd.Controllers.Admin
         // GET: MarcasAdmin
         public ActionResult Index()
         {
-            string mensaje = "";
-            if (Session["mensaje"] != null)
-            {
-                mensaje = Session["mensaje"].ToString();
-            }
+           
             List<marcas> marcas;
             using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
             {
@@ -32,14 +28,21 @@ namespace FrontEnd.Controllers.Admin
 
             foreach (var item in marcas)
             {
-                marcaVM = new MarcasViewModel
+                if (item.id_estado == 1)
                 {
-                    id_marca = item.id_marca,
-                    nombre = item.nombre,
-                    descripcion = item.descripcion
-                };
-
-                marcasVM.Add(marcaVM);
+                    continue;
+                }
+                else
+                {
+                    marcaVM = new MarcasViewModel
+                    {
+                        id_marca = item.id_marca,
+                        nombre = item.nombre,
+                        descripcion = item.descripcion
+                    };
+                    marcasVM.Add(marcaVM);
+                }
+            
             }
             return View("~/Views/Admin/MarcasAdmin/Index.cshtml", marcasVM);
         }
@@ -66,7 +69,8 @@ namespace FrontEnd.Controllers.Admin
                 marcas marca = new marcas
                 {
                     nombre = marcaVM.nombre,
-                    descripcion = marcaVM.descripcion
+                    descripcion = marcaVM.descripcion,
+                    id_estado = 2
                 };
 
                 if (marca.nombre != null)
@@ -76,38 +80,44 @@ namespace FrontEnd.Controllers.Admin
                         unidad.genericDAL.Add(marca);
                         unidad.Complete();
                     }
-                    Session["mensaje"] =
-                            "<div class='alert alert-success alert-dismissible'>" +
-                            "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                            "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                            "       ¡La marca fue agregada!" +
-                            "</div> ";
+                    return new HttpStatusCodeResult(HttpStatusCode.OK);
                 }
-                
-
-                return RedirectToAction("Index");
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
         // GET: MarcasAdmin/Edit/5
         public ActionResult Edit(int id)
         {
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             MarcasViewModel marcasViewModel;
             marcas marca;
             using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
             {
                 marca = unidad.genericDAL.Get(id);
             }
+            if (marca.id_estado == 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
             marcasViewModel = new MarcasViewModel
             {
                 id_marca = marca.id_marca,
                 nombre = marca.nombre,
-                descripcion = marca.descripcion
+                descripcion = marca.descripcion,
             };
 
             return View("~/Views/Admin/MarcasAdmin/Edit.cshtml", marcasViewModel);
@@ -119,84 +129,58 @@ namespace FrontEnd.Controllers.Admin
         {
             try
             {
-                using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
+                if (ModelState.IsValid)
                 {
-                    marcas marca = new marcas
+                    using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
                     {
-                        id_marca = marcasViewModel.id_marca,
-                        nombre = marcasViewModel.nombre,
-                        descripcion = marcasViewModel.descripcion
+                        marcas marca = new marcas
+                        {
+                            id_marca = marcasViewModel.id_marca,
+                            nombre = marcasViewModel.nombre,
+                            descripcion = marcasViewModel.descripcion
 
-                    };
+                        };
 
-                    unidad.genericDAL.Update(marca);
-                    unidad.Complete();
+                        unidad.genericDAL.Update(marca);
+                        unidad.Complete();
+                        return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    }
                 }
-                // TODO: Add update logic here
-                Session["mensaje"] =
-                        "<div class='alert alert-success alert-dismissible'>" +
-                        "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                        "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                        "       ¡La marca fue actualizada!" +
-                        "</div> ";
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+
             }
             catch
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
         }
 
-        // GET: CategoriasAdmin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                marcas marca;
-                using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
-                {
-
-                    marca = unidad.genericDAL.Get(id);
-                }
-                using (UnidadDeTrabajo<marcas> unidad = new UnidadDeTrabajo<marcas>(new BDContext()))
-                {
-
-                    unidad.genericDAL.Remove(marca);
-                    unidad.Complete();
-                }
-                Session["mensaje"] =
-                       "<div class='alert alert-success alert-dismissible'>" +
-                       "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                       "   <h4><i class='icon fa fa-check'></i> Alerta!</h4>" +
-                       "      ¡La marca fue eliminada!" +
-                       "</div> ";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                Session["mensaje"] =
-                      "<div class='alertalert-danger alert-dismissible'>" +
-                      "   <button type = 'button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>" +
-                      "   <h4><i class='icon fa fa-ban'></i> Alerta!</h4>" +
-                      "      ¡La marca fue eliminada correctamente!" +
-                      "</div> ";
-                return View("~/Views/Admin/MarcasAdmin/Index.cshtml");
-            }
-        }
+       
         // POST: MarcasAdmin/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            // revisar si el URL contiene un ID, si no entonces devolver 404
+            if (id == 0)
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            marcas marca = new marcas();
+            using (UnidadDeTrabajo<marcas> unidad_marca = new UnidadDeTrabajo<marcas>(new BDContext()))
+            {
+                // buscar el producto y los demas datos
+                marca = unidad_marca.genericDAL.Get(id);
+                marca.id_estado = 1;
 
-                return RedirectToAction("Index");
             }
-            catch
+
+            using (UnidadDeTrabajo<marcas> unidad_marca = new UnidadDeTrabajo<marcas>(new BDContext()))
             {
-                return View();
+                unidad_marca.genericDAL.Update(marca);
+                unidad_marca.Complete();
             }
+            // devolver que todo bien
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

@@ -48,8 +48,8 @@
                                 @Html.DisplayFor(modelItem => item.descripcion)
                             </td>
                             <td>
-                                @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-default btn-warning" })
-                                <button type="button" class="btn btn-default  btn-danger" onclick="eliminar(@item.id_categoria)">Eliminar</button>
+                                @Html.ActionLink("Editar", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-warning" })
+                                <button type="button" class="btn btn-danger" onclick="eliminar(@item.id_categoria)">Eliminar</button>
                             </td>
                         </tr>
                         }
@@ -57,12 +57,7 @@
 
                 </table>
             </div>
-           
         </div>
-
-
-
-
     </div>
 </div>
 
