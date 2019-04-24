@@ -12,7 +12,75 @@ namespace FrontEnd.Controllers.User
 {
     public class PerfilUsuarioController : Controller
     {
+        public ActionResult MostrarFacturasUsuario(int id_usuario)
+        {
+            List<usuarios> usuarios = new List<usuarios>();
+            List<facturaciones> facturaciones;
+            List<usuario_facturaciones> usuario_Facturaciones;
 
+            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            {
+                facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+            using (UnidadDeTrabajo<usuario_facturaciones> unidad = new UnidadDeTrabajo<usuario_facturaciones>(new BDContext()))
+            {
+                usuario_Facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+
+
+            List<FacturacionesViewModels> facturacionesVM = new List<FacturacionesViewModels>();
+
+            FacturacionesViewModels facturacionVM;
+
+            foreach (var itemFacturacion in facturaciones)
+            {
+                if (itemFacturacion.id_estado == 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    foreach (var itemUsuarioFacturacion in usuario_Facturaciones)
+                    {
+                        if(itemUsuarioFacturacion.usuarioId == id_usuario)
+                        {
+                            facturacionVM = new FacturacionesViewModels
+                            {
+                                facturacionId = itemFacturacion.facturacionId,
+                                nombre = itemFacturacion.nombre,
+                                fecha = itemFacturacion.fecha,
+                                descripcion = itemFacturacion.descripcion,
+                                impuesto = itemFacturacion.impuesto,
+                                subtotal = itemFacturacion.subtotal,
+                                total = itemFacturacion.total,
+                                tipo = itemFacturacion.tipo
+                            };
+                            facturacionesVM.Add(facturacionVM);
+                        }
+                    }
+                    
+                }
+
+
+
+            }
+            return View("~/Views/User/PerfilUsuario/Facturas.cshtml", facturacionesVM);
+
+        }
+
+        public ActionResult obtenerPDF(int id, string nombre)
+        {
+            /*
+            var htmlToPdf = new HtmlToPdf();
+            var html = @"<h1>Hello World!</h1><br><p>This is IronPdf.</p>";
+            // turn html to pdf
+            var pdf = htmlToPdf.RenderHtmlAsPdf(html);
+            // save resulting pdf into file
+            pdf.SaveAs("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");*/
+
+
+            return Redirect("~/Content/dist/facturacionesPDF/" + nombre + id + ".pdf");
+        }
         // GET: PerfilUsuario/Edit/5
         public ActionResult Edit(int id)
         {

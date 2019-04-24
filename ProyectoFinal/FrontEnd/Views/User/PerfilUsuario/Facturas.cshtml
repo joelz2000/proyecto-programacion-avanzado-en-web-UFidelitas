@@ -1,23 +1,23 @@
 ﻿@model IEnumerable<FrontEnd.Models.FacturacionesViewModels>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Facturas";
 }
 
+
+
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
         <div class="box">
+
             <div class="box-header">
-                <h3 class="box-title">Facturaciones</h3>
+                <h2 class="box-title">Facturas</h2>
             </div>
 
-            <div class="box-body">
-                <table id="tablaFacturaciones" class="table table-bordered table-striped">
+            <div class="box-body table-responsive">
+                <table id="tablaFacturaUsuario" class="table table-bordered table-striped"> 
                     <thead>
                         <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.facturacionId)
-                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.nombre)
                             </th>
@@ -36,25 +36,13 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.total)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.tipo)
-                            </th>
-                            <th>
-                                Productos
-                            </th>
-                            <th>
-                                Acciones
-                            </th>
+                            <th>PDF</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.facturacionId)
-                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.nombre)
                                 </td>
@@ -65,29 +53,20 @@
                                     @Html.DisplayFor(modelItem => item.descripcion)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.impuesto)
+                                    @Html.DisplayFor(modelItem => item.impuesto)%
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.subtotal)
+                                   $ @Html.DisplayFor(modelItem => item.subtotal)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.total)
+                                  $ @Html.DisplayFor(modelItem => item.total)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.tipo)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Ver", "Index", "FacturacionProductosAdmin", new { id = item.facturacionId }, null)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("PDF", "obtenerPDF", "FacturacionAdmin", new { id=item.facturacionId, nombre = item.nombre }, new { @class = "btn btn-warning" })
-                                    
+                                    @Html.ActionLink("PDF", "obtenerPDF", "PerfilUsuario", new { id = item.facturacionId, nombre = item.nombre }, new { @class = "btn btn-warning" })
                                 </td>
                             </tr>
                         }
-
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -95,25 +74,22 @@
 </div>
 
 
-
-
 @section Scripts
 {
     <script>
-        $(document).ready(function () {
-            cargarTabla();
-        });
 
-        // funcion para cargar DataTable con información de historial
-        var cargarTabla = function () {
-            var tabla = $("#tablaFacturaciones").DataTable({
+        $(document).ready(function () {
+            $("#tablaFacturaUsuario").DataTable({
                 responsive: true,
                 "destroy": true,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 }
             });
-        }
-        
+        });
+
+       
+
     </script>
+
 }

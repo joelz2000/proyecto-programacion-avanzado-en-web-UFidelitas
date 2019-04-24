@@ -119,6 +119,15 @@
             datePattern: ['m', 'y']
         });
 
+        $("#Comprar").click(function() {
+            var clicks =1;
+
+            if (clicks == 1) {
+                $(this).addClass("disabled");
+            }   
+
+        })
+
         $('#id_provincia').on("change", function () {  
             var url = '@Url.Action("obtenerCantones", "Compra")';
             $.ajax({ 
@@ -158,6 +167,7 @@
         });  
 
         function comprar() {
+           
             var saveUrl = '@Url.Action("Index", "Compra")';
             var indexUrl = '@Url.Action("Index", "Home")';
             var procesarUrl = '@Url.Action("Procesar", "Compra")';
@@ -169,7 +179,8 @@
             var nombre_tarjeta = $("#nombre_tarjeta").val();
             var fecha = $("#fecha").val();
             var cvv = $("#cvv").val();
-
+            
+            
             $.ajax({
                 type: 'POST',
                 url: procesarUrl,
@@ -209,6 +220,10 @@
                     }
                 }
             });
+
+               
+            
+           
         }
     </script>
 }

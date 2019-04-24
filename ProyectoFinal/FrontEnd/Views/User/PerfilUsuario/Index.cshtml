@@ -5,8 +5,10 @@
 <div class="container d-flex flex-row flex-wrap">
 
 
+
+
     <!--
-        Imagen de Perfil    
+        Imagen de Perfil
     -->
     <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3 h-100">
         <div id="fotoPerfil" class="d-flex flex-column w-100 h-100">
@@ -45,8 +47,24 @@
 
     </div>
 
+   
+    <!--
+
+        Informacion Personal
+    -->
     <div class="container-fluid d-flex flex-column flex-wrap col-lg-9 h-100">
 
+        <!--
+         Opciones como ver sus facturas
+    -->
+        <div class="card mb-2" style="width: 18rem;">
+           
+            <div class="card-body bg-white text-center">
+                <h5 class="card-title text-black-50">Facturas</h5>
+                <p class="card-text  text-black-50">Facturas de tus compras</p>
+                @Html.ActionLink("Ir", "MostrarFacturasUsuario", new { id_usuario = Model.id_usuario }, new { @class = "btn btn-primary w-100 " })
+            </div>
+        </div>
         <div id="content-InformacionPersonal" class="bg-white rounded col-lg-12 h-100">
             <div id="informacionPersonal" class="d-flex flex-column h-100">
 
