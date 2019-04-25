@@ -42,7 +42,7 @@ namespace FrontEnd.Controllers.User
                 {
                     foreach (var itemUsuarioFacturacion in usuario_Facturaciones)
                     {
-                        if(itemUsuarioFacturacion.usuarioId == id_usuario)
+                        if(itemUsuarioFacturacion.usuarioId == id_usuario && itemFacturacion.facturacionId == itemUsuarioFacturacion.facturacionId)
                         {
                             facturacionVM = new FacturacionesViewModels
                             {
