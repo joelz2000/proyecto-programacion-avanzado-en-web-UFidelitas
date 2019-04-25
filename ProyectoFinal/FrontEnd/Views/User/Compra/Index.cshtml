@@ -118,15 +118,7 @@
             date: true,
             datePattern: ['m', 'y']
         });
-
-        $("#Comprar").click(function() {
-            var clicks =1;
-
-            if (clicks == 1) {
-                $(this).addClass("disabled");
-            }   
-
-        })
+        
 
         $('#id_provincia').on("change", function () {  
             var url = '@Url.Action("obtenerCantones", "Compra")';
@@ -179,7 +171,11 @@
             var nombre_tarjeta = $("#nombre_tarjeta").val();
             var fecha = $("#fecha").val();
             var cvv = $("#cvv").val();
+
             
+             $("#Comprar").remove();
+             
+
             
             $.ajax({
                 type: 'POST',
