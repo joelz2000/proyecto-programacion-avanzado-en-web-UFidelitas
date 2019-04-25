@@ -14,7 +14,6 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.User
 {
-    [CustomAuthorize(Roles = "Usuario")]
     public class CompraController : Controller
     {
         // GET: Compra
@@ -156,7 +155,6 @@ namespace FrontEnd.Controllers.User
         }
         public void generarFactura(int idfactura)
         {
-
             List<facturacion_producto> productosFacturacion;
             List<productos> productos;
             List<facturaciones> facturaciones;

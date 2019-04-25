@@ -133,13 +133,7 @@ namespace FrontEnd.Controllers.User
 
         public ActionResult Editar(int? id)
         {
-
-            if (!User.IsInRole("Usuario"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-
-            if (id == null || id == 0)
+            if(id == null || id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
@@ -191,12 +185,6 @@ namespace FrontEnd.Controllers.User
         [ValidateAntiForgeryToken]
         public ActionResult Editar(int? Id_Producto, int? cantidad_producto)
         {
-
-            if (!User.IsInRole("Usuario"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-
             try
             {
                 BDContext context = new BDContext();
@@ -229,12 +217,6 @@ namespace FrontEnd.Controllers.User
         [HttpPost]
         public ActionResult Delete(int id)
         {
-
-            if (!User.IsInRole("Usuario"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-
             // revisar si el URL contiene un ID, si no entonces devolver 404
             if (id == 0)
             {

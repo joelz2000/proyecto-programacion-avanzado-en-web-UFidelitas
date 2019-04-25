@@ -84,11 +84,6 @@ namespace FrontEnd.Controllers.User
         // GET: PerfilUsuario/Edit/5
         public ActionResult Edit(int id)
         {
-            if (!User.IsInRole("Usuario"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-
             usuarios usuario;
             List<Provincia> provincias = new List<Provincia>();
             List<Canton> cantones = new List<Canton>();
