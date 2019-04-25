@@ -74,14 +74,18 @@ namespace FrontEnd.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "El proyecto nace con la necesidad de cumplir con el objetivo primordial , aplicando conocimientos adquiridos del mismo y con apoyo externo" +
+                " ,del curso de programacion avanzada en Web de la Universidad Fidélitas durante el primer cuatrimestre del 2019.                                 " +
+                "Partiendo de esta premisa simulamos un sitio e-commerce atraves de las 16 semanas que se compone dicha asignatura. Nuestro equipo de trabajo esta " +
+                "integrado por los estudiantes Gabriel Umaña , Joel Zuñiga , Randall Herrera y  Bryan  bajo la supervision del profesor Jose Pablo Ramos." +
+                "";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Informacion del contacto";
 
             return View();
         }
