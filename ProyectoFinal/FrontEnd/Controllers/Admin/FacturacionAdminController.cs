@@ -119,7 +119,7 @@ namespace FrontEnd.Controllers.Admin
             pdf.SaveAs("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");*/
 
            
-            return Redirect("~/Content/dist/facturacionesPDF/"+nombre+id+".Pdf");
+            return Redirect("~/Content/dist/facturacionesPDF/"+nombre+id+".pdf");
         }
     }
 }

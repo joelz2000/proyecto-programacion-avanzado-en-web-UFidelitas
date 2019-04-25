@@ -7215,6 +7215,7 @@
     <Content Include="Views\Admin\PromocionesProductoAdmin\Create.cshtml" />
     <Content Include="Views\User\Compra\Index.cshtml" />
     <None Include="Views\User\Compra\FacturaPDF.cshtml" />
+    <Content Include="Views\User\PerfilUsuario\Facturas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\MarcasAdmin\Index.cshtml" />

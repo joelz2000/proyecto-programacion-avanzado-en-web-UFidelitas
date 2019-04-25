@@ -12,7 +12,75 @@ namespace FrontEnd.Controllers.User
 {
     public class PerfilUsuarioController : Controller
     {
+        public ActionResult MostrarFacturasUsuario(int id_usuario)
+        {
+            List<usuarios> usuarios = new List<usuarios>();
+            List<facturaciones> facturaciones;
+            List<usuario_facturaciones> usuario_Facturaciones;
 
+            using (UnidadDeTrabajo<facturaciones> unidad = new UnidadDeTrabajo<facturaciones>(new BDContext()))
+            {
+                facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+            using (UnidadDeTrabajo<usuario_facturaciones> unidad = new UnidadDeTrabajo<usuario_facturaciones>(new BDContext()))
+            {
+                usuario_Facturaciones = unidad.genericDAL.GetAll().ToList();
+            }
+
+
+            List<FacturacionesViewModels> facturacionesVM = new List<FacturacionesViewModels>();
+
+            FacturacionesViewModels facturacionVM;
+
+            foreach (var itemFacturacion in facturaciones)
+            {
+                if (itemFacturacion.id_estado == 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    foreach (var itemUsuarioFacturacion in usuario_Facturaciones)
+                    {
+                        if(itemUsuarioFacturacion.usuarioId == id_usuario)
+                        {
+                            facturacionVM = new FacturacionesViewModels
+                            {
+                                facturacionId = itemFacturacion.facturacionId,
+                                nombre = itemFacturacion.nombre,
+                                fecha = itemFacturacion.fecha,
+                                descripcion = itemFacturacion.descripcion,
+                                impuesto = itemFacturacion.impuesto,
+                                subtotal = itemFacturacion.subtotal,
+                                total = itemFacturacion.total,
+                                tipo = itemFacturacion.tipo
+                            };
+                            facturacionesVM.Add(facturacionVM);
+                        }
+                    }
+                    
+                }
+
+
+
+            }
+            return View("~/Views/User/PerfilUsuario/Facturas.cshtml", facturacionesVM);
+
+        }
+
+        public ActionResult obtenerPDF(int id, string nombre)
+        {
+            /*
+            var htmlToPdf = new HtmlToPdf();
+            var html = @"<h1>Hello World!</h1><br><p>This is IronPdf.</p>";
+            // turn html to pdf
+            var pdf = htmlToPdf.RenderHtmlAsPdf(html);
+            // save resulting pdf into file
+            pdf.SaveAs("~/Content/dist/facturacionesPDF/HtmlToPdf.Pdf");*/
+
+
+            return Redirect("~/Content/dist/facturacionesPDF/" + nombre + id + ".pdf");
+        }
         // GET: PerfilUsuario/Edit/5
         public ActionResult Edit(int id)
         {
@@ -341,62 +409,73 @@ namespace FrontEnd.Controllers.User
         [HttpPost]
         public ActionResult SubirImagenPerfil(HttpPostedFileBase file)
         {
-
-            var id_usuario = Request["id_usuario"];
-            var Usuario_ID = Request["Usuario_ID"];
-            var nombre = Request["nombre"];
-            var apellidos = Request["apellidos"];
-            var correo = Request["correo"];
-            var telefono = Request["telefono"];
-            var direccion = Request["direccion"];
-            var provinciaId = Request["id_provincia"];
-            var id_canton = Request["id_canton"];
-            var id_distrito = Request["id_distrito"];
-            //var fotoPerfil = Request.Files["fotoPerfil"]; 
-
-            
-            string ruta = "";
-
-            if (file == null) {
-                ruta = "/Content/dist/img/avatar5.png";
-              
-            }
-            else
+            try
             {
-                string archivo = (file.FileName).ToLower();
+                
+                var id_usuario = Request["id_usuario"];
+                var Usuario_ID = Request["Usuario_ID"];
+                var nombre = Request["nombre"];
+                var apellidos = Request["apellidos"];
+                var correo = Request["correo"];
+                var telefono = Request["telefono"];
+                var direccion = Request["direccion"];
+                var provinciaId = Request["id_provincia"];
+                var id_canton = Request["id_canton"];
+                var id_distrito = Request["id_distrito"];
+                //var fotoPerfil = Request.Files["fotoPerfil"]; 
 
-                file.SaveAs(Server.MapPath("/Content/dist/img/usuarios/" + archivo));
 
-                ruta = "/Content/dist/img/usuarios/" + archivo;
-               
-            }
+                string ruta = "";
 
-            usuarios usuario;
-
-            if (direccion != null) {
-                direccion = "No tiene direccion";
-            }
-            using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
-            {
-                usuario = new usuarios
+                if (file == null)
                 {
-                    userId = Int32.Parse(id_usuario),
-                    Usuario_ID = Usuario_ID,
-                    nombre = nombre,
-                    apellidos = apellidos,
-                    telefono = Int32.Parse(telefono),
-                    correoElectronico = correo,
-                    direccion = direccion,
-                    provinciaId = Int32.Parse(provinciaId),
-                    cantonId = Int32.Parse(id_canton),
-                    distritoId = Int32.Parse(id_distrito),
-                    fotoPerfil = ruta,
-                };
-                unidad.genericDAL.Update(usuario);
-                unidad.Complete();
-               
+                    ruta = "/Content/dist/img/avatar5.png";
+
+                }
+                else
+                {
+                    string archivo = (file.FileName).ToLower();
+
+                    file.SaveAs(Server.MapPath("/Content/dist/img/usuarios/" + archivo));
+
+                    ruta = "/Content/dist/img/usuarios/" + archivo;
+
+                }
+
+                usuarios usuario;
+
+                if (direccion != null)
+                {
+                    direccion = "No tiene direccion";
+                }
+                using (UnidadDeTrabajo<usuarios> unidad = new UnidadDeTrabajo<usuarios>(new BDContext()))
+                {
+                    usuario = new usuarios
+                    {
+                        userId = Int32.Parse(id_usuario),
+                        Usuario_ID = Usuario_ID,
+                        nombre = nombre,
+                        apellidos = apellidos,
+                        telefono = Int32.Parse(telefono),
+                        correoElectronico = correo,
+                        direccion = direccion,
+                        provinciaId = Int32.Parse(provinciaId),
+                        cantonId = Int32.Parse(id_canton),
+                        distritoId = Int32.Parse(id_distrito),
+                        fotoPerfil = ruta,
+                    };
+                    unidad.genericDAL.Update(usuario);
+                    unidad.Complete();
+
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
-            return RedirectToAction("Edit","PerfilUsuario", new { id = id_usuario });
+            catch (Exception)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+            }
+            
         }
 
        

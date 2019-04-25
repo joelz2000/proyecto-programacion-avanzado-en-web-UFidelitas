@@ -5,15 +5,17 @@
 <div class="container d-flex flex-row flex-wrap">
 
 
+
+
     <!--
-        Imagen de Perfil    
+        Imagen de Perfil
     -->
     <div id="content-fotoPerfil" class="d-flex p-2 col-lg-3 h-100">
         <div id="fotoPerfil" class="d-flex flex-column w-100 h-100">
 
             @Html.HiddenFor(perfilUsuario => perfilUsuario.imagenUsuario, new { id = "imagenUsuario" })
             <img class="w-100 h-100 mb-2" alt="Responsive image" src="@Model.imagenUsuario" />
-            @using (Html.BeginForm("SubirImagenPerfil", "PerfilUsuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SubirImagenPerfil", "PerfilUsuario", FormMethod.Post, new { enctype = "multipart/form-data", id="formFotoPerfil" }))
             {
                 @Html.HiddenFor(perfilUsuario => perfilUsuario.id_usuario, new { id = "id_usuario" })
                 @Html.HiddenFor(perfilUsuario => perfilUsuario.Usuario_ID, new { id = "Usuario_ID" })
@@ -35,7 +37,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" id="botonTest" onclick="ejecutar()" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
+                    <button type="submit" class="btn btn-outline-primary w-100" onchange="subirImagen()">Editar Foto de Perfil</button>
                 </div>
             }
             <hr />
@@ -44,8 +46,24 @@
 
     </div>
 
+   
+    <!--
+
+        Informacion Personal
+    -->
     <div class="container-fluid d-flex flex-column flex-wrap col-lg-9 h-100">
 
+        <!--
+         Opciones como ver sus facturas
+    -->
+        <div class="card mb-2" style="width: 18rem;">
+           
+            <div class="card-body bg-white text-center">
+                <h5 class="card-title text-black-50">Facturas</h5>
+                <p class="card-text  text-black-50">Facturas de tus compras</p>
+                @Html.ActionLink("Ir", "MostrarFacturasUsuario", new { id_usuario = Model.id_usuario }, new { @class = "btn btn-primary w-100 " })
+            </div>
+        </div>
         <div id="content-InformacionPersonal" class="bg-white rounded col-lg-12 h-100">
             <div id="informacionPersonal" class="d-flex flex-column h-100">
 
@@ -137,12 +155,58 @@
     <script src="~/Scripts/Cleave/cleave.min.js"></script>
     <script>
 
-        $(document).ready(function(){
-            $('#fotoPerfil').change(function (e) {
-                var url = '@Url.Action("test", "test")';
-                var fileName = e.target.files[0];
-                alert(fileName);
-                enviarFactura();
+        $(function () {
+            $("#formFotoPerfil :submit").click(function () {
+                 var newUrl = '@Url.Action("Edit", "PerfilUsuario", routeValues: new { id = @Model.id_usuario })';
+                var data = new FormData();
+                var files = $("#file").get(0).files;
+                if (files.length > 0) {
+                    data.append("HelpSectionImages", files[0]);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: $("#formFotoPerfil").attr("action"),
+                    data: {file:data},
+                    statusCode: {
+                        200: function () {
+                            Swal.fire(
+                                'Perfil Actualizado!',
+                                'Perfil ha sido actualizado exitosamente!',
+                                'success'
+                            ).then(function () {
+                                window.location.href = newUrl;
+                            });
+                        },
+                        400: function () {
+                            Swal.fire(
+                                'Error!',
+                                'Bad request',
+                                'error'
+                            ).then(function () {
+                                location.reload();
+                            });
+                        },
+                        404: function () {
+                            Swal.fire(
+                                'Error!',
+                                'Pagina no encontrada',
+                                'error'
+                            ).then(function () {
+                                location.reload();
+                            });
+                        },
+                        500: function () {
+                            Swal.fire(
+                                'Error!',
+                                'Lo sentimos, hubo un error. Por favor Llena todos los datos de informacion personal o direccion',
+                                'error'
+                            ).then(function () {
+                                location.reload();
+                            });
+                        }
+                    }
+                });
+                return false;
             });
         });
 

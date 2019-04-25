@@ -4,8 +4,6 @@
     ViewBag.Title = "Index";
 
 }
-
-@Html.Raw(Session["mensaje"])
 <div class="btn-group">
     @Html.ActionLink("Agregar Nueva Marca", "Create", null, new { @class = "btn btn-block btn-success" })
     <br><br><br>
@@ -20,7 +18,7 @@
             </div>
 
             <div class="box-body table-responsive">
-                <table id="tablaMarcas" class="table table-bordered table-striped">
+                <table id="marcaTabla" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>
@@ -44,9 +42,8 @@
                                     @Html.DisplayFor(modelItem => item.descripcion)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_marca }, new { @class = "btn btn-default btn-warning" })
-                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.id_marca }, new { @class = "btn btn-default  btn-danger" })
-
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.id_marca }, new { @class = "btn btn-warning" })
+                                    <button type="button" class="btn btn-danger" onclick="eliminar(@item.id_marca)">Eliminar</button>
                                 </td>
                             </tr>
                         }
@@ -57,3 +54,82 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $("#marcaTabla").DataTable({
+                responsive: true,
+                "destroy": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                }
+            });
+        });
+
+        function eliminar(id_marca) {
+            Swal.fire({
+                title: 'Seguro que desea eliminar esta Marca?',
+                text: "Esta accion no se puede revertir!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Eliminar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: 'POST',
+                        url: `MarcasAdmin/Delete/${id_marca}`,
+                        data: {
+                            id_marca: id_marca
+                        },
+                        statusCode: {
+                            200: function () {
+                                Swal.fire(
+                                    'Exito!',
+                                    'Marca eliminado',
+                                    'success'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            400: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Bad request',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            404: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Pagina no encontrada',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            },
+                            500: function () {
+                                Swal.fire(
+                                    'Error!',
+                                    'Lo sentimos, hubo un error. Por favor intentelo de nuevo mas tarde',
+                                    'error'
+                                ).then(function () {
+                                    location.reload();
+                                });
+                            }
+                        }
+
+                    });
+                }
+            })
+        }
+
+    </script>
+
+}

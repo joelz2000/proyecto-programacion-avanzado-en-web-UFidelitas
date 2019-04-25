@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.Admin
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class FacturacionProductosAdminController : Controller
     {
         int id_promocion = 0;
