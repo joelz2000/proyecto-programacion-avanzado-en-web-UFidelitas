@@ -404,7 +404,8 @@ namespace FrontEnd.Controllers.User
         [HttpPost]
         public ActionResult SubirImagenPerfil(HttpPostedFileBase file)
         {
-            
+            try
+            {
                 var id_usuario = Request["id_usuario"];
                 var Usuario_ID = Request["Usuario_ID"];
                 var nombre = Request["nombre"];
@@ -461,8 +462,15 @@ namespace FrontEnd.Controllers.User
                     unidad.Complete();
                     //return new HttpStatusCodeResult(HttpStatusCode.OK);
 
-                   return RedirectToAction("Edit","PerfilUsuario" , new { id = id_usuario });
+                    return RedirectToAction("Edit", "PerfilUsuario", new { id = id_usuario });
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+               
             
             
             
