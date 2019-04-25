@@ -29,6 +29,12 @@ namespace FrontEnd.Controllers.User
         // GET: Productos/Detalles/5
         public ActionResult Detalles(int? id)
         {
+
+            if (!User.IsInRole("Usuario"))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
             // revisar si el URL contiene un ID, si no entonces devolver 404
             if (id == null || id == 0)
             {

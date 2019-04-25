@@ -40,7 +40,6 @@
                     <button type="submit" class="btn btn-outline-primary w-100" onchange="subirImagen()">Editar Foto de Perfil</button>
                 </div>
             }
-
             <hr />
         </div>
 
@@ -229,10 +228,6 @@
                     $('#id_canton').append(options);
             });
         });
-
-
-
-
 
         $('#id_canton').on("change", function () {
             var url = '@Url.Action("obtenerDistritos", "PerfilUsuario")';
