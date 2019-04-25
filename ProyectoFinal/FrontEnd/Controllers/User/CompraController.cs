@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.User
 {
+    [CustomAuthorize(Roles = "Usuario")]
     public class CompraController : Controller
     {
         // GET: Compra

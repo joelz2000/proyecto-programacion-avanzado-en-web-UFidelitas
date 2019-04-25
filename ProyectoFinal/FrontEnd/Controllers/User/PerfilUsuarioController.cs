@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.User
 {
+    [CustomAuthorize(Roles = "Usuario")]
     public class PerfilUsuarioController : Controller
     {
         public ActionResult MostrarFacturasUsuario(int id_usuario)

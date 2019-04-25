@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace FrontEnd.Controllers.User
 {
+    [CustomAuthorize(Roles = "Usuario")]
     public class CarritoController : Controller
     {
         private UnidadDeTrabajo<carrito> unidad_carrito = new UnidadDeTrabajo<carrito>(new BDContext());
