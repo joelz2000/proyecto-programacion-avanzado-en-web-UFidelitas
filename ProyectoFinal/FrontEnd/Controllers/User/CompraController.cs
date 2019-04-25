@@ -286,11 +286,11 @@ namespace FrontEnd.Controllers.User
                                             <table>
                                                 <tr>
                                                     <td class=""title"">
-                                                        Some company
+                                                        Amaz@n.Cr
                                                     </td>
                                                     <td>
-                                                        Invoice #:" + idfactura + @"<br>
-                                                        Created:" + facturacion.fecha + @"<br>
+                                                        Numero de Factura:" + idfactura + @"<br>
+                                                        Fecha de la compra:" + facturacion.fecha + @"<br>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -301,14 +301,14 @@ namespace FrontEnd.Controllers.User
                                         <table>
                                             <tr>
                                                 <td>
-                                                    Just another company, Inc.<br>
-                                                    01 Another st.<br>
-                                                    Another City, AK 00001
+                                                    Amaz@n Cr, Inc.<br>
+                                                    Rohmoser Pavas<br>
+                                                    San Jose , Costa Rica
+                                                    
                                                 </td>
                                                 <td>
-                                                    Awesome company, Inc.<br>
-                                                    Steve Stevenson<br>
-                                                    awesomeSteve@awesomecompany.com
+                                                    2295-4909 <br>
+                                                    Dudas o consultas : servicio-cliente@amazoncr.com
                                                 </td>
                                             </tr>
                                         </table>
@@ -317,7 +317,7 @@ namespace FrontEnd.Controllers.User
  
                                 <tr class=""heading"">
                                     <td>
-                                        Producto Nombre
+                                        Nombre del Producto
                                     </td>
                                     <td>
                                         Cantidad
