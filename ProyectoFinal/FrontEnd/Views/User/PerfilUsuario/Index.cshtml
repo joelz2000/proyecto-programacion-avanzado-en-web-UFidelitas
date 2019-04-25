@@ -35,10 +35,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
+                    <button type="submit" id="botonTest" onclick="ejecutar()" class="btn btn-outline-primary w-100">Editar Foto de Perfil</button>
                 </div>
             }
-
             <hr />
         </div>
 
@@ -138,6 +137,14 @@
     <script src="~/Scripts/Cleave/cleave.min.js"></script>
     <script>
 
+        $(document).ready(function(){
+            $('#fotoPerfil').change(function (e) {
+                var url = '@Url.Action("test", "test")';
+                var fileName = e.target.files[0];
+                alert(fileName);
+                enviarFactura();
+            });
+        });
 
         $('#id_provincia').on("change", function () {
             var url = '@Url.Action("obtenerCantones", "PerfilUsuario")';
@@ -157,10 +164,6 @@
                     $('#id_canton').append(options);
             });
         });
-
-
-
-
 
         $('#id_canton').on("change", function () {
             var url = '@Url.Action("obtenerDistritos", "PerfilUsuario")';
